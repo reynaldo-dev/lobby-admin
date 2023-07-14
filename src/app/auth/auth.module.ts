@@ -7,9 +7,9 @@ import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component'
 import { LoginScreenComponent } from './screen/login-screen/login-screen.component';
 import { RegisterScreenComponent } from './screen/register-screen/register-screen.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
+
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -19,11 +19,12 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
+
+    RouterModule,
     AuthRoutingModule,
     PrimeNgModule,
     ReactiveFormsModule,
-    ButtonModule,
-    InputTextModule,
+
     FormsModule,
   ],
 })
