@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login-screen',
@@ -6,10 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./login-screen.component.css'],
 })
 export class LoginScreenComponent {
-  constructor() {}
+  email: string = '';
+  password: string = '';
 
-  login(e: Event) {
-    e.preventDefault();
-    console.log('login');
+  login() {
+    // Aquí va tu lógica de inicio de sesión
+    console.log(this.email, this.password);
   }
 }
