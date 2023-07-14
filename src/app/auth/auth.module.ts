@@ -19,12 +19,10 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
-
     RouterModule,
     AuthRoutingModule,
     PrimeNgModule,
     ReactiveFormsModule,
-
     FormsModule,
   ],
 })

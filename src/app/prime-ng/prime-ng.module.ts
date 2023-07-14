@@ -6,6 +6,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
+import { SidebarModule } from 'primeng/sidebar';
 
 @NgModule({
   declarations: [],
@@ -17,6 +18,7 @@ import { MessagesModule } from 'primeng/messages';
     PasswordModule,
     ToastModule,
     MessagesModule,
+    SidebarModule,
   ],
   exports: [
     InputTextModule,
@@ -25,6 +27,7 @@ import { MessagesModule } from 'primeng/messages';
     PasswordModule,
     ToastModule,
     MessagesModule,
+    SidebarModule,
   ],
 })
 export class PrimeNgModule {}
