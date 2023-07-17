@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
 import { LoginScreenComponent } from './screen/login-screen/login-screen.component';
 import { RegisterScreenComponent } from './screen/register-screen/register-screen.component';
+import { publicGuard } from './guards/public.guard';
 
 const routes: Routes = [
   {
@@ -12,10 +13,12 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginScreenComponent,
+        canActivate: [publicGuard],
       },
       {
         path: 'register',
         component: RegisterScreenComponent,
+        canActivate: [publicGuard],
       },
     ],
   },
