@@ -14,7 +14,6 @@ export class DashboardMainComponent implements OnInit {
 
   ngOnInit(): void {
     this.dashboardService.getCommunities().subscribe();
-    console.log(this.dashboardService.communities);
   }
 
   onKey() {
