@@ -12,13 +12,13 @@ const routes: Routes = [
     children: [
       {
         path: 'inicio',
-        component: DashboardMainComponent,
         canActivate: [authGuard],
+        component: DashboardMainComponent,
       },
       {
         path: 'users',
-        component: UsersComponent,
         canActivate: [authGuard],
+        component: UsersComponent,
       },
     ],
   },

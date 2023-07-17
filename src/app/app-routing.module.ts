@@ -11,16 +11,16 @@ const routes: Routes = [
   },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
     canActivate: [publicGuard],
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: 'dashboard',
+    canActivate: [authGuard],
     loadChildren: () =>
       import('./admin-dashboard/admin-dashboard.module').then(
         (m) => m.AdminDashboardModule
       ),
-    canActivate: [authGuard],
   },
 ];
 
