@@ -1,0 +1,9 @@
+<div>
+    <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input type="text" pInputText [(ngModel)]="value" (keyup.enter)="onKey()" />
+    </span>
+</div>
+<div>
+    <app-communities-carousel [communities]="communities" />
+</div>

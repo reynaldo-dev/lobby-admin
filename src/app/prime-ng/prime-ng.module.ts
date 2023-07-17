@@ -6,6 +6,13 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
+import { SidebarModule } from 'primeng/sidebar';
+import { DividerModule } from 'primeng/divider';
+import { CardModule } from 'primeng/card';
+import { TooltipModule } from 'primeng/tooltip';
+import { ChipModule } from 'primeng/chip';
+import { DataViewModule } from 'primeng/dataview';
+import { CarouselModule } from 'primeng/carousel';
 
 @NgModule({
   declarations: [],
@@ -17,6 +24,13 @@ import { MessagesModule } from 'primeng/messages';
     PasswordModule,
     ToastModule,
     MessagesModule,
+    SidebarModule,
+    DividerModule,
+    CardModule,
+    TooltipModule,
+    ChipModule,
+    DataViewModule,
+    CarouselModule,
   ],
   exports: [
     InputTextModule,
@@ -25,6 +39,13 @@ import { MessagesModule } from 'primeng/messages';
     PasswordModule,
     ToastModule,
     MessagesModule,
+    SidebarModule,
+    DividerModule,
+    CardModule,
+    TooltipModule,
+    ChipModule,
+    DataViewModule,
+    CarouselModule,
   ],
 })
 export class PrimeNgModule {}
