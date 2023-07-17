@@ -3,7 +3,7 @@
         <i class="pi pi-search"></i>
         <input type="text" pInputText [(ngModel)]="searchValue" (keyup.enter)="onKey()" />
     </span>
-    <p-splitButton label="Crear nuevo" icon="pi pi-plus" [model]="this.items" (onClick)="save('info')"
+    <p-splitButton label="Crear nuevo" icon="pi pi-plus" [model]="this.items"
         styleClass="p-button-rounded mr-2 mb-2">
     </p-splitButton>
 </div>
@@ -24,16 +24,17 @@
 
         <div class="flex flex-column gap-2">
             <label htmlFor="color">Color</label>
-            <input type="color" [(ngModel)]="color">
+            <input  type="color" [(ngModel)]="color">
         </div>
 
         <ng-template pTemplate="footer">
             <p-button label="Cancelar" styleClass="p-button-secondary p-button-text"
-                (onClick)="closeDialog()"></p-button>
-            <p-button label="Guardar"></p-button>
+                (onClick)="toggleDialog()"></p-button>
+            <p-button label="Guardar" (click)="saveCommunity()" ></p-button>
         </ng-template>
 
     </p-dialog>
+    <p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
 </div>
 <div>
     <app-communities-carousel></app-communities-carousel>

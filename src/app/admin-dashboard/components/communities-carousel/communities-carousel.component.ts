@@ -1,5 +1,5 @@
 import { Component, HostListener, Input } from '@angular/core';
-import { DashboardService } from '../../services/dashboard.service';
+import { CommunityService } from 'src/app/community-module/services/community.service';
 
 @Component({
   selector: 'app-communities-carousel',
@@ -7,18 +7,19 @@ import { DashboardService } from '../../services/dashboard.service';
   styleUrls: ['./communities-carousel.component.css'],
 })
 export class CommunitiesCarouselComponent {
-  constructor(private dashboardService: DashboardService) {
-    this.resizeCarousel(window.innerWidth);
-  }
-  get communities() {
-    return this.dashboardService.communities;
-  }
   numVisible = 3;
   numScroll = 1;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.resizeCarousel(event.target.innerWidth);
+  }
+
+  constructor(private communityService: CommunityService) {
+    this.resizeCarousel(window.innerWidth);
+  }
+  get communities() {
+    return this.communityService.communities;
   }
 
   resizeCarousel(width: number) {
