@@ -1,0 +1,19 @@
+<div class="mb-4">
+    <span class="text-3xl font-bold text-600">Bienvenido de nuevo</span>
+   
+</div>
+
+<div class="w-full">
+    <form class="flex gap-4 flex-column">
+        <div class="flex flex-column gap-2">
+            <label htmlFor="email">Correo electrónico</label>
+            <input class="w-full" pInputText id="email" aria-describedby="username-help" [formControl]="email" />
+        </div>
+        <div class="flex flex-column gap-2">
+            <label htmlFor="password">Contraseña</label>
+            <input class="w-full" pInputText id="password" type="password" aria-describedby="username-help" [formControl]="password" />
+        </div>
+        <button pButton pRipple label="Iniciar Sesión" (click)="login()"></button>
+        <p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+    </form>
+</div>
