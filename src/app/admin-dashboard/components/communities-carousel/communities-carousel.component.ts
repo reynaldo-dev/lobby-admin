@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { DashboardService } from '../../services/dashboard.service';
 
 @Component({
   selector: 'app-communities-carousel',
@@ -6,8 +7,8 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./communities-carousel.component.css'],
 })
 export class CommunitiesCarouselComponent {
-  @Input() communities: any[] = [];
-  get items() {
-    return this.communities;
+  constructor(private dashboardService: DashboardService) {}
+  get communities() {
+    return this.dashboardService.communities;
   }
 }
