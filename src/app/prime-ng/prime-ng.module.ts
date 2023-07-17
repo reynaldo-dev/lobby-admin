@@ -13,6 +13,9 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ChipModule } from 'primeng/chip';
 import { DataViewModule } from 'primeng/dataview';
 import { CarouselModule } from 'primeng/carousel';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { DropdownModule } from 'primeng/dropdown';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: [],
@@ -31,6 +34,9 @@ import { CarouselModule } from 'primeng/carousel';
     ChipModule,
     DataViewModule,
     CarouselModule,
+    SplitButtonModule,
+    DropdownModule,
+    DialogModule,
   ],
   exports: [
     InputTextModule,
@@ -46,6 +52,9 @@ import { CarouselModule } from 'primeng/carousel';
     ChipModule,
     DataViewModule,
     CarouselModule,
+    SplitButtonModule,
+    DropdownModule,
+    DialogModule,
   ],
 })
 export class PrimeNgModule {}

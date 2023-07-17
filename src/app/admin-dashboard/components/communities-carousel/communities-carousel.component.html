@@ -1,19 +1,22 @@
-<p-carousel [value]="communities" [numVisible]="3" [numScroll]="1">
-    <ng-template let-community pTemplate="item">
-        <div class="m-2  py-5 px-3">
-            <p-card [header]="community.name" [subheader]="community.description" [style]="{'border-radius': '10px'}">
-                <ng-template pTemplate="header">
-                    <div class="w-full h-12rem" [style]="{'background-color': community.color}"
-                        style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
-                    </div>
-                </ng-template>
+<div class="w-8">
+    <p-carousel [value]="communities" [numVisible]="numVisible" [numScroll]="numScroll">
+        <ng-template let-community pTemplate="item">
+            <div class="m-2 w-full  d-flex justify-content-center">
+                <p-card [header]="community.name" [subheader]="community.description"
+                    [style]="{'border-radius': '10px', 'margin': '0 10px', 'min-height': '300px', 'max-height': '400px'}">
+                    <ng-template pTemplate="header">
+                        <div class="w-full h-4rem" [style]="{'background-color': community.color}"
+                            style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                        </div>
+                    </ng-template>
 
-                <ng-template pTemplate="footer">
-                    <p-chip [style]="{'background-color': community.color, 'color': 'white'}">
-                        <div class="p-2">Content</div>
-                    </p-chip>
-                </ng-template>
-            </p-card>
-        </div>
-    </ng-template>
-</p-carousel>
+                    <ng-template pTemplate="footer">
+                        <p-chip [style]="{'background-color': community.color, 'color': 'white'}">
+                            <div class="p-2">Content</div>
+                        </p-chip>
+                    </ng-template>
+                </p-card>
+            </div>
+        </ng-template>
+    </p-carousel>
+</div>
