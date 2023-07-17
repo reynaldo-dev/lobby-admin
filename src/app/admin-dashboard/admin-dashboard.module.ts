@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { UsersComponent } from './screens/users/users.component';
 import { FormsModule } from '@angular/forms';
 import { CommunitiesCarouselComponent } from './components/communities-carousel/communities-carousel.component';
+import { AuthModule } from '../auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { CommunitiesCarouselComponent } from './components/communities-carousel/
   imports: [
     CommonModule,
     AdminDashboardRoutingModule,
+    AuthModule,
     PrimeNgModule,
     RouterModule,
     FormsModule,
