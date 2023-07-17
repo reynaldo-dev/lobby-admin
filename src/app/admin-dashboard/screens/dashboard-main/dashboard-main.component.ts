@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../services/dashboard.service';
 import { MenuItem, MessageService } from 'primeng/api';
+import { CommunityService } from 'src/app/community-module/services/community.service';
 
 @Component({
   selector: 'app-dashboard-main',
@@ -18,63 +19,63 @@ export class DashboardMainComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private communityService: CommunityService
   ) {
     this.items = [
       {
         label: 'Comunidad',
         icon: 'pi pi-users',
         command: () => {
-          this.showDialog();
+          this.toggleDialog();
         },
       },
       {
         label: 'Evento',
         icon: 'pi pi-calendar-plus',
-        command: () => {
-          this.delete();
-        },
       },
     ];
   }
 
-  save(severity: string) {
-    // this.messageService.add({
-    //   severity: severity,
-    //   summary: 'Success',
-    //   detail: 'Data Saved',
-    // });
+  ngOnInit(): void {
+    this.communityService.getCommunities().subscribe();
   }
+  saveCommunity() {
+    const payload = {
+      name: this.nameValue,
+      description: this.descriptionValue,
+      color: this.color,
+    };
 
-  update() {
-    // this.messageService.add({
-    //   severity: 'success',
-    //   summary: 'Success',
-    //   detail: 'Data Updated',
-    // });
-  }
-
-  showDialog() {
-    this.visible = true;
-  }
-
-  closeDialog() {
-    this.visible = false;
-  }
-
-  delete() {
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: 'Data Deleted',
+    this.communityService.createCommunity(payload).subscribe({
+      next: (res) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Éxito',
+          detail: 'Comunidad agregada correctamente',
+        });
+        this.clearText();
+        this.toggleDialog();
+      },
+      error: (err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: err,
+        });
+      },
     });
   }
 
-  ngOnInit(): void {
-    this.dashboardService.getCommunities().subscribe();
+  clearText() {
+    this.nameValue = '';
+    this.descriptionValue = '';
+    this.color = '#ffffff';
   }
 
-  onKey() {
-    console.log(this.searchValue);
+  toggleDialog() {
+    this.visible = !this.visible;
   }
+
+  onKey() {}
 }
