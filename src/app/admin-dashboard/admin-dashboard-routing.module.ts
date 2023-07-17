@@ -10,7 +10,7 @@ const routes: Routes = [
     component: DashboardLayoutComponent,
     children: [
       {
-        path: 'main',
+        path: 'inicio',
         component: DashboardMainComponent,
       },
       {
