@@ -1,0 +1,42 @@
+<section class="layout">
+    <div class="span12 h-10rem border-round-top-md w-full" [style]="{'background-color': community?.color}">
+    </div>
+    <div class="span6 vertical-stack">
+        <span class=" text-3xl">{{community?.name}}</span>
+        <span class="text-md">{{community?.description}}</span>
+    </div>
+    <div class="span5 flex justify-content-end">
+        <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-info p-button-outlined"
+            (onClick)="toggleDialog()"></p-button>
+    </div>
+    <div class="span4">
+        <span>32 Miembros</span>
+    </div>
+    <p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+    <p-dialog header="Crear nueva comunidad" [(visible)]="visible" [style]="{ width: '50vw' }">
+
+        <div class="flex justify-content-between gap-4">
+            <div class="flex flex-column gap-2" style="width: 50%">
+                <label htmlFor="nombre">Nombre</label>
+                <input pInputText id="nombre" aria-describedby="nombre-help" [(ngModel)]="nameValue" />
+            </div>
+
+            <div class="flex flex-column gap-2" style="width: 50%">
+                <label htmlFor="descripcion">Descripción</label>
+                <input pInputText id="descripcion" aria-describedby="descripcion-help" [(ngModel)]="descriptionValue" />
+            </div>
+        </div>
+
+        <div class="flex flex-column gap-2">
+            <label htmlFor="color">Color</label>
+            <input type="color" [(ngModel)]="color">
+        </div>
+
+        <ng-template pTemplate="footer">
+            <p-button label="Cancelar" styleClass="p-button-secondary p-button-text"
+                (onClick)="toggleDialog()"></p-button>
+            <p-button label="Guardar" (click)="updateCommunity()"></p-button>
+        </ng-template>
+
+    </p-dialog>
+</section>

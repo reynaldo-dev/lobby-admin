@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DashboardService } from '../../services/dashboard.service';
 import { MenuItem, MessageService } from 'primeng/api';
 import { CommunityService } from 'src/app/community-module/services/community.service';
 
@@ -18,7 +17,6 @@ export class DashboardMainComponent implements OnInit {
   color: string = '#ffffff';
 
   constructor(
-    private dashboardService: DashboardService,
     private messageService: MessageService,
     private communityService: CommunityService
   ) {

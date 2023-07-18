@@ -25,12 +25,38 @@ export class CommunityService {
     );
   }
 
+  getCommunityById(id: string) {
+    return this.http.get(`http://localhost:4000/api/communities/${id}`).pipe(
+      tap((res) => {
+        console.log(res);
+      }),
+      catchError((err) => {
+        return throwError(() => err.error.message);
+      })
+    );
+  }
+
   createCommunity(community: any) {
     return this.http
       .post('http://localhost:4000/api/communities', community)
       .pipe(
         tap((res) => {
           this.getCommunities().subscribe();
+        }),
+        catchError((err) => {
+          return throwError(() => err.error.message);
+        })
+      );
+  }
+
+  updateCommunity(id: string, community: any) {
+    return this.http
+      .patch(`http://localhost:4000/api/communities/${id}`, community)
+      .pipe(
+        tap((res) => {
+          console.log(res, 'update');
+          this.getCommunities().subscribe();
+          this.getCommunityById(id).subscribe();
         }),
         catchError((err) => {
           return throwError(() => err.error.message);

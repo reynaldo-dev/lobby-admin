@@ -10,6 +10,8 @@ import { UsersComponent } from './screens/users/users.component';
 import { FormsModule } from '@angular/forms';
 import { CommunitiesCarouselComponent } from './components/communities-carousel/communities-carousel.component';
 import { AuthModule } from '../auth/auth.module';
+import { CommunitiesComponent } from './screens/communities/communities.component';
+import { CommunityDetailComponent } from './screens/community-detail/community-detail.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { AuthModule } from '../auth/auth.module';
     DashboardMainComponent,
     UsersComponent,
     CommunitiesCarouselComponent,
+    CommunitiesComponent,
+    CommunityDetailComponent,
   ],
   imports: [
     CommonModule,
