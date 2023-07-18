@@ -4,6 +4,8 @@ import { DashboardLayoutComponent } from './layout/dashboard-layout/dashboard-la
 import { DashboardMainComponent } from './screens/dashboard-main/dashboard-main.component';
 import { UsersComponent } from './screens/users/users.component';
 import { authGuard } from '../auth/guards/auth.guard';
+import { CommunitiesComponent } from './screens/communities/communities.component';
+import { CommunityDetailComponent } from './screens/community-detail/community-detail.component';
 
 const routes: Routes = [
   {
@@ -12,13 +14,23 @@ const routes: Routes = [
     children: [
       {
         path: 'inicio',
-        //canActivate: [authGuard],
+        canActivate: [authGuard],
         component: DashboardMainComponent,
       },
       {
-        path: 'users',
-        //canActivate: [authGuard],
+        path: 'usuarios',
+        canActivate: [authGuard],
         component: UsersComponent,
+      },
+      {
+        path: 'comunidades',
+        canActivate: [authGuard],
+        component: CommunitiesComponent,
+      },
+      {
+        path: 'comunidad/:id',
+        canActivate: [authGuard],
+        component: CommunityDetailComponent,
       },
     ],
   },

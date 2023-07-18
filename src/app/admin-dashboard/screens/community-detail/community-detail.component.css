@@ -1,0 +1,31 @@
+.layout {
+  display: grid;
+  grid:
+    "span12 span12 span12 span12 span12 span12 span12 span12 span12 span12 span12 span12" 1fr
+    "span6 span6 span6 span6 span6 span6 span6 . . span5 span5 span5" 1fr
+    "span4 span4 span4 span4 span4 span4 span4 . . . . ." 1fr
+    "span7 span7 span7 span7 span7 span7 span7 span7 span7 span7 span7 span7" 1fr
+    / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+.span12 {
+  grid-area: span12;
+}
+.span6 {
+  grid-area: span6;
+}
+.span5 {
+  grid-area: span5;
+}
+.span4 {
+  grid-area: span4;
+}
+.span7 {
+  grid-area: span7;
+}
+
+.vertical-stack {
+  display: flex;
+  flex-direction: column;
+}

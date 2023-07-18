@@ -1,22 +1,23 @@
 <div class="w-8">
+    <h1 class="my-4">Comunidades</h1>
     <p-carousel [value]="communities" [numVisible]="numVisible" [numScroll]="numScroll">
         <ng-template let-community pTemplate="item">
-            <div class="m-2 w-full  d-flex justify-content-center">
-                <p-card [header]="community.name" [subheader]="community.description"
-                    [style]="{'border-radius': '10px', 'margin': '0 10px', 'min-height': '300px', 'max-height': '400px'}">
+            <a [routerLink]="['/dashboard/comunidad', community?.id]" style="color: inherit; text-decoration: none;">
+                <p-card [header]="community?.name" [subheader]="community?.description"
+                    [style]="{'border-radius': '10px', 'margin': '10px 10px', 'min-height': '300px', 'max-height': '400px', 'cursor': 'pointer'}">
                     <ng-template pTemplate="header">
-                        <div class="w-full h-4rem" [style]="{'background-color': community.color}"
+                        <div class="w-full h-4rem" [style]="{'background-color': community?.color}"
                             style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
                         </div>
                     </ng-template>
 
                     <ng-template pTemplate="footer">
-                        <p-chip [style]="{'background-color': community.color, 'color': 'white'}">
-                            <div class="p-2">Content</div>
+                        <p-chip [style]="{'background-color': community?.color, 'color': 'white'}">
+                            <div class="p-2">30 miembros</div>
                         </p-chip>
                     </ng-template>
                 </p-card>
-            </div>
+            </a>
         </ng-template>
     </p-carousel>
 </div>
