@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
 import { catchError, tap, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { ICommunities } from 'src/app/admin-dashboard/interfaces/communities.interface';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -9,10 +9,11 @@ import { ICommunities } from 'src/app/admin-dashboard/interfaces/communities.int
 export class CommunityService {
   private _communities: ICommunities[] | [] = [];
 
+  constructor(private http: HttpClient) {}
+
   get communities() {
     return this._communities;
   }
-  constructor(private http: HttpClient) {}
 
   getCommunities() {
     return this.http.get('http://localhost:4000/api/communities').pipe(
@@ -26,14 +27,13 @@ export class CommunityService {
   }
 
   getCommunityById(id: string) {
-    return this.http.get(`http://localhost:4000/api/communities/${id}`).pipe(
-      tap((res) => {
-        console.log(res);
-      }),
-      catchError((err) => {
-        return throwError(() => err.error.message);
-      })
-    );
+    return this.http
+      .get<ICommunities>(`http://localhost:4000/api/communities/${id}`)
+      .pipe(
+        catchError((err) => {
+          return throwError(() => err.error.message);
+        })
+      );
   }
 
   createCommunity(community: any) {
@@ -54,9 +54,7 @@ export class CommunityService {
       .patch(`http://localhost:4000/api/communities/${id}`, community)
       .pipe(
         tap((res) => {
-          console.log(res, 'update');
           this.getCommunities().subscribe();
-          this.getCommunityById(id).subscribe();
         }),
         catchError((err) => {
           return throwError(() => err.error.message);

@@ -9,17 +9,19 @@ import { CommunityService } from 'src/app/community-module/services/community.se
   providers: [MessageService],
 })
 export class DashboardMainComponent implements OnInit {
-  searchValue: string | undefined;
-  nameValue: string | undefined;
-  descriptionValue: string | undefined;
-  items: MenuItem[] | [] = [];
-  visible: boolean = false;
-  color: string = '#ffffff';
+  public searchValue: string | undefined;
+  public nameValue: string | undefined;
+  public descriptionValue: string | undefined;
+  public items: MenuItem[] | [] = [];
+  public visible: boolean = false;
+  public color: string = '#ffffff';
 
   constructor(
     private messageService: MessageService,
     private communityService: CommunityService
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.items = [
       {
         label: 'Comunidad',
@@ -33,9 +35,6 @@ export class DashboardMainComponent implements OnInit {
         icon: 'pi pi-calendar-plus',
       },
     ];
-  }
-
-  ngOnInit(): void {
     this.communityService.getCommunities().subscribe();
   }
   saveCommunity() {

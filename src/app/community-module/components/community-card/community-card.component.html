@@ -1,0 +1,16 @@
+<a [routerLink]="['/dashboard/comunidad', community?.id]" style="color: inherit; text-decoration: none;">
+    <p-card [header]="community?.name" [subheader]="community?.description"
+        [style]="{'border-radius': '10px', 'margin': '10px 10px', 'min-height': '300px', 'max-height': '400px', 'cursor': 'pointer'}">
+        <ng-template pTemplate="header">
+            <div class="w-full h-4rem" [style]="{'background-color': community?.color}"
+                style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <p-chip [style]="{'background-color': community?.color, 'color': 'white'}">
+                <div class="p-2">30 miembros</div>
+            </p-chip>
+        </ng-template>
+    </p-card>
+</a>

@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DashboardService {
-  public toggleMenu: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    true
-  );
+  public isOpen = true;
 
   handleToggleMenu() {
-    this.toggleMenu.next(!this.toggleMenu.value);
+    this.isOpen = !this.isOpen;
   }
 }

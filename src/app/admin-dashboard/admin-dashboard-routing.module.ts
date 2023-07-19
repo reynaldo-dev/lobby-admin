@@ -4,8 +4,8 @@ import { DashboardLayoutComponent } from './layout/dashboard-layout/dashboard-la
 import { DashboardMainComponent } from './screens/dashboard-main/dashboard-main.component';
 import { UsersComponent } from './screens/users/users.component';
 import { authGuard } from '../auth/guards/auth.guard';
-import { CommunitiesComponent } from './screens/communities/communities.component';
-import { CommunityDetailComponent } from './screens/community-detail/community-detail.component';
+import { CommunitiesPageComponent } from '../community-module/screens/communities-page/communities-page.component';
+import { CommunityComponent } from '../community-module/screens/community/community.component';
 
 const routes: Routes = [
   {
@@ -25,12 +25,12 @@ const routes: Routes = [
       {
         path: 'comunidades',
         canActivate: [authGuard],
-        component: CommunitiesComponent,
+        component: CommunitiesPageComponent,
       },
       {
         path: 'comunidad/:id',
         canActivate: [authGuard],
-        component: CommunityDetailComponent,
+        component: CommunityComponent,
       },
     ],
   },
