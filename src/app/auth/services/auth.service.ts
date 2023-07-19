@@ -1,16 +1,16 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import { LoginResponse } from '../interfaces/user.interface';
+import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private _authState: any;
   private _isAuthenticated: boolean = false;
   private _user: any;
-  private _authState: any;
 
   constructor(private router: Router, private http: HttpClient) {
     this.whoAmI().subscribe();

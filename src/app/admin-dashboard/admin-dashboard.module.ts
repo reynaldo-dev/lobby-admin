@@ -10,8 +10,8 @@ import { UsersComponent } from './screens/users/users.component';
 import { FormsModule } from '@angular/forms';
 import { CommunitiesCarouselComponent } from './components/communities-carousel/communities-carousel.component';
 import { AuthModule } from '../auth/auth.module';
-import { CommunitiesComponent } from './screens/communities/communities.component';
-import { CommunityDetailComponent } from './screens/community-detail/community-detail.component';
+import { SideBarComponent } from './components/side-bar/side-bar.component';
+import { CommunityModule } from '../community-module/community-module.module';
 
 @NgModule({
   declarations: [
@@ -19,12 +19,12 @@ import { CommunityDetailComponent } from './screens/community-detail/community-d
     DashboardMainComponent,
     UsersComponent,
     CommunitiesCarouselComponent,
-    CommunitiesComponent,
-    CommunityDetailComponent,
+    SideBarComponent,
   ],
   imports: [
     CommonModule,
     AdminDashboardRoutingModule,
+    CommunityModule,
     AuthModule,
     PrimeNgModule,
     RouterModule,

@@ -9,14 +9,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./communities-carousel.component.css'],
 })
 export class CommunitiesCarouselComponent {
-  numVisible = 3;
-  numScroll = 1;
+  public numVisible = 3;
+  public numScroll = 1;
 
   constructor(
     private communityService: CommunityService,
     private router: Router
   ) {
     this.resizeCarousel(window.innerWidth);
+  }
+
+  get communities() {
+    return this.communityService.communities;
   }
 
   navigateToCommunity(id: string) {
@@ -26,10 +30,6 @@ export class CommunitiesCarouselComponent {
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.resizeCarousel(event.target.innerWidth);
-  }
-
-  get communities() {
-    return this.communityService.communities;
   }
 
   resizeCarousel(width: number) {

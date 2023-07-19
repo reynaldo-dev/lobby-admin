@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { CommunityService } from 'src/app/community-module/services/community.service';
+import { CommunityService } from '../../services/community.service';
 
 @Component({
-  selector: 'app-communities',
-  templateUrl: './communities.component.html',
-  styleUrls: ['./communities.component.css'],
+  selector: 'app-communities-page',
+  templateUrl: './communities-page.component.html',
+  styleUrls: ['./communities-page.component.css'],
 })
-export class CommunitiesComponent {
+export class CommunitiesPageComponent {
   searchValue: string | undefined;
 
   constructor(private communityService: CommunityService) {}
