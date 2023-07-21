@@ -9,7 +9,9 @@ import { Injectable } from '@angular/core';
 export class CommunityService {
   private _communities: ICommunities[] | [] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.getCommunities().subscribe();
+  }
 
   get communities() {
     return this._communities;

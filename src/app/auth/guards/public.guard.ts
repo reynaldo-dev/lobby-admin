@@ -9,7 +9,9 @@ export const publicGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
-  router.navigate(['dashboard/inicio']);
+  const lastRoute = localStorage.getItem('url') || '/dashboard/inicio';
+
+  router.navigateByUrl(lastRoute);
 
   return false;
 };
