@@ -1,17 +1,17 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
 import { AdminDashboardRoutingModule } from './admin-dashboard-routing.module';
-import { PrimeNgModule } from '../prime-ng/prime-ng.module';
+import { AuthModule } from '../auth/auth.module';
+import { CommonModule } from '@angular/common';
+import { CommunitiesCarouselComponent } from './components/communities-carousel/communities-carousel.component';
+import { CommunityModule } from '../community-module/community-module.module';
 import { DashboardLayoutComponent } from './layout/dashboard-layout/dashboard-layout.component';
 import { DashboardMainComponent } from './screens/dashboard-main/dashboard-main.component';
-import { RouterModule } from '@angular/router';
-import { UsersComponent } from './screens/users/users.component';
+import { EventsModule } from '../events/events.module';
 import { FormsModule } from '@angular/forms';
-import { CommunitiesCarouselComponent } from './components/communities-carousel/communities-carousel.component';
-import { AuthModule } from '../auth/auth.module';
+import { NgModule } from '@angular/core';
+import { PrimeNgModule } from '../prime-ng/prime-ng.module';
+import { RouterModule } from '@angular/router';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
-import { CommunityModule } from '../community-module/community-module.module';
+import { UsersComponent } from './screens/users/users.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +29,7 @@ import { CommunityModule } from '../community-module/community-module.module';
     PrimeNgModule,
     RouterModule,
     FormsModule,
+    EventsModule,
   ],
 })
 export class AdminDashboardModule {}

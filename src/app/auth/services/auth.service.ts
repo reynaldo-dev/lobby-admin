@@ -11,6 +11,7 @@ export class AuthService {
   private _authState: any;
   private _isAuthenticated: boolean = false;
   private _user: any;
+  private lastRoute = localStorage.getItem('url') || '/dashboard/inicio';
 
   constructor(private router: Router, private http: HttpClient) {
     this.whoAmI().subscribe();
@@ -39,7 +40,7 @@ export class AuthService {
           this._user = res.user;
           localStorage.setItem('access_token', res.access_token);
           this._authState = { isAuthenticated: true, user: res.user };
-          this.router.navigate(['dashboard/inicio']);
+          this.router.navigateByUrl(this.lastRoute);
         }),
         map(() => true),
 
@@ -62,7 +63,8 @@ export class AuthService {
           this._user = res.user;
           localStorage.setItem('access_token', res.access_token);
           this._authState = { isAuthenticated: true, user: res.user };
-          this.router.navigate(['dashboard/inicio']);
+
+          this.router.navigateByUrl(this.lastRoute);
         }),
         map(() => true)
       );

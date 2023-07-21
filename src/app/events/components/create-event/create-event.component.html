@@ -1,0 +1,73 @@
+
+<p-dialog header="Header" [(visible)]="isModalCreateVisible" [style]="{ width: '50vw' }" (onHide)="closeModalCreate()" [modal]="true" styleClass="" >
+    <ng-template pTemplate="header">
+        <span class="text-xl font-bold">Crear un nuevo evento</span>
+    </ng-template>
+
+
+    <div class="">
+        <form [formGroup]="createEventForm" class="grid gap-3" >
+            <div class="col-12" >
+                <span class="p-float-label w-full ">
+                    <input pInputText id="username" formControlName="title" class="w-full" />
+                    <label htmlFor="username">Titulo</label>
+                </span>
+            </div>
+
+            <div class="col-12" >
+                <span class="p-float-label w-full">
+                    <input pInputText id="username" formControlName="description" class="w-full" />
+                    <label htmlFor="username">Descripción</label>
+                </span>
+            </div>
+
+            <div class="col-6 ">
+                <span class="p-float-label w-full">
+                    <p-dropdown [options]="['active','inactive']" formControlName="status" placeholder="Selecciona una opcion"  inputId="status"></p-dropdown>
+                    <label for="status">Selecciona un estado</label>
+                </span>
+            </div>
+
+            <div class=" col-5 flex justify-content-center align-items-center " >
+                <p-checkbox [binary]="true" label="El evento será privado?" formControlName="isPrivate"></p-checkbox>
+            </div>
+
+            <div class="col-12" >
+                <span class="p-float-label w-full">
+                    <input pInputText id="username" formControlName="place" class="w-full" />
+                    <label htmlFor="username">Lugar</label>
+                </span>
+            </div>
+
+            <div class="col-6 flex gap-3 justiy-content-center align-items-center" >
+                <label htmlFor="date">Fecha</label>
+                <input type="date" formControlName="date" name="date"   class="outline-none p-2 border-round-lg surface-border" />
+            </div>
+
+            <div class="col-5 flex justify-content-center align-items-center">
+                <span class="p-float-label">
+                    <input pInputText id="username" formControlName="time" />
+                    <label htmlFor="username">Hora</label>
+                </span>
+            </div>
+
+            <div class="col-12">
+                <span class="p-float-label w-full">
+                    <input pInputText id="username" formControlName="communityId" class="w-full" />
+                    <label htmlFor="username">Comunidad</label>
+                </span>
+            </div>
+
+        </form>
+    </div>
+
+
+   
+
+    <ng-template pTemplate="footer">
+        <p-button (click)="createEvent()" icon="pi pi-check"  label="Crear" styleClass="p-button-text"></p-button>
+    </ng-template>
+
+</p-dialog>
+<p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+

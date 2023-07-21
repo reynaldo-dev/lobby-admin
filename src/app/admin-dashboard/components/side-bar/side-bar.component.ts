@@ -9,7 +9,7 @@ import { DashboardService } from '../../services/dashboard.service';
 })
 export class SideBarComponent {
   @Input()
-  isVisible!: boolean;
+  isVisible: boolean = false;
 
   public routes = [
     {
@@ -25,7 +25,7 @@ export class SideBarComponent {
     {
       name: 'Eventos',
       icon: 'pi pi-calendar-plus mr-4',
-      path: '/auth/login',
+      path: '/dashboard/eventos',
     },
     {
       name: 'Comunidades',

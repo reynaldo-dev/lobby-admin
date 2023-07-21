@@ -1,60 +1,78 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { InputSwitchModule } from 'primeng/inputswitch';
-import { PasswordModule } from 'primeng/password';
-import { ToastModule } from 'primeng/toast';
-import { MessagesModule } from 'primeng/messages';
-import { SidebarModule } from 'primeng/sidebar';
-import { DividerModule } from 'primeng/divider';
 import { CardModule } from 'primeng/card';
-import { TooltipModule } from 'primeng/tooltip';
-import { ChipModule } from 'primeng/chip';
-import { DataViewModule } from 'primeng/dataview';
 import { CarouselModule } from 'primeng/carousel';
-import { SplitButtonModule } from 'primeng/splitbutton';
-import { DropdownModule } from 'primeng/dropdown';
+import { ChipModule } from 'primeng/chip';
+import { CommonModule } from '@angular/common';
+import { DataViewModule } from 'primeng/dataview';
 import { DialogModule } from 'primeng/dialog';
+import { DividerModule } from 'primeng/divider';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessagesModule } from 'primeng/messages';
+import { NgModule } from '@angular/core';
+import { PasswordModule } from 'primeng/password';
+import { SidebarModule } from 'primeng/sidebar';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
+import { TooltipModule } from 'primeng/tooltip';
+import { TagModule } from 'primeng/tag';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { CalendarModule } from 'primeng/calendar';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
-    InputTextModule,
     ButtonModule,
-    InputSwitchModule,
-    PasswordModule,
-    ToastModule,
-    MessagesModule,
-    SidebarModule,
-    DividerModule,
     CardModule,
-    TooltipModule,
-    ChipModule,
-    DataViewModule,
     CarouselModule,
-    SplitButtonModule,
-    DropdownModule,
+    ChipModule,
+    CommonModule,
+    DataViewModule,
     DialogModule,
+    DividerModule,
+    DropdownModule,
+    InputSwitchModule,
+    InputTextModule,
+    MessagesModule,
+    PasswordModule,
+    SidebarModule,
+    SplitButtonModule,
+    TableModule,
+    ToastModule,
+    TooltipModule,
+    TagModule,
+    ProgressBarModule,
+    RadioButtonModule,
+    CalendarModule,
+    CheckboxModule,
   ],
   exports: [
-    InputTextModule,
     ButtonModule,
-    InputSwitchModule,
-    PasswordModule,
-    ToastModule,
-    MessagesModule,
-    SidebarModule,
-    DividerModule,
     CardModule,
-    TooltipModule,
+    CarouselModule,
     ChipModule,
     DataViewModule,
-    CarouselModule,
-    SplitButtonModule,
-    DropdownModule,
     DialogModule,
+    DividerModule,
+    DropdownModule,
+    InputSwitchModule,
+    InputTextModule,
+    MessagesModule,
+    PasswordModule,
+    SidebarModule,
+    SplitButtonModule,
+    TableModule,
+    ToastModule,
+    TooltipModule,
+    TagModule,
+    ProgressBarModule,
+    RadioButtonModule,
+    CalendarModule,
+    CheckboxModule,
   ],
 })
 export class PrimeNgModule {}

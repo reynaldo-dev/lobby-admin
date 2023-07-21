@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
   providedIn: 'root',
 })
 export class DashboardService {
-  public isOpen = true;
+  public isOpen = false;
 
   handleToggleMenu() {
     this.isOpen = !this.isOpen;

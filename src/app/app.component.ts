@@ -9,25 +9,21 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'lobby-admin';
+  public lastPath = localStorage.getItem('url') || '/dashboard/inicio';
 
-  // constructor(private authService: AuthService, private router: Router) {}
-  // ngOnInit(): void {
-  //   console.log('AppComponent');
-  // }
+  constructor(private authService: AuthService, private router: Router) {}
 
-  // public authStatusChangeEffect = effect(() => {
-  //   console.log('authStatusChangeEffect');
-  //   console.log(this.authService.authState);
-  //   switch (this.authService.authState?.isAuthenticated) {
-  //     case true:
-  //       this.router.navigate(['dashboard/inicio']);
-  //       break;
-  //     case false:
-  //       this.router.navigate(['auth/login']);
-  //       break;
+  public authStatusChangeEffect = effect(() => {
+    switch (this.authService.authState?.isAuthenticated) {
+      case true:
+        this.router.navigate([this.lastPath]);
+        break;
+      case false:
+        this.router.navigate(['auth/login']);
+        break;
 
-  //     default:
-  //       break;
-  //   }
-  // });
+      default:
+        break;
+    }
+  });
 }
