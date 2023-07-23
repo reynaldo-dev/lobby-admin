@@ -9,4 +9,13 @@ export interface IEvent {
   date: string;
   time: string;
   communityId: string;
+  community: Community;
+}
+
+export interface Community {
+  id: string;
+  name: string;
+  description: string;
+  color: string;
+  createdAt: string;
 }

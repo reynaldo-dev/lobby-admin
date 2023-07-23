@@ -1,5 +1,5 @@
 
-<p-dialog header="Header" [(visible)]="isModalCreateVisible" [style]="{ width: '50vw' }" (onHide)="closeModalCreate()" [modal]="true" styleClass="" >
+<p-dialog header="Header" [(visible)]="isModalCreateVisible" [style]="{ width: '50vw' }" (onHide)="closeModalCreate()" [modal]="true" styleClass="h-screen" >
     <ng-template pTemplate="header">
         <span class="text-xl font-bold">Crear un nuevo evento</span>
     </ng-template>
@@ -53,9 +53,13 @@
 
             <div class="col-12">
                 <span class="p-float-label w-full">
+                    <p-dropdown [options]="communities" formControlName="communityId" optionLabel="name" optionValue="id" placeholder="Selecciona una comunidad" styleClass="w-full"  inputId="community"></p-dropdown>
+                    <label for="community">Selecciona una comunidad</label>
+                </span>
+                <!-- <span class="p-float-label w-full">
                     <input pInputText id="username" formControlName="communityId" class="w-full" />
                     <label htmlFor="username">Comunidad</label>
-                </span>
+                </span> -->
             </div>
 
         </form>
