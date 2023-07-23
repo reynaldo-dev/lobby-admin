@@ -3,6 +3,7 @@ import { EventsService } from '../../services/events.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { IEvent } from '../../interfaces/event.interface';
 import { MessageService } from 'primeng/api';
+import { CommunityService } from 'src/app/community-module/services/community.service';
 
 @Component({
   selector: 'app-create-event',
@@ -20,13 +21,18 @@ export class CreateEventComponent {
     place: ['Santa Ana', Validators.required],
     date: ['2023-12-08', Validators.required],
     time: ['12:00', Validators.required],
-    communityId: ['6854714e-e50c-402a-8fc0-b3d5c9c72985', Validators.required],
+    communityId: [''],
   });
+
+  get communities() {
+    return this.communityService.communities;
+  }
 
   constructor(
     private eventsService: EventsService,
     private fb: FormBuilder,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private communityService: CommunityService
   ) {
     this.eventsService.modalCreateStatus.subscribe((modalStatus) => {
       this.isModalCreateVisible = modalStatus;

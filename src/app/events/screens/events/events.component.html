@@ -70,7 +70,7 @@
             <th style="min-width:10rem">
                 <div class="flex align-items-center">
                     Comunidad
-                    <p-columnFilter field="communityId" matchMode="equals" display="menu">
+                    <p-columnFilter field="community.name" matchMode="equals" display="menu">
                     </p-columnFilter>
                 </div>
             </th>
@@ -106,7 +106,7 @@
                 {{ event.time }}
             </td>
             <td>
-                {{ event.communityId }}
+                {{ event.community.name || 'No tiene comunidad' }}
             </td>
             <td class="flex gap-2">
                 <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-3 p-button-sm"  (click)="updateEvent(event)"></button>
