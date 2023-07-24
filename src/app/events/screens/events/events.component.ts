@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IEvent } from '../../interfaces/event.interface';
 import { EventsService } from '../../services/events.service';
 import { CommunityService } from 'src/app/community-module/services/community.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-events',
@@ -10,12 +11,12 @@ import { CommunityService } from 'src/app/community-module/services/community.se
 })
 export class EventsComponent {
   public loading: boolean = false;
-  public statuses: string[] = ['open', 'closed', 'canceled'];
-  public value = 0;
   public filter = '';
   public filterEventState = '';
   public filterEventIsPrivate = '';
   public filterEventCommunity = '';
+
+  public selectedEvent!: IEvent;
 
   public filterStateOption = [
     {
@@ -58,8 +59,10 @@ export class EventsComponent {
   createEvent() {
     this.eventsService.toggleCreateModal();
   }
+
   updateEvent(event: IEvent) {
     this.eventsService.toggleUpdateModal();
+    this.eventsService.setSelectedEvent(event);
   }
 
   deleteEvent(event: IEvent) {
