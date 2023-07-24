@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { IEvent } from '../interfaces/event.interface';
 
 @Injectable({
@@ -13,13 +13,21 @@ export class EventsService {
 
   public isModalUpdateVisible = false;
   public modalUpdateStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  get events(): IEvent[] {
-    return this._events;
-  }
+  private selectedEvent: BehaviorSubject<IEvent | null> =
+    new BehaviorSubject<IEvent | null>(null);
 
   constructor(private readonly http: HttpClient) {
     this.getEvents().subscribe();
+  }
+  getSelectedEvent(): Observable<IEvent | null> {
+    return this.selectedEvent.asObservable();
+  }
+  setSelectedEvent(event: IEvent | null) {
+    this.selectedEvent.next(event);
+  }
+
+  get events(): IEvent[] {
+    return this._events;
   }
 
   getEvents() {
@@ -41,6 +49,22 @@ export class EventsService {
     });
     return this.http
       .post('http://localhost:4000/api/events', event, { headers })
+      .pipe(
+        tap((event) => {
+          this.getEvents().subscribe();
+        }),
+        catchError((err) => {
+          return throwError(() => err.error.message);
+        })
+      );
+  }
+
+  updateEvent(event: IEvent, id: string) {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+    return this.http
+      .patch(`http://localhost:4000/api/events/${id}`, event, { headers })
       .pipe(
         tap((event) => {
           this.getEvents().subscribe();
@@ -76,5 +100,6 @@ export class EventsService {
   toggleUpdateModal() {
     this.isModalUpdateVisible = !this.isModalUpdateVisible;
     this.modalUpdateStatus.emit(this.isModalUpdateVisible);
+    console.log(this.isModalUpdateVisible);
   }
 }

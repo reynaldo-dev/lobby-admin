@@ -1,0 +1,3 @@
+.custom-calendar .ui-datepicker {
+    z-index: 1001; /* Ajusta el valor del z-index según sea necesario */
+  }

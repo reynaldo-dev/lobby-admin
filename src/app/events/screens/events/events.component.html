@@ -68,8 +68,6 @@
             <th style="min-width:10rem">
                 <div class="flex align-items-center">
                     Fecha/Hora
-                    <!-- <p-columnFilter field="dateTime" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" placeholder="YYYY-MM-DD">
-                    </p-columnFilter> -->
                 </div>
             </th>
             <th style="min-width:10rem">
@@ -118,6 +116,7 @@
                 <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-3 p-button-sm"  (click)="updateEvent(event)"></button>
                 <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-sm" (click)="deleteEvent(event)"></button>
             </td>
+            <app-update-event     />
         </tr>
         
     </ng-template>
@@ -127,7 +126,7 @@
         </tr>
     </ng-template>
 </p-table>
-<app-create-event     />
-<app-update-event     />
+<app-create-event      />
 <button pButton type="button" icon="pi pi-plus" class="p-button-rounded  p-button-primary md:p-5 sm:p-1  p-button-lg absolute bottom-0 right-0 mr-5 mb-5"  (click)="createEvent()"></button>
 </div>
+
