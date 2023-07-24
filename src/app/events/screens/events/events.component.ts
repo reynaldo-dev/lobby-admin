@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IEvent } from '../../interfaces/event.interface';
 import { EventsService } from '../../services/events.service';
+import { CommunityService } from 'src/app/community-module/services/community.service';
 
 @Component({
   selector: 'app-events',
@@ -12,8 +13,40 @@ export class EventsComponent {
   public statuses: string[] = ['open', 'closed', 'canceled'];
   public value = 0;
   public filter = '';
+  public filterEventState = '';
+  public filterEventIsPrivate = '';
+  public filterEventCommunity = '';
 
-  constructor(private eventsService: EventsService) {
+  public filterStateOption = [
+    {
+      name: 'Activo',
+      value: 'Activo',
+    },
+    {
+      name: 'Inactivo',
+      value: 'Inactivo',
+    },
+  ];
+
+  public filterIsPrivateOption = [
+    {
+      name: 'Si',
+      value: 'Si',
+    },
+    {
+      name: 'No',
+      value: 'No',
+    },
+  ];
+
+  get communities() {
+    return this.communityService.communities;
+  }
+
+  constructor(
+    private eventsService: EventsService,
+    private communityService: CommunityService
+  ) {
     this.eventsService.modalCreateStatus.subscribe();
     this.eventsService.modalUpdateStatus.subscribe();
   }

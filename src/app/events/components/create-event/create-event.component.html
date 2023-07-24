@@ -21,14 +21,7 @@
                 </span>
             </div>
 
-            <div class="col-6 ">
-                <span class="p-float-label w-full">
-                    <p-dropdown [options]="['active','inactive']" formControlName="status" placeholder="Selecciona una opcion"  inputId="status"></p-dropdown>
-                    <label for="status">Selecciona un estado</label>
-                </span>
-            </div>
-
-            <div class=" col-5 flex justify-content-center align-items-center " >
+            <div class=" col-6 flex mb-3" >
                 <p-checkbox [binary]="true" label="El evento será privado?" formControlName="isPrivate"></p-checkbox>
             </div>
 
@@ -40,37 +33,26 @@
             </div>
 
             <div class="col-6 flex gap-3 justiy-content-center align-items-center" >
-                <label htmlFor="date">Fecha</label>
-                <input type="date" formControlName="date" name="date"   class="outline-none p-2 border-round-lg surface-border" />
+                <p-calendar [showSeconds]="false"  formControlName="dateTime" [showTime]="true" placeholder="Fecha y Hora" ></p-calendar>
             </div>
 
-            <div class="col-5 flex justify-content-center align-items-center">
-                <span class="p-float-label">
-                    <input pInputText id="username" formControlName="time" />
-                    <label htmlFor="username">Hora</label>
-                </span>
-            </div>
 
             <div class="col-12">
                 <span class="p-float-label w-full">
                     <p-dropdown [options]="communities" formControlName="communityId" optionLabel="name" optionValue="id" placeholder="Selecciona una comunidad" styleClass="w-full"  inputId="community"></p-dropdown>
                     <label for="community">Selecciona una comunidad</label>
                 </span>
-                <!-- <span class="p-float-label w-full">
-                    <input pInputText id="username" formControlName="communityId" class="w-full" />
-                    <label htmlFor="username">Comunidad</label>
-                </span> -->
             </div>
 
+            
+                <p-button (click)="createEvent()" icon="pi pi-check"  label="Crear" styleClass="p-button-text"></p-button>
+            
         </form>
     </div>
 
 
    
 
-    <ng-template pTemplate="footer">
-        <p-button (click)="createEvent()" icon="pi pi-check"  label="Crear" styleClass="p-button-text"></p-button>
-    </ng-template>
 
 </p-dialog>
 <p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>

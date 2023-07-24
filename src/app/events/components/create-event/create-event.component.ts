@@ -16,11 +16,10 @@ export class CreateEventComponent {
   public createEventForm = this.fb.group({
     title: ['Evento numero 4', Validators.required],
     description: ['Descripcion del evento 4', Validators.required],
-    status: ['active', Validators.required],
-    isPrivate: ['false'],
+    status: ['Activo'],
+    isPrivate: ['No'],
     place: ['Santa Ana', Validators.required],
-    date: ['2023-12-08', Validators.required],
-    time: ['12:00', Validators.required],
+    dateTime: ['', Validators.required],
     communityId: [''],
   });
 
@@ -40,6 +39,18 @@ export class CreateEventComponent {
   }
 
   createEvent() {
+    const isPrivate =
+      this.createEventForm.get('isPrivate')?.value?.toString() === 'true'
+        ? 'Si'
+        : 'No';
+    this.createEventForm.patchValue({ isPrivate });
+
+    this.createEventForm.patchValue({
+      dateTime: new Date(
+        this.createEventForm.get('dateTime')?.value as string
+      ).toLocaleString(),
+    });
+
     this.eventsService
       .createEvent(this.createEventForm.value as IEvent)
       .subscribe({

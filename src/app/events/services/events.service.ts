@@ -40,11 +40,7 @@ export class EventsService {
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     });
     return this.http
-      .post(
-        'http://localhost:4000/api/events',
-        { ...event, isPrivate: `${event.isPrivate}` },
-        { headers }
-      )
+      .post('http://localhost:4000/api/events', event, { headers })
       .pipe(
         tap((event) => {
           this.getEvents().subscribe();

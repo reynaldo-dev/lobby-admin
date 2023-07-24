@@ -6,8 +6,7 @@ export interface IEvent {
   isPrivate: string;
   createdAt: string;
   place: string;
-  date: string;
-  time: string;
+  dateTime: string;
   communityId: string;
   community: Community;
 }

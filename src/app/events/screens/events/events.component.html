@@ -6,19 +6,19 @@
     #dt1
     [value]="events"
     dataKey="id"
-    [rows]="5"
+    [rows]="3"
     [showCurrentPageReport]="true"
-    [rowsPerPageOptions]="[5,10,20]"
+    [rowsPerPageOptions]="[3,10,20]"
     [loading]="loading"
     [paginator]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [globalFilterFields]="['title', 'status', 'isPrivate', 'date', 'time', 'communityId']"
+    [globalFilterFields]="['title', 'community.name', 'place']"
 >
     <ng-template pTemplate="caption">
         <div class="flex">
             <span class="p-input-icon-left ml-auto">
                 <i class="pi pi-search"></i>
-                <input pInputText type="text" [(ngModel)]="filter" (input)="dt1.filterGlobal(filter, 'contains')" placeholder="Search keyword" />
+                <input pInputText type="text" [placeholder]="'titulo, comunidad, lugar'" [(ngModel)]="filter" (input)="dt1.filterGlobal(filter, 'contains')" />
             </span>
         </div>
     </ng-template>
@@ -27,7 +27,7 @@
             <th style="min-width:15rem">
                 <div class="flex align-items-center">
                     Titulo
-                    <p-columnFilter type="text" field="title" display="menu" [showAddButton]="false"></p-columnFilter>
+                    <p-columnFilter type="text" field="title" display="menu" matchMode="contains"  [showMatchModes]="false" [showOperator]="false" [showAddButton]="false"></p-columnFilter>
                 </div>
             </th>
             <th style="min-width:15rem">
@@ -39,38 +39,47 @@
             <th style="min-width:15rem">
                 <div class="flex align-items-center">
                     Estado
-                    <p-columnFilter type="text" field="status" display="menu"  [showAddButton]="false"></p-columnFilter>
+                        <p-columnFilter field="status" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-dropdown optionLabel="name" optionValue="value" [ngModel]="filterEventState" [options]="filterStateOption" (onChange)="filter($event.value)" placeholder="Any">
+                                </p-dropdown>
+                            </ng-template>
+                        </p-columnFilter>
                 </div>
             </th>
             <th style="min-width:10rem">
                 <div class="flex align-items-center">
                     Privado
-                    <p-columnFilter type="text" field="isPrivate" display="menu"></p-columnFilter>
+                    <p-columnFilter field="isPrivate" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-dropdown optionLabel="name" optionValue="value" [ngModel]="filterEventIsPrivate" [options]="filterIsPrivateOption" (onChange)="filter($event.value)" placeholder="Any">
+                            </p-dropdown>
+                        </ng-template>
+                    </p-columnFilter>
                 </div>
             </th>
             <th style="min-width:10rem">
                 <div class="flex align-items-center">
                     Lugar
-                </div>
-            </th>
-            <th style="min-width:10rem">
-                <div class="flex align-items-center">
-                    Fecha
-                    <p-columnFilter field="date" matchMode="equals" display="menu">
+                    <p-columnFilter field="place" matchMode="contains" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                     </p-columnFilter>
                 </div>
             </th>
             <th style="min-width:10rem">
                 <div class="flex align-items-center">
-                    Hora
-                    <p-columnFilter field="time" matchMode="equals" display="menu">
-                    </p-columnFilter>
+                    Fecha/Hora
+                    <!-- <p-columnFilter field="dateTime" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" placeholder="YYYY-MM-DD">
+                    </p-columnFilter> -->
                 </div>
             </th>
             <th style="min-width:10rem">
                 <div class="flex align-items-center">
                     Comunidad
-                    <p-columnFilter field="community.name" matchMode="equals" display="menu">
+                    <p-columnFilter field="community.name" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-dropdown optionLabel="name" optionValue="name" [ngModel]="filterEventCommunity" [options]="communities" (onChange)="filter($event.value)" placeholder="Any">
+                            </p-dropdown>
+                        </ng-template>
                     </p-columnFilter>
                 </div>
             </th>
@@ -100,10 +109,7 @@
                 {{ event.place }}
             </td>
             <td>
-                {{ event.date }}
-            </td>
-            <td>
-                {{ event.time }}
+                {{ event.dateTime }}
             </td>
             <td>
                 {{ event.community.name || 'No tiene comunidad' }}
