@@ -22,7 +22,7 @@ export class UpdateEventComponent {
     private communityService: CommunityService,
     private messageService: MessageService
   ) {
-    this.eventsService.modalUpdateStatus.subscribe((modalStatus) => {
+    this.eventsService.isUpdateModalVisible.subscribe((modalStatus) => {
       this.isModalUpdateOpen = modalStatus;
     });
 
