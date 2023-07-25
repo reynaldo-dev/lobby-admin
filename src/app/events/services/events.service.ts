@@ -13,8 +13,9 @@ export class EventsService {
   public isModalUpdateVisible = false;
   public modalUpdateStatus: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
-  private selectedEvent: BehaviorSubject<IEvent | null> =
-    new BehaviorSubject<IEvent | null>(null);
+  private selectedEvent: BehaviorSubject<IEvent> = new BehaviorSubject<IEvent>(
+    {} as IEvent
+  );
   private headers!: HttpHeaders;
 
   constructor(private readonly http: HttpClient) {
@@ -24,10 +25,10 @@ export class EventsService {
     this.getEvents().subscribe();
   }
 
-  getSelectedEvent(): Observable<IEvent | null> {
+  getSelectedEvent(): Observable<IEvent> {
     return this.selectedEvent.asObservable();
   }
-  setSelectedEvent(event: IEvent | null) {
+  setSelectedEvent(event: IEvent) {
     this.selectedEvent.next(event);
   }
 

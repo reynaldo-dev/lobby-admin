@@ -59,8 +59,8 @@ export class EventsComponent {
   }
 
   updateEvent(event: IEvent) {
-    this.eventsService.toggleUpdateModal();
     this.eventsService.setSelectedEvent(event);
+    this.eventsService.toggleUpdateModal();
   }
 
   deleteEvent(event: IEvent) {
