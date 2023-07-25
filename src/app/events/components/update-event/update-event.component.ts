@@ -19,6 +19,7 @@ export class UpdateEventComponent implements OnInit {
     status: ['', Validators.required],
     isPrivate: ['', Validators.required],
     place: ['', Validators.required],
+    // dateTime: ['', Validators.required],
     communityId: ['', Validators.required],
   });
   public selectedEventId: string | undefined;
@@ -34,6 +35,7 @@ export class UpdateEventComponent implements OnInit {
     });
 
     this.eventsService.getSelectedEvent().subscribe((event) => {
+      console.log(event);
       this.selectedEventId = event?.id;
       this.updateEventForm.patchValue({
         title: event?.title,
@@ -41,6 +43,7 @@ export class UpdateEventComponent implements OnInit {
         status: event?.status,
         isPrivate: event?.isPrivate,
         place: event?.place,
+        // dateTime: new Date(event?.dateTime).toDateString(),
         communityId: event?.communityId,
       });
     });
@@ -63,11 +66,6 @@ export class UpdateEventComponent implements OnInit {
         : 'No';
     this.updateEventForm.patchValue({ isPrivate });
 
-    // this.updateEventForm.patchValue({
-    //   dateTime: new Date(
-    //     this.updateEventForm.get('dateTime')?.value as string
-    //   ).toLocaleString(),
-    // });
     this.eventsService
       .updateEvent(
         this.updateEventForm.value as IEvent,
