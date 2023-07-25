@@ -10,15 +10,20 @@ export class EventsService {
   private _events: IEvent[] = [];
   public isModalCreateVisible = false;
   public modalCreateStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
-
   public isModalUpdateVisible = false;
-  public modalUpdateStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
+  public modalUpdateStatus: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
   private selectedEvent: BehaviorSubject<IEvent | null> =
     new BehaviorSubject<IEvent | null>(null);
+  private headers!: HttpHeaders;
 
   constructor(private readonly http: HttpClient) {
+    this.headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
     this.getEvents().subscribe();
   }
+
   getSelectedEvent(): Observable<IEvent | null> {
     return this.selectedEvent.asObservable();
   }
@@ -31,11 +36,10 @@ export class EventsService {
   }
 
   getEvents() {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-    });
     return this.http
-      .get<IEvent[]>('http://localhost:4000/api/events', { headers })
+      .get<IEvent[]>('http://localhost:4000/api/events', {
+        headers: this.headers,
+      })
       .pipe(
         tap((events: IEvent[]) => {
           this._events = events;
@@ -43,12 +47,15 @@ export class EventsService {
       );
   }
 
+  get isUpdateModalVisible(): Observable<boolean> {
+    return this.modalUpdateStatus.asObservable();
+  }
+
   createEvent(event: IEvent) {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-    });
     return this.http
-      .post('http://localhost:4000/api/events', event, { headers })
+      .post('http://localhost:4000/api/events', event, {
+        headers: this.headers,
+      })
       .pipe(
         tap((event) => {
           this.getEvents().subscribe();
@@ -60,11 +67,10 @@ export class EventsService {
   }
 
   updateEvent(event: IEvent, id: string) {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-    });
     return this.http
-      .patch(`http://localhost:4000/api/events/${id}`, event, { headers })
+      .patch(`http://localhost:4000/api/events/${id}`, event, {
+        headers: this.headers,
+      })
       .pipe(
         tap((event) => {
           this.getEvents().subscribe();
@@ -76,11 +82,10 @@ export class EventsService {
   }
 
   deleteEvent(eventId: string) {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-    });
     return this.http
-      .delete(`http://localhost:4000/api/events/${eventId}`, { headers })
+      .delete(`http://localhost:4000/api/events/${eventId}`, {
+        headers: this.headers,
+      })
       .pipe(
         tap((event) => {
           this.getEvents().subscribe();
@@ -99,7 +104,6 @@ export class EventsService {
 
   toggleUpdateModal() {
     this.isModalUpdateVisible = !this.isModalUpdateVisible;
-    this.modalUpdateStatus.emit(this.isModalUpdateVisible);
-    console.log(this.isModalUpdateVisible);
+    this.modalUpdateStatus.next(this.isModalUpdateVisible);
   }
 }

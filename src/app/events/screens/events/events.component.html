@@ -27,7 +27,7 @@
             <th style="min-width:15rem">
                 <div class="flex align-items-center">
                     Titulo
-                    <p-columnFilter type="text" field="title" display="menu" matchMode="contains"  [showMatchModes]="false" [showOperator]="false" [showAddButton]="false"></p-columnFilter>
+                    <p-columnFilter type="text" field="title" placeholder="Busca un titulo" display="menu" matchMode="contains"  [showMatchModes]="false" [showOperator]="false" [showAddButton]="false"></p-columnFilter>
                 </div>
             </th>
             <th style="min-width:15rem">
@@ -41,7 +41,7 @@
                     Estado
                         <p-columnFilter field="status" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-dropdown optionLabel="name" optionValue="value" [ngModel]="filterEventState" [options]="filterStateOption" (onChange)="filter($event.value)" placeholder="Any">
+                                <p-dropdown optionLabel="name" optionValue="value" [ngModel]="filterEventState" [options]="filterStateOption" (onChange)="filter($event.value)" placeholder="Busca por estado">
                                 </p-dropdown>
                             </ng-template>
                         </p-columnFilter>
@@ -52,7 +52,7 @@
                     Privado
                     <p-columnFilter field="isPrivate" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <p-dropdown optionLabel="name" optionValue="value" [ngModel]="filterEventIsPrivate" [options]="filterIsPrivateOption" (onChange)="filter($event.value)" placeholder="Any">
+                            <p-dropdown optionLabel="name" optionValue="value" [ngModel]="filterEventIsPrivate" [options]="filterIsPrivateOption" (onChange)="filter($event.value)" placeholder="Es privado?">
                             </p-dropdown>
                         </ng-template>
                     </p-columnFilter>
@@ -61,7 +61,7 @@
             <th style="min-width:10rem">
                 <div class="flex align-items-center">
                     Lugar
-                    <p-columnFilter field="place" matchMode="contains" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                    <p-columnFilter field="place" placeholder="Busca por lugar" matchMode="contains" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                     </p-columnFilter>
                 </div>
             </th>
@@ -75,7 +75,7 @@
                     Comunidad
                     <p-columnFilter field="community.name" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <p-dropdown optionLabel="name" optionValue="name" [ngModel]="filterEventCommunity" [options]="communities" (onChange)="filter($event.value)" placeholder="Any">
+                            <p-dropdown optionLabel="name" optionValue="name" [ngModel]="filterEventCommunity" [options]="communities" (onChange)="filter($event.value)" placeholder="Busca por comunidad">
                             </p-dropdown>
                         </ng-template>
                     </p-columnFilter>
@@ -98,7 +98,8 @@
                 {{ event.description }}
             </td>
             <td>
-                {{ event.status }}
+           
+                <p-tag [severity]=" event.status === 'Activo' ? 'success': 'danger' " [value]="event.status"></p-tag>
             </td>
             <td>
                 {{ event.isPrivate  }}
@@ -113,10 +114,9 @@
                 {{ event.community.name || 'No tiene comunidad' }}
             </td>
             <td class="flex gap-2">
-                <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-3 p-button-sm"  (click)="updateEvent(event)"></button>
-                <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-sm" (click)="deleteEvent(event)"></button>
+                <button pButton pRipple  type="button" icon="pi pi-pencil" class="p-button-rounded  p-button-primary p-mr-3 p-button-sm"  (click)="updateEvent(event)"></button>
+                <!-- <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-sm" (click)="deleteEvent(event)"></button> -->
             </td>
-            <app-update-event     />
         </tr>
         
     </ng-template>
@@ -126,6 +126,7 @@
         </tr>
     </ng-template>
 </p-table>
+<app-update-event     />
 <app-create-event      />
 <button pButton type="button" icon="pi pi-plus" class="p-button-rounded  p-button-primary md:p-5 sm:p-1  p-button-lg absolute bottom-0 right-0 mr-5 mb-5"  (click)="createEvent()"></button>
 </div>

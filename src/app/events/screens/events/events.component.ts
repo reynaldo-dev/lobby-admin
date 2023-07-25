@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
+import { CommunityService } from 'src/app/community-module/services/community.service';
 import { IEvent } from '../../interfaces/event.interface';
 import { EventsService } from '../../services/events.service';
-import { CommunityService } from 'src/app/community-module/services/community.service';
-import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-events',
@@ -40,10 +39,6 @@ export class EventsComponent {
     },
   ];
 
-  get communities() {
-    return this.communityService.communities;
-  }
-
   constructor(
     private eventsService: EventsService,
     private communityService: CommunityService
@@ -52,6 +47,9 @@ export class EventsComponent {
     this.eventsService.modalUpdateStatus.subscribe();
   }
 
+  get communities() {
+    return this.communityService.communities;
+  }
   get events(): IEvent[] {
     return this.eventsService.events;
   }
