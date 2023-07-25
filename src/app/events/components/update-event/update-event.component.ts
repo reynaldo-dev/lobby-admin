@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { CommunityService } from 'src/app/community-module/services/community.service';
 import { IEvent } from '../../interfaces/event.interface';
@@ -11,9 +11,16 @@ import { EventsService } from '../../services/events.service';
   styleUrls: ['./update-event.component.css'],
   providers: [MessageService],
 })
-export class UpdateEventComponent {
+export class UpdateEventComponent implements OnInit {
   public isModalUpdateOpen = false;
-  public updateEventForm: any;
+  public updateEventForm = this.fb.group({
+    title: ['', Validators.required],
+    description: ['', Validators.required],
+    status: ['', Validators.required],
+    isPrivate: ['', Validators.required],
+    place: ['', Validators.required],
+    communityId: ['', Validators.required],
+  });
   public selectedEventId: string | undefined;
 
   constructor(
@@ -28,20 +35,18 @@ export class UpdateEventComponent {
 
     this.eventsService.getSelectedEvent().subscribe((event) => {
       this.selectedEventId = event?.id;
-      this.updateEventForm = this.fb.group({
-        title: [event?.title, Validators.required],
-        description: [event?.description, Validators.required],
-        status: [event?.status, Validators.required],
-        isPrivate: [
-          event?.isPrivate === 'Si' ? true : false,
-          Validators.required,
-        ],
-        place: [event?.place, Validators.required],
-        dateTime: [new Date()],
-        communityId: [event?.communityId, Validators.required],
+      this.updateEventForm.patchValue({
+        title: event?.title,
+        description: event?.description,
+        status: event?.status,
+        isPrivate: event?.isPrivate,
+        place: event?.place,
+        communityId: event?.communityId,
       });
     });
   }
+
+  ngOnInit(): void {}
 
   get communities() {
     return this.communityService.communities;
@@ -58,11 +63,11 @@ export class UpdateEventComponent {
         : 'No';
     this.updateEventForm.patchValue({ isPrivate });
 
-    this.updateEventForm.patchValue({
-      dateTime: new Date(
-        this.updateEventForm.get('dateTime')?.value as string
-      ).toLocaleString(),
-    });
+    // this.updateEventForm.patchValue({
+    //   dateTime: new Date(
+    //     this.updateEventForm.get('dateTime')?.value as string
+    //   ).toLocaleString(),
+    // });
     this.eventsService
       .updateEvent(
         this.updateEventForm.value as IEvent,
@@ -80,5 +85,13 @@ export class UpdateEventComponent {
           this.messageService.add({ severity: 'error', summary: err });
         },
       });
+  }
+
+  formatDate(date: string) {
+    const [datePart, timePart] = date.split(', ');
+    const [day, month, year] = datePart.split('/');
+    const [hour, minute] = timePart.split(':');
+    const formatDate = new Date(`${month}/${day}/${year} ${hour}:${minute}`);
+    return formatDate;
   }
 }
