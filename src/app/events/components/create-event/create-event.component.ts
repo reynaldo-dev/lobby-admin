@@ -45,12 +45,6 @@ export class CreateEventComponent {
         : 'No';
     this.createEventForm.patchValue({ isPrivate });
 
-    this.createEventForm.patchValue({
-      dateTime: new Date(
-        this.createEventForm.get('dateTime')?.value as string
-      ).toLocaleString(),
-    });
-
     this.eventsService
       .createEvent(this.createEventForm.value as IEvent)
       .subscribe({
