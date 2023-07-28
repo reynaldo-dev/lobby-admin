@@ -1,0 +1,53 @@
+<p-dialog header="Header" [(visible)]="isModalCreateVisible" [style]="{ width: '50vw' }" (onHide)="closeModalCreate()"
+    [modal]="true" styleClass="h-screen">
+    <ng-template pTemplate="header">
+        <span class="text-xl font-bold">Crear un nuevo usuario</span>
+    </ng-template>
+
+
+    <div class="">
+        <form [formGroup]="createUserForm" class="grid gap-3">
+            <div class="col-12">
+                <span class="p-float-label w-full">
+                    <input pInputText id="name" formControlName="name" class="w-full" />
+                    <label htmlFor="name">Nombre</label>
+                </span>
+            </div>
+
+            <div class="col-12">
+                <span class="p-float-label w-full">
+                    <input pInputText id="lastname" formControlName="lastname" class="w-full" />
+                    <label htmlFor="lastname">Apellido</label>
+                </span>
+            </div>
+
+            <div class="col-12">
+                <span class="p-float-label w-full ">
+                    <input pInputText id="username" formControlName="email" class="w-full" />
+                    <label htmlFor="username">Correo electrónico</label>
+                </span>
+            </div>
+
+            <div class="col-12">
+                <span class="p-float-label w-full">
+                    <input type="password" pInputText id="password" formControlName="password" class="w-full" />
+                    <label htmlFor="password">Contraseña</label>
+                </span>
+            </div>
+
+            <div class="col-12">
+                <span class="p-float-label w-full">
+                    <p-dropdown [options]="roles" formControlName="rolId" optionLabel="role" optionValue="id"
+                        placeholder="Selecciona un rol" styleClass="w-full" inputId="rol"></p-dropdown>
+                    <label for="rol">Selecciona un rol</label>
+                </span>
+            </div>
+
+
+            <p-button (click)="createUser()" icon="pi pi-check" label="Crear" styleClass="p-button-text"></p-button>
+
+        </form>
+    </div>
+
+</p-dialog>
+<p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
