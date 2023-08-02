@@ -51,6 +51,34 @@
                 </span>
             </div>
 
+            <div class="col-12">
+                <span class="p-float-label w-full">
+                    <p-dropdown [options]="eventCategories" formControlName="eventCategoryId" optionLabel="name" optionValue="id" placeholder="Selecciona una categoría para este evento" styleClass="w-full"  inputId="eventCategory"></p-dropdown>
+                    <label for="eventCategory">Selecciona una categoríapara este evento</label>
+                </span>
+            </div>
+
+            <div class="col-12" >
+                <span class="p-float-label w-full">
+                    <p-inputNumber 
+                        inputId="locale-us" 
+                        locale="en-US" 
+                        id="score" 
+                        inputId="integeronly" 
+                        inputId="minmax" 
+                        [showButtons]="true" 
+                        inputId="minmax-buttons"  
+                        [min]="1" 
+                        [max]="100" 
+                        formControlName="score" 
+                        class="w-full" 
+                    />
+                    <label htmlFor="score">
+                        Puntaje
+                    </label>
+                </span>
+            </div>
+
             
                 <p-button (click)="updateEvent()" icon="pi pi-check"  label="Actualizar" styleClass="p-button-text"></p-button>
             

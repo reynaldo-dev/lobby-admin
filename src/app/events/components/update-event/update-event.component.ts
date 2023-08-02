@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { CommunityService } from 'src/app/community-module/services/community.service';
 import { IEvent } from '../../interfaces/event.interface';
 import { EventsService } from '../../services/events.service';
+import { EventsCategoryService } from 'src/app/events-category/services/events-category.service';
 
 @Component({
   selector: 'app-update-event',
@@ -21,6 +22,8 @@ export class UpdateEventComponent implements OnInit {
     place: ['', Validators.required],
     // dateTime: ['', Validators.required],
     communityId: ['', Validators.required],
+    eventCategoryId: ['', Validators.required],
+    score: [0, Validators.required],
   });
   public selectedEventId: string | undefined;
 
@@ -28,14 +31,14 @@ export class UpdateEventComponent implements OnInit {
     private eventsService: EventsService,
     private fb: FormBuilder,
     private communityService: CommunityService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private eventsCategoryService: EventsCategoryService
   ) {
     this.eventsService.isUpdateModalVisible.subscribe((modalStatus) => {
       this.isModalUpdateOpen = modalStatus;
     });
 
     this.eventsService.getSelectedEvent().subscribe((event) => {
-      console.log(event);
       this.selectedEventId = event?.id;
       this.updateEventForm.patchValue({
         title: event?.title,
@@ -45,6 +48,8 @@ export class UpdateEventComponent implements OnInit {
         place: event?.place,
         // dateTime: new Date(event?.dateTime).toDateString(),
         communityId: event?.communityId,
+        eventCategoryId: event?.eventCategoryId,
+        score: event?.score,
       });
     });
   }
@@ -53,6 +58,10 @@ export class UpdateEventComponent implements OnInit {
 
   get communities() {
     return this.communityService.communities;
+  }
+
+  get eventCategories() {
+    return this.eventsCategoryService.eventCategories;
   }
 
   closeModalUpdate() {
