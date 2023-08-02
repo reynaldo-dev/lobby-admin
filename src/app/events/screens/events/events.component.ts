@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommunityService } from 'src/app/community-module/services/community.service';
 import { IEvent } from '../../interfaces/event.interface';
 import { EventsService } from '../../services/events.service';
+import { EventsCategoryService } from 'src/app/events-category/services/events-category.service';
 
 @Component({
   selector: 'app-events',
@@ -14,6 +15,7 @@ export class EventsComponent {
   public filterEventState = '';
   public filterEventIsPrivate = '';
   public filterEventCommunity = '';
+  public filterEventCategory = '';
 
   public selectedEvent!: IEvent;
 
@@ -41,7 +43,8 @@ export class EventsComponent {
 
   constructor(
     private eventsService: EventsService,
-    private communityService: CommunityService
+    private communityService: CommunityService,
+    private eventsCategoryService: EventsCategoryService
   ) {
     this.eventsService.modalCreateStatus.subscribe();
     this.eventsService.modalUpdateStatus.subscribe();
@@ -52,6 +55,10 @@ export class EventsComponent {
   }
   get events(): IEvent[] {
     return this.eventsService.events;
+  }
+
+  get eventCategories() {
+    return this.eventsCategoryService.eventCategories;
   }
 
   createEvent() {

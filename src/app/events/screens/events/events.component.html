@@ -42,7 +42,7 @@
                     Categoría
                         <p-columnFilter field="eventCategory.name" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-dropdown optionLabel="name" optionValue="value" [ngModel]="filterEventState" [options]="filterStateOption" (onChange)="filter($event.value)" placeholder="Busca por categoría">
+                                <p-dropdown optionLabel="name" optionValue="name" [ngModel]="filterEventCategory" [options]="eventCategories" (onChange)="filter($event.value)" placeholder="Busca por categoría">
                                 </p-dropdown>
                             </ng-template>
                         </p-columnFilter>

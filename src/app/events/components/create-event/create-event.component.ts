@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { IEvent } from '../../interfaces/event.interface';
 import { MessageService } from 'primeng/api';
 import { CommunityService } from 'src/app/community-module/services/community.service';
+import { EventsCategoryService } from 'src/app/events-category/services/events-category.service';
 
 @Component({
   selector: 'app-create-event',
@@ -14,28 +15,35 @@ import { CommunityService } from 'src/app/community-module/services/community.se
 export class CreateEventComponent {
   public isModalCreateVisible = false;
   public createEventForm = this.fb.group({
-    title: ['Evento numero 4', Validators.required],
-    description: ['Descripcion del evento 4', Validators.required],
+    title: ['', Validators.required],
+    description: ['', Validators.required],
     status: ['Activo'],
     isPrivate: ['No'],
     place: ['Santa Ana', Validators.required],
     dateTime: ['', Validators.required],
-    communityId: [''],
+    communityId: ['', Validators.required],
+    eventCategoryId: ['', Validators.required],
+    score: [0, Validators.required],
   });
-
-  get communities() {
-    return this.communityService.communities;
-  }
 
   constructor(
     private eventsService: EventsService,
     private fb: FormBuilder,
     private messageService: MessageService,
-    private communityService: CommunityService
+    private communityService: CommunityService,
+    private eventsCategoryService: EventsCategoryService
   ) {
     this.eventsService.modalCreateStatus.subscribe((modalStatus) => {
       this.isModalCreateVisible = modalStatus;
     });
+  }
+
+  get communities() {
+    return this.communityService.communities;
+  }
+
+  get eventCategories() {
+    return this.eventsCategoryService.eventCategories;
   }
 
   createEvent() {

@@ -23,6 +23,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
   declarations: [],
@@ -51,6 +52,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     CalendarModule,
     CheckboxModule,
     MultiSelectModule,
+    InputNumberModule,
   ],
   exports: [
     ButtonModule,
@@ -76,6 +78,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     CalendarModule,
     CheckboxModule,
     MultiSelectModule,
+    InputNumberModule,
   ],
 })
 export class PrimeNgModule {}
