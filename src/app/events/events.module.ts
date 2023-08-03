@@ -30,6 +30,7 @@ import { UpdateEventComponent } from './components/update-event/update-event.com
     EventCardComponent,
     CreateEventComponent,
     UpdateEventComponent,
+    EventCardComponent,
   ],
 })
 export class EventsModule {}

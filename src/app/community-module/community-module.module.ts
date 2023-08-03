@@ -6,6 +6,7 @@ import { CommunityComponent } from './screens/community/community.component';
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 import { FormsModule } from '@angular/forms';
 import { CommunityCardComponent } from './components/community-card/community-card.component';
+import { EventsModule } from '../events/events.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,7 @@ import { CommunityCardComponent } from './components/community-card/community-ca
     CommunityComponent,
     CommunityCardComponent,
   ],
-  imports: [CommonModule, PrimeNgModule, FormsModule],
+  imports: [CommonModule, PrimeNgModule, FormsModule, EventsModule],
   exports: [
     CommunitiesPageComponent,
     CommunityComponent,
