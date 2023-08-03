@@ -7,4 +7,6 @@ export interface ICommunities {
   color: string;
   createdAt: string;
   users: any[];
+  Event: any[];
+  membersCount: number;
 }
