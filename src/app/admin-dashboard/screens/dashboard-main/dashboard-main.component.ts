@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { CommunityService } from 'src/app/community-module/services/community.service';
+import { EventsCategoryService } from 'src/app/events-category/services/events-category.service';
+import { EventsService } from 'src/app/events/services/events.service';
 
 @Component({
   selector: 'app-dashboard-main',
@@ -18,8 +21,16 @@ export class DashboardMainComponent implements OnInit {
 
   constructor(
     private messageService: MessageService,
-    private communityService: CommunityService
-  ) {}
+    private communityService: CommunityService,
+    private authService: AuthService,
+    private eventsService: EventsService
+  ) {
+    this.eventsService.modalCreateStatus.subscribe();
+  }
+
+  get user() {
+    return this.authService.user;
+  }
 
   ngOnInit(): void {
     this.items = [
@@ -33,10 +44,18 @@ export class DashboardMainComponent implements OnInit {
       {
         label: 'Evento',
         icon: 'pi pi-calendar-plus',
+        command: () => {
+          this.createEvent();
+        },
       },
     ];
     this.communityService.getCommunities().subscribe();
   }
+
+  createEvent() {
+    this.eventsService.toggleCreateModal();
+  }
+
   saveCommunity() {
     const payload = {
       name: this.nameValue,

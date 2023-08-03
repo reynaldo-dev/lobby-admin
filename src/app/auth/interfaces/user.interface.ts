@@ -4,8 +4,10 @@ export interface LoginResponse {
 }
 
 export interface User {
+  id: string;
   email: string;
   name: string;
   role: string;
   isActive: boolean;
+  lastname: string;
 }

@@ -24,6 +24,12 @@ import { UpdateEventComponent } from './components/update-event/update-event.com
     FormsModule,
     ReactiveFormsModule,
   ],
-  exports: [EventsComponent, EventComponent, EventCardComponent],
+  exports: [
+    EventsComponent,
+    EventComponent,
+    EventCardComponent,
+    CreateEventComponent,
+    UpdateEventComponent,
+  ],
 })
 export class EventsModule {}
