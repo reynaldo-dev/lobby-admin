@@ -1,0 +1,113 @@
+<h3 class="text-500 mt-5">Tickets de Asistencia</h3>
+
+<div class="mt-7">
+    <p-table #dt1 [value]="tickets" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10,20,30]" [loading]="loading" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [globalFilterFields]="['user.name', 'user.email', 'event.title']">
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" [placeholder]="'Buscar tickets'" [(ngModel)]="filter"
+                        (input)="dt1.filterGlobal(filter, 'contains')" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Nombre de funcionario
+                        <p-columnFilter type="text" field="user.name" placeholder="Busca por nombre" display="menu"
+                            matchMode="contains" [showMatchModes]="false" [showOperator]="false"
+                            [showAddButton]="false"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Email
+                        <p-columnFilter type="text" field="user.email" placeholder="Busca por email" display="menu"
+                            matchMode="contains" [showMatchModes]="false" [showOperator]="false"
+                            [showAddButton]="false"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Nombre del evento
+                        <p-columnFilter type="text" field="event.title" placeholder="Busca por evento" display="menu"
+                            matchMode="contains" [showMatchModes]="false" [showOperator]="false"
+                            [showAddButton]="false"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width:10rem">
+                    <div class="flex align-items-center">
+                        Acciones
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-ticket>
+            <tr>
+                <td>
+                    {{ ticket.user.name }} {{ticket.user.lastname}}
+                </td>
+                <td>
+                    {{ ticket.user.email }}
+                </td>
+                <td>
+                    {{ ticket.event.title }}
+                </td>
+                <td class="flex gap-2">
+                    <button pButton pRipple type="button" icon="pi pi-eye"
+                        class="p-button-rounded  p-button-primary p-mr-3 p-button-sm"
+                        (click)="openDialog(ticket)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="4">Tickets de asistencia no encontrados.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <p-dialog [(visible)]="isDialogOpen" [modal]="true" [closable]="true" [style]="{width: '70vw'}" [baseZIndex]="10000"
+        header="Detalles del Ticket">
+        <div *ngIf="selectedTicket" class="grid">
+
+            <div class="col-6">
+                <h4 class="mb-3">Información del Usuario</h4>
+                <div class="mb-3"><span class="font-bold">Nombre:</span> {{ selectedTicket.user.name }}
+                    {{selectedTicket.user.lastname}}</div>
+                <div class="mb-3"><span class="font-bold">Email:</span> {{ selectedTicket.user.email }}</div>
+                <div class="mb-3"><span class="font-bold">Fecha de Creación:</span> {{ selectedTicket.user.createdAt
+                    |
+                    date:'dd/MM/yyyy HH:mm' }}
+                </div>
+            </div>
+
+
+            <div class="col-6">
+                <h4 class="mb-3">Información del Evento</h4>
+                <div class="mb-3"><span class="font-bold">Título:</span> {{ selectedTicket.event.title }}</div>
+                <div class="mb-3"><span class="font-bold">Descripción:</span> {{ selectedTicket.event.description }}
+                </div>
+                <div class="mb-3"><span class="font-bold">Fecha y Hora:</span> {{ selectedTicket.event.dateTime |
+                    date:'dd/MM/yyyy HH:mm' }}</div>
+                <div class="mb-3"><span class="font-bold">Lugar:</span> {{ selectedTicket.event.place }}</div>
+                <div class="mb-3">
+                    <span class="font-bold">Estado:</span> {{ selectedTicket.event.status }}
+                </div>
+                <div>
+                    <span class="font-bold">Puntaje:</span> {{ selectedTicket.event.score ? selectedTicket.event.score
+                    : '0' }}
+                </div>
+            </div>
+        </div>
+
+        <p-footer>
+            <button pButton type="button" label="Cerrar" icon="pi pi-times" (click)="isDialogOpen = false"></button>
+        </p-footer>
+
+    </p-dialog>
+</div>

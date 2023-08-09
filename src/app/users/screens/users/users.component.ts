@@ -43,7 +43,7 @@ export class UsersComponent implements OnInit {
 
   openUpdateModal(user: UserData): void {
     this.selectedUser = user;
-    this.usersService.setSelectedUser(user); // Añade esta línea
+    this.usersService.setSelectedUser(user);
     this.usersService.toggleUpdateModal(true);
   }
 }

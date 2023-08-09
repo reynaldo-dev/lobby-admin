@@ -40,7 +40,7 @@ export class SideBarComponent {
     {
       name: 'Cupones',
       icon: 'pi pi-ticket mr-4',
-      path: '/auth/login',
+      path: '/dashboard/cupones',
     },
   ];
 
