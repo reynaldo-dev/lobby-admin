@@ -54,7 +54,6 @@ export class EventsComponent {
     return this.communityService.communities;
   }
   get events(): IEvent[] {
-    console.log(this.eventsService.events);
     return this.eventsService.events;
   }
 
