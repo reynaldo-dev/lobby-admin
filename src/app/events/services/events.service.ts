@@ -8,6 +8,7 @@ import { IEvent } from '../interfaces/event.interface';
 })
 export class EventsService {
   private _events: IEvent[] = [];
+  private _eventsAtDate: IEvent[] = [];
   public isModalCreateVisible = false;
   public modalCreateStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
   public isModalUpdateVisible = false;
@@ -23,6 +24,7 @@ export class EventsService {
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     });
     this.getEvents().subscribe();
+    this.getEventsAtDate(new Date().toISOString()).subscribe();
   }
 
   getSelectedEvent(): Observable<IEvent> {
@@ -36,6 +38,10 @@ export class EventsService {
     return this._events;
   }
 
+  get eventsAtDate(): IEvent[] {
+    return this._eventsAtDate;
+  }
+
   getEvents() {
     return this.http
       .get<IEvent[]>('http://localhost:4000/api/events', {
@@ -44,6 +50,25 @@ export class EventsService {
       .pipe(
         tap((events: IEvent[]) => {
           this._events = events;
+        })
+      );
+  }
+
+  getEventsAtDate(date: string) {
+    return this.http
+      .get<IEvent[]>(
+        `http://localhost:4000/api/events/at-date?fromDate=${date}`,
+        {
+          headers: this.headers,
+        }
+      )
+      .pipe(
+        tap((events: IEvent[]) => {
+          this._eventsAtDate = events;
+        }),
+        catchError((err) => {
+          console.log(err);
+          return throwError(() => err.error.message);
         })
       );
   }
