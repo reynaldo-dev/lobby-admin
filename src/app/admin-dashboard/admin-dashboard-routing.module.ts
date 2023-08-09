@@ -8,6 +8,7 @@ import { CommunityComponent } from '../community-module/screens/community/commun
 import { EventsComponent } from '../events/screens/events/events.component';
 import { EventComponent } from '../events/screens/event/event.component';
 import { UsersComponent } from '../users/screens/users/users.component';
+import { TicketsComponent } from '../tickets/screens/tickets/tickets.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,11 @@ const routes: Routes = [
         path: 'eventos/:id',
         canActivate: [authGuard],
         component: EventComponent,
+      },
+      {
+        path: 'cupones',
+        canActivate: [authGuard],
+        component: TicketsComponent,
       },
     ],
   },

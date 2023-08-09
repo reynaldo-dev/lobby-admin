@@ -1,159 +1,170 @@
+<h3 class="text-500 mt-5">Eventos</h3>
 
-<h3 class="text-500 mt-5" >Eventos</h3>
+<div class="mt-7 bg-primary">
+    <p-table #dt1 [value]="events" dataKey="id" [rows]="3" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[3,10,20]" [loading]="loading" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [globalFilterFields]="['title', 'community.name', 'place']">
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" [placeholder]="'titulo, comunidad, lugar'" [(ngModel)]="filter"
+                        (input)="dt1.filterGlobal(filter, 'contains')" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Titulo
+                        <p-columnFilter type="text" field="title" placeholder="Busca un titulo" display="menu"
+                            matchMode="contains" [showMatchModes]="false" [showOperator]="false"
+                            [showAddButton]="false"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Descripcion
+                    </div>
+                </th>
 
-<div class="mt-7 bg-primary"  >
-    <p-table
-    #dt1
-    [value]="events"
-    dataKey="id"
-    [rows]="3"
-    [showCurrentPageReport]="true"
-    [rowsPerPageOptions]="[3,10,20]"
-    [loading]="loading"
-    [paginator]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [globalFilterFields]="['title', 'community.name', 'place']"
->
-    <ng-template pTemplate="caption">
-        <div class="flex">
-            <span class="p-input-icon-left ml-auto">
-                <i class="pi pi-search"></i>
-                <input pInputText type="text" [placeholder]="'titulo, comunidad, lugar'" [(ngModel)]="filter" (input)="dt1.filterGlobal(filter, 'contains')" />
-            </span>
-        </div>
-    </ng-template>
-    <ng-template pTemplate="header">
-        <tr>
-            <th style="min-width:15rem">
-                <div class="flex align-items-center">
-                    Titulo
-                    <p-columnFilter type="text" field="title" placeholder="Busca un titulo" display="menu" matchMode="contains"  [showMatchModes]="false" [showOperator]="false" [showAddButton]="false"></p-columnFilter>
-                </div>
-            </th>
-            <th style="min-width:15rem">
-                <div class="flex align-items-center">
-                    Descripcion
-                </div>
-            </th>
 
-            
-            <th style="min-width:15rem">
-                <div class="flex align-items-center">
-                    Categoría
-                        <p-columnFilter field="eventCategory.name" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                <th style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Categoría
+                        <p-columnFilter field="eventCategory.name" matchMode="equals" display="menu"
+                            [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-dropdown optionLabel="name" optionValue="name" [ngModel]="filterEventCategory" [options]="eventCategories" (onChange)="filter($event.value)" placeholder="Busca por categoría">
+                                <p-dropdown optionLabel="name" optionValue="name" [ngModel]="filterEventCategory"
+                                    [options]="eventCategories" (onChange)="filter($event.value)"
+                                    placeholder="Busca por categoría">
                                 </p-dropdown>
                             </ng-template>
                         </p-columnFilter>
-                </div>
-            </th>
+                    </div>
+                </th>
 
-            <th style="min-width:15rem">
-                <div class="flex align-items-center">
-                    Puntaje
-                </div>
-            </th>
+                <th style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Puntaje
+                    </div>
+                </th>
 
-            <th style="min-width:15rem">
-                <div class="flex align-items-center">
-                    Estado
-                        <p-columnFilter field="status" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                <th style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Estado
+                        <p-columnFilter field="status" matchMode="equals" display="menu" [showMatchModes]="false"
+                            [showOperator]="false" [showAddButton]="false">
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-dropdown optionLabel="name" optionValue="value" [ngModel]="filterEventState" [options]="filterStateOption" (onChange)="filter($event.value)" placeholder="Busca por estado">
+                                <p-dropdown optionLabel="name" optionValue="value" [ngModel]="filterEventState"
+                                    [options]="filterStateOption" (onChange)="filter($event.value)"
+                                    placeholder="Busca por estado">
                                 </p-dropdown>
                             </ng-template>
                         </p-columnFilter>
-                </div>
-            </th>
-            <th style="min-width:10rem">
-                <div class="flex align-items-center">
-                    Privado
-                    <p-columnFilter field="isPrivate" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <p-dropdown optionLabel="name" optionValue="value" [ngModel]="filterEventIsPrivate" [options]="filterIsPrivateOption" (onChange)="filter($event.value)" placeholder="Es privado?">
-                            </p-dropdown>
-                        </ng-template>
-                    </p-columnFilter>
-                </div>
-            </th>
-            <th style="min-width:10rem">
-                <div class="flex align-items-center">
-                    Lugar
-                    <p-columnFilter field="place" placeholder="Busca por lugar" matchMode="contains" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                    </p-columnFilter>
-                </div>
-            </th>
-            <th style="min-width:10rem">
-                <div class="flex align-items-center">
-                    Fecha/Hora
-                </div>
-            </th>
-            <th style="min-width:10rem">
-                <div class="flex align-items-center">
-                    Comunidad
-                    <p-columnFilter field="community.name" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <p-dropdown optionLabel="name" optionValue="name" [ngModel]="filterEventCommunity" [options]="communities" (onChange)="filter($event.value)" placeholder="Busca por comunidad">
-                            </p-dropdown>
-                        </ng-template>
-                    </p-columnFilter>
-                </div>
-            </th>
-            <th style="min-width:10rem">
-                <div class="flex align-items-center">
-                    Acciones
-                </div>
-            </th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-event>
-        <tr>
-            <td>
-                {{ event.title }}
-            </td>
-        
-            <td>
-                {{ event.description }}
-            </td>
-            <td>
-                {{ event.eventCategory.name }}
-            </td>
-            <td class="">
-                <div class="custom-td w-fit border-round-lg px-2" >
-                    <span class=" text-primary ">{{ event.score }} pts</span>
-                </div>
-              </td>
-            <td>
-                <p-tag [severity]=" event.status === 'Activo' ? 'success': 'danger' " [value]="event.status"></p-tag>
-            </td>
-            <td>
-                {{ event.isPrivate  }}
-            </td>
-            <td>
-                {{ event.place }}
-            </td>
-            <td>
-                {{ event.dateTime | date:'dd/MM/yyyy hh:mm' }}
-            </td>
-            <td>
-                {{ event.community.name || 'No tiene comunidad' }}
-            </td>
-            <td class="flex gap-2">
-                <button pButton pRipple  type="button" icon="pi pi-pencil" class="p-button-rounded  p-button-primary p-mr-3 p-button-sm"  (click)="updateEvent(event)"></button>
-                <!-- <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-sm" (click)="deleteEvent(event)"></button> -->
-            </td>
-        </tr>
-        
-    </ng-template>
-    <ng-template pTemplate="emptymessage">
-        <tr>
-            <td colspan="7">No customers found.</td>
-        </tr>
-    </ng-template>
-</p-table>
-<app-update-event     />
-<app-create-event      />
-<button pButton type="button" icon="pi pi-plus" class="p-button-rounded  p-button-primary md:p-5 sm:p-1  p-button-lg absolute bottom-0 right-0 mr-5 mb-5"  (click)="createEvent()"></button>
+                    </div>
+                </th>
+                <th style="min-width:10rem">
+                    <div class="flex align-items-center">
+                        Privado
+                        <p-columnFilter field="isPrivate" matchMode="equals" display="menu" [showMatchModes]="false"
+                            [showOperator]="false" [showAddButton]="false">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-dropdown optionLabel="name" optionValue="value" [ngModel]="filterEventIsPrivate"
+                                    [options]="filterIsPrivateOption" (onChange)="filter($event.value)"
+                                    placeholder="Es privado?">
+                                </p-dropdown>
+                            </ng-template>
+                        </p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width:10rem">
+                    <div class="flex align-items-center">
+                        Lugar
+                        <p-columnFilter field="place" placeholder="Busca por lugar" matchMode="contains" display="menu"
+                            [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                        </p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width:10rem">
+                    <div class="flex align-items-center">
+                        Fecha/Hora
+                    </div>
+                </th>
+                <th style="min-width:10rem">
+                    <div class="flex align-items-center">
+                        Comunidad
+                        <p-columnFilter field="community.name" matchMode="equals" display="menu"
+                            [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-dropdown optionLabel="name" optionValue="name" [ngModel]="filterEventCommunity"
+                                    [options]="communities" (onChange)="filter($event.value)"
+                                    placeholder="Busca por comunidad">
+                                </p-dropdown>
+                            </ng-template>
+                        </p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width:10rem">
+                    <div class="flex align-items-center">
+                        Acciones
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-event>
+            <tr>
+                <td>
+                    {{ event.title }}
+                </td>
+
+                <td>
+                    {{ event.description }}
+                </td>
+                <td>
+                    {{ event.eventCategory.name }}
+                </td>
+                <td class="">
+                    <div class="custom-td w-fit border-round-lg px-2">
+                        <span class=" text-primary ">{{ event.score }} pts</span>
+                    </div>
+                </td>
+                <td>
+                    <p-tag [severity]=" event.status === 'Activo' ? 'success': 'danger' " [value]="event.status">
+                    </p-tag>
+                </td>
+                <td>
+                    {{ event.isPrivate }}
+                </td>
+                <td>
+                    {{ event.place }}
+                </td>
+                <td>
+                    {{ event.dateTime | date:'dd/MM/yyyy hh:mm' }}
+                </td>
+                <td>
+                    {{ event.community.name || 'No tiene comunidad' }}
+                </td>
+                <td class="flex gap-2">
+                    <button pButton pRipple type="button" icon="pi pi-pencil"
+                        class="p-button-rounded  p-button-primary p-mr-3 p-button-sm"
+                        (click)="updateEvent(event)"></button>
+                    <!-- <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-sm" (click)="deleteEvent(event)"></button> -->
+                </td>
+            </tr>
+
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="7">No customers found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <app-update-event />
+    <app-create-event />
+    <button pButton type="button" icon="pi pi-plus"
+        class="p-button-rounded  p-button-primary md:p-5 sm:p-1  p-button-lg absolute bottom-0 right-0 mr-5 mb-5"
+        (click)="createEvent()"></button>
 </div>
-

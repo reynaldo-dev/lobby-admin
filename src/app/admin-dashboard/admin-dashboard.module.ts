@@ -12,6 +12,7 @@ import { CommunitiesCarouselComponent } from './components/communities-carousel/
 import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { DashboardLayoutComponent } from './layout/dashboard-layout/dashboard-layout.component';
 import { DashboardMainComponent } from './screens/dashboard-main/dashboard-main.component';
+import { TicketsModule } from '../tickets/tickets.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { DashboardMainComponent } from './screens/dashboard-main/dashboard-main.
     FormsModule,
     EventsModule,
     UsersModule,
+    TicketsModule,
   ],
 })
 export class AdminDashboardModule {}
