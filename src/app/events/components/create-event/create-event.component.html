@@ -7,6 +7,15 @@
 
     <div class="">
         <form [formGroup]="createEventForm" class="grid gap-3" >
+
+            <div class="col-12">
+                <span class="p-float-label w-full">
+                    <p-dropdown (onChange)="changeCreateEventForm($event )" [options]="eventCategories" formControlName="eventCategoryId" optionLabel="name" optionValue="id" placeholder="Selecciona una categoría para este evento" styleClass="w-full"  inputId="eventCategory"></p-dropdown>
+                    <label for="eventCategory">Selecciona una categoríapara este evento</label>
+                </span>
+            </div>
+
+
             <div class="col-12" >
                 <span class="p-float-label w-full ">
                     <input pInputText id="username" formControlName="title" class="w-full" />
@@ -25,12 +34,19 @@
                 <p-checkbox [binary]="true" label="El evento será privado?" formControlName="isPrivate"></p-checkbox>
             </div>
 
-            <div class="col-12" >
-                <span class="p-float-label w-full">
-                    <input pInputText id="username" formControlName="place" class="w-full" />
-                    <label htmlFor="username">Lugar</label>
-                </span>
+            <div class="col-12">
+                    <span class="p-float-label w-full">
+                        <input pInputText id="place" formControlName="place" class="w-full" />
+                        <label for="place">Lugar</label>
+                    </span>
             </div>
+
+            <div class="col-12">
+                <span class="p-float-label w-full">
+                    <input pInputText id="link" formControlName="link" class="w-full" />
+                    <label for="link">Link</label>
+                </span>
+        </div>
 
             <div class="col-6 flex gap-3 justiy-content-center align-items-center" >
                 <p-calendar [showSeconds]="false"  formControlName="dateTime" [showTime]="true" placeholder="Fecha y Hora" ></p-calendar>
@@ -44,12 +60,7 @@
                 </span>
             </div>
 
-            <div class="col-12">
-                <span class="p-float-label w-full">
-                    <p-dropdown [options]="eventCategories" formControlName="eventCategoryId" optionLabel="name" optionValue="id" placeholder="Selecciona una categoría para este evento" styleClass="w-full"  inputId="eventCategory"></p-dropdown>
-                    <label for="eventCategory">Selecciona una categoríapara este evento</label>
-                </span>
-            </div>
+          
 
             <div class="col-12" >
                 <span class="p-float-label w-full">

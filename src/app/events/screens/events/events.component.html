@@ -48,6 +48,12 @@
 
                 <th style="min-width:15rem">
                     <div class="flex align-items-center">
+                        Link
+                    </div>
+                </th>
+
+                <th style="min-width:15rem">
+                    <div class="flex align-items-center">
                         Puntaje
                     </div>
                 </th>
@@ -126,6 +132,11 @@
                 <td>
                     {{ event.eventCategory.name }}
                 </td>
+                <td [class]=" event.link ? 'text-primary' : 'text-400' " >
+                    <a *ngIf="event.link" [href]="event.link">{{event.link}}</a>
+                    <p *ngIf="!event.link" >No aplica</p>
+                </td>
+
                 <td class="">
                     <div class="custom-td w-fit border-round-lg px-2">
                         <span class=" text-primary ">{{ event.score }} pts</span>
@@ -138,8 +149,9 @@
                 <td>
                     {{ event.isPrivate }}
                 </td>
-                <td>
-                    {{ event.place }}
+                <td [class]=" event.place ? 'text-primary' : 'text-400' " >
+                    <p *ngIf="event.place" >{{ event.place }}</p>
+                    <p *ngIf="!event.place" >No aplica</p>
                 </td>
                 <td>
                     {{ event.dateTime | date:'dd/MM/yyyy hh:mm' }}

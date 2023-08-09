@@ -1,10 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { EventsService } from '../../services/events.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { IEvent } from '../../interfaces/event.interface';
 import { MessageService } from 'primeng/api';
 import { CommunityService } from 'src/app/community-module/services/community.service';
 import { EventsCategoryService } from 'src/app/events-category/services/events-category.service';
+import { DropdownChangeEvent } from 'primeng/dropdown';
+
+interface IEventForm {
+  title: FormControl<string | null>;
+  description: FormControl<string | null>;
+  status: FormControl<string | null>;
+  isPrivate: FormControl<string | null>;
+  dateTime: FormControl<string | null>;
+  communityId: FormControl<string | null>;
+  eventCategoryId: FormControl<string | null>;
+  score: FormControl<number | null>;
+  place?: FormControl<string | null>;
+  link?: FormControl<string | null>;
+}
 
 @Component({
   selector: 'app-create-event',
@@ -17,13 +36,14 @@ export class CreateEventComponent {
   public createEventForm = this.fb.group({
     title: ['', Validators.required],
     description: ['', Validators.required],
-    status: ['Activo'],
-    isPrivate: ['No'],
-    place: ['Santa Ana', Validators.required],
+    status: ['', Validators.required],
+    isPrivate: ['', Validators.required],
     dateTime: ['', Validators.required],
     communityId: ['', Validators.required],
     eventCategoryId: ['', Validators.required],
-    score: [0, Validators.required],
+    score: ['', Validators.required],
+    place: ['', Validators.required],
+    link: ['', Validators.required],
   });
 
   constructor(
@@ -46,6 +66,26 @@ export class CreateEventComponent {
     return this.eventsCategoryService.eventCategories;
   }
 
+  public changeCreateEventForm = (event: DropdownChangeEvent) => {
+    const { value } = event;
+    const category = this.eventCategories.find(
+      (category) => category.id === value
+    );
+
+    if (category.name === 'Presencial') {
+      this.createEventForm.get('link')?.disable();
+      this.createEventForm.get('place')?.enable();
+
+      return;
+    }
+
+    if (category.name === 'Virtual') {
+      this.createEventForm.get('place')?.disable();
+      this.createEventForm.get('link')?.enable();
+      return;
+    }
+  };
+
   createEvent() {
     const isPrivate =
       this.createEventForm.get('isPrivate')?.value?.toString() === 'true'
@@ -53,21 +93,19 @@ export class CreateEventComponent {
         : 'No';
     this.createEventForm.patchValue({ isPrivate });
 
-    this.eventsService
-      .createEvent(this.createEventForm.value as IEvent)
-      .subscribe({
-        next: (res) => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Evento creado',
-          });
-          this.createEventForm.reset();
-        },
+    this.eventsService.createEvent(this.createEventForm.value).subscribe({
+      next: (res) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Evento creado',
+        });
+        this.createEventForm.reset();
+      },
 
-        error: (err) => {
-          this.messageService.add({ severity: 'error', summary: err });
-        },
-      });
+      error: (err) => {
+        this.messageService.add({ severity: 'error', summary: err });
+      },
+    });
   }
 
   closeModalCreate() {

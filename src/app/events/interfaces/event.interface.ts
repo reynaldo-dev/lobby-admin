@@ -7,10 +7,11 @@ export interface IEvent {
   status: string;
   isPrivate: string;
   createdAt: string;
-  place: string;
+  place?: string;
   communityId: string;
   score: number;
   dateTime: string;
+  link?: string;
   eventCategoryId: string;
   community: Community;
   Consumable: any[];

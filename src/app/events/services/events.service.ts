@@ -77,7 +77,7 @@ export class EventsService {
     return this.modalUpdateStatus.asObservable();
   }
 
-  createEvent(event: IEvent) {
+  createEvent(event: any) {
     return this.http
       .post('http://localhost:4000/api/events', event, {
         headers: this.headers,
