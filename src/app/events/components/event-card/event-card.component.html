@@ -1,33 +1,33 @@
-<div class="border-round-3xl  relative border-1 p-3 " [style]="{'border-color': communityColor}"  >
+<div class="border-round-3xl  relative border-1 p-3 mt-4" [style]="{'border-color': communityColor}"  >
     <div class="absolute top-0 left-0 bottom-0 border-round-left-3xl w-3rem" [style]="{'background-color': communityColor}">
     </div>
     <div class="flex flex-row justify-content-between  gap-2 ml-6">
         <div class="flex flex-column" >
             <p class="text-center" [style]=" { 'color': communityColor} " >
-                {{event.title}}
+                {{event?.title}}
             </p>
          
                 <p-chip  icon="pi pi-calendar" styleClass="mt-2" >
-                    {{event.dateTime | date: 'dd/MM/yyyy HH:mm' }}
+                    {{event?.dateTime | date: 'dd/MM/yyyy HH:mm' }}
                 </p-chip>
           
         </div>
         <div class="flex gap-1 justify-content-center align-items-center" >
             <i class="pi pi-map-marker" style="font-size: 1rem"></i>
             <span>
-                {{event.place}}
+                {{event?.place}}
             </span>
         </div>
         <div class="flex gap-1 justify-content-center align-items-center" >
-            <p-tag [severity]="event.status == 'Activo' ? 'success' : 'danger' ">
-                {{event.status}}
+            <p-tag [severity]="event?.status == 'Activo' ? 'success' : 'danger' ">
+                {{event?.status}}
             </p-tag>
         </div>
 
 
         <div class="flex gap-1 justify-content-center align-items-center" >
             <span>
-                {{event.score}}
+                {{event?.score}}
             </span>
             <i class="pi pi-star-fill"  [style]="{'font-size': '1rem', 'color' : communityColor}"></i>
         </div>

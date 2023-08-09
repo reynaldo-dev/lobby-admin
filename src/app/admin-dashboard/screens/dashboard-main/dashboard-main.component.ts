@@ -3,6 +3,7 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CommunityService } from 'src/app/community-module/services/community.service';
 import { EventsCategoryService } from 'src/app/events-category/services/events-category.service';
+import { IEvent } from 'src/app/events/interfaces/event.interface';
 import { EventsService } from 'src/app/events/services/events.service';
 
 @Component({
@@ -30,6 +31,14 @@ export class DashboardMainComponent implements OnInit {
 
   get user() {
     return this.authService.user;
+  }
+
+  get events(): IEvent[] {
+    return this.eventsService.events;
+  }
+
+  get eventsAtDate(): IEvent[] {
+    return this.eventsService.eventsAtDate;
   }
 
   ngOnInit(): void {

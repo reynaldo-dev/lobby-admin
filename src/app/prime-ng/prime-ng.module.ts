@@ -24,6 +24,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { ScrollerModule } from 'primeng/scroller';
 
 @NgModule({
   declarations: [],
@@ -53,6 +54,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
     CheckboxModule,
     MultiSelectModule,
     InputNumberModule,
+    ScrollerModule,
   ],
   exports: [
     ButtonModule,
@@ -79,6 +81,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
     CheckboxModule,
     MultiSelectModule,
     InputNumberModule,
+    ScrollerModule,
   ],
 })
 export class PrimeNgModule {}
