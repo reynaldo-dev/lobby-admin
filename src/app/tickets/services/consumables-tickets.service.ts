@@ -12,7 +12,7 @@ import {
 export class ConsumablesTicketsService {
   private _consumables = new BehaviorSubject<IConsumableData[]>([]);
   private headers!: HttpHeaders;
-  private readonly baseUrl = 'http://localhost:4000/api/consumables';
+  private readonly baseUrl = 'http://localhost:4000/api/consumables-tickets';
   public selectedConsumable = new BehaviorSubject<IConsumableData | null>(null);
 
   public isDialogOpen = new BehaviorSubject<boolean>(false);

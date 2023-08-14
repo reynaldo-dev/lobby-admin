@@ -13,6 +13,30 @@ export class AssistanceTicketsComponent {
   isDialogOpen = false;
   public loading: boolean = false;
   public filter = '';
+  public filterTicketState = '';
+  public filterTicketWasPresent = '';
+
+  public filterStateOption = [
+    {
+      name: 'Activo',
+      value: true,
+    },
+    {
+      name: 'Inactivo',
+      value: false,
+    },
+  ];
+
+  public filterWasPresentOption = [
+    {
+      name: 'Si',
+      value: true,
+    },
+    {
+      name: 'No',
+      value: false,
+    },
+  ];
 
   constructor(private assistanceTicketsService: AssistanceTicketsService) {}
 

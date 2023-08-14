@@ -1,10 +1,71 @@
 import { Component } from '@angular/core';
+import { IConsumableData } from '../../interfaces/consumable.interface';
+import { ConsumablesTicketsService } from '../../services/consumables-tickets.service';
 
 @Component({
   selector: 'app-consumables-tickets',
   templateUrl: './consumables-tickets.component.html',
-  styleUrls: ['./consumables-tickets.component.css']
+  styleUrls: ['./consumables-tickets.component.css'],
 })
 export class ConsumablesTicketsComponent {
+  consumables: IConsumableData[] = [];
+  selectedConsumable: IConsumableData | null = null;
+  isDialogOpen = false;
+  public loading: boolean = false;
+  public filter = '';
+  public filterEventState = '';
+  public filterWasConsumed = '';
 
+  public filterStateOption = [
+    {
+      name: 'Activo',
+      value: true,
+    },
+    {
+      name: 'Inactivo',
+      value: false,
+    },
+  ];
+
+  public filterWasConsumedOption = [
+    {
+      name: 'Si',
+      value: true,
+    },
+    {
+      name: 'No',
+      value: false,
+    },
+  ];
+
+  constructor(private consumablesTicketsService: ConsumablesTicketsService) {}
+
+  ngOnInit(): void {
+    this.consumablesTicketsService.consumables$.subscribe(
+      (consumables: IConsumableData[]) => {
+        this.consumables = consumables;
+      }
+    );
+
+    this.consumablesTicketsService.isDialogOpen.subscribe(
+      (isVisible: boolean) => {
+        console.log('Dialog should be:', isVisible);
+
+        this.isDialogOpen = isVisible;
+      }
+    );
+  }
+
+  isActiveToString(isActive: boolean): string {
+    return isActive ? 'Activo' : 'Inactivo';
+  }
+
+  openDialog(consumable: IConsumableData): void {
+    this.selectedConsumable = consumable;
+    this.consumablesTicketsService.toggleDialogDetails(true);
+  }
+
+  closeDialog(): void {
+    this.consumablesTicketsService.toggleDialogDetails(false);
+  }
 }

@@ -79,6 +79,7 @@ export class UpdateUserComponent {
             summary: 'Usuario actualizado',
           });
           this.updateUserForm.reset();
+          this.closeModalUpdate();
         },
         error: (err) => {
           this.messageService.add({ severity: 'error', summary: err });

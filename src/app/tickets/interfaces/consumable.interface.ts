@@ -6,6 +6,7 @@ export interface IConsumable {
 export interface IConsumableData {
   id: string;
   isActive: boolean;
+  isConsumed: boolean;
   createdAt: Date;
   eventId: string;
   userId: string;
