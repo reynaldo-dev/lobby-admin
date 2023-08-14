@@ -6,14 +6,17 @@ export interface IAssistance {
 export interface IAssistanceData {
   id: string;
   isActive: boolean;
+  wasPresent: boolean;
+  scannedAt: null;
   createdAt: Date;
   eventId: string;
   userId: string;
-  user: IUser;
-  event: IEvent;
+  qrCodeId: null;
+  user: User;
+  event: Event;
 }
 
-export interface IEvent {
+export interface Event {
   id: string;
   title: string;
   description: string;
@@ -22,12 +25,13 @@ export interface IEvent {
   createdAt: Date;
   place: string;
   communityId: string;
-  score: null;
+  link: null;
+  score: number;
   dateTime: Date;
-  eventCategoryId: null;
+  eventCategoryId: string;
 }
 
-export interface IUser {
+export interface User {
   id: string;
   isActive: boolean;
   email: string;
