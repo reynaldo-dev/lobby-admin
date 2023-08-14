@@ -3,7 +3,7 @@
 <div class="mt-7 bg-primary">
     <p-table #dt1 [value]="events" dataKey="id" [rows]="3" [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[3,10,20]" [loading]="loading" [paginator]="true"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros"
         [globalFilterFields]="['title', 'community.name', 'place']">
         <ng-template pTemplate="caption">
             <div class="flex">
@@ -24,11 +24,7 @@
                             [showAddButton]="false"></p-columnFilter>
                     </div>
                 </th>
-                <th style="min-width:15rem">
-                    <div class="flex align-items-center">
-                        Descripcion
-                    </div>
-                </th>
+               
 
 
                 <th style="min-width:15rem">
@@ -122,14 +118,12 @@
         </ng-template>
         <ng-template pTemplate="body" let-event>
             <tr>
-                <td>
+                <td class="text-500">
                     {{ event.title }}
                 </td>
 
-                <td>
-                    {{ event.description }}
-                </td>
-                <td>
+               
+                <td class="text-500">
                     {{ event.eventCategory.name }}
                 </td>
                 <td [class]=" event.link ? 'text-primary' : 'text-400' " >
@@ -146,17 +140,17 @@
                     <p-tag [severity]=" event.status === 'Activo' ? 'success': 'danger' " [value]="event.status">
                     </p-tag>
                 </td>
-                <td>
+                <td class="text-500">
                     {{ event.isPrivate }}
                 </td>
                 <td [class]=" event.place ? 'text-primary' : 'text-400' " >
                     <p *ngIf="event.place" >{{ event.place }}</p>
                     <p *ngIf="!event.place" >No aplica</p>
                 </td>
-                <td>
+                <td class="text-500">
                     {{ event.dateTime | date:'dd/MM/yyyy hh:mm' }}
                 </td>
-                <td>
+                <td class="text-500">
                     {{ event.community.name || 'No tiene comunidad' }}
                 </td>
                 <td class="flex gap-2">
@@ -170,7 +164,7 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td colspan="7">No customers found.</td>
+                <td colspan="7 text-500">No se encontraron eventos</td>
             </tr>
         </ng-template>
     </p-table>

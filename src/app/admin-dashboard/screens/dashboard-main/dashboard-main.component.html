@@ -2,7 +2,7 @@
     <div class="col-6 flex justify-content-center alignt-items-center mt-4">
         <span class="p-input-icon-left w-full ">
             <i class="pi pi-search"></i>
-            <input type="text" class="w-full" pInputText [(ngModel)]="searchValue" (keyup.enter)="onKey()" />
+            <input type="text" class="w-full border-none" pInputText [(ngModel)]="searchValue" (keyup.enter)="onKey()" />
         </span>
     </div>
     <div class="col-6 flex  align-items-end flex-column justify-content-center ">
@@ -59,7 +59,7 @@
     <app-communities-carousel />
     <div>
         <div class="w-8">
-            <h1 class="my-4 ">Proximos eventos</h1>
+            <h1 class="my-4 text-500 text-md">Proximos eventos</h1>
             <!-- <div class="col-12" *ngFor="let event of events" >
                 <app-event-card [communityColor]="event.community.color" [event]="event" />
             </div> -->

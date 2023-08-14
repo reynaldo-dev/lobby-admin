@@ -1,6 +1,6 @@
-<section class="cards-grid">
+<section class="grid">
 
-    <div *ngFor="let community of communities" class="m-2 w-full  d-flex justify-content-center">
+    <div *ngFor="let community of communities" class="md:col-3 col-12">
        <app-community-card [community]="community" />
     </div>
 

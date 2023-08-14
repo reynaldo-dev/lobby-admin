@@ -24,7 +24,7 @@
     <!-- eventos -->
     <h3 class="mt-5" >Eventos</h3>
     <div class="grid mt-2"  >
-        <div class="col-12" *ngFor="let event of community.Event" >
+        <div class="col-12" *ngFor="let event of community?.Event" >
             <app-event-card [communityColor]="community.color" [event]="event" />
         </div>
     </div>

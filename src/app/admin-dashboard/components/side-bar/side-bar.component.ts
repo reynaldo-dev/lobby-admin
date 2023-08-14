@@ -1,17 +1,18 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { DashboardService } from '../../services/dashboard.service';
+import { AllowedRoles } from 'src/app/auth/roles/AllowedRoles';
 
 @Component({
   selector: 'app-side-bar',
   templateUrl: './side-bar.component.html',
   styleUrls: ['./side-bar.component.css'],
 })
-export class SideBarComponent {
+export class SideBarComponent implements OnInit {
   @Input()
   isVisible: boolean = false;
 
-  public routes = [
+  public adminRoutes = [
     {
       name: 'Inicio',
       icon: 'pi pi-home mr-4',
@@ -44,10 +45,45 @@ export class SideBarComponent {
     },
   ];
 
+  public sponsorRoutes = [
+    {
+      name: 'Inicio',
+      icon: 'pi pi-home mr-4',
+      path: '/dashboard/inicio',
+    },
+    {
+      name: 'Eventos',
+      icon: 'pi pi-calendar-plus mr-4',
+      path: '/dashboard/eventos',
+    },
+  ];
+
+  public routes = [
+    {
+      name: 'Eventos',
+      icon: 'pi pi-calendar-plus mr-4',
+      path: '/dashboard/eventos',
+    },
+  ];
+
   constructor(
     private authService: AuthService,
     private dashboardService: DashboardService
   ) {}
+
+  ngOnInit(): void {
+    if (this.authState.user.role === AllowedRoles.ADMIN) {
+      this.routes = this.adminRoutes;
+    }
+
+    if (this.authState.user.role === AllowedRoles.SPONSOR) {
+      this.routes = this.sponsorRoutes;
+    }
+  }
+
+  get authState() {
+    return this.authService.authState;
+  }
 
   handleToggleMenu() {
     this.dashboardService.handleToggleMenu();

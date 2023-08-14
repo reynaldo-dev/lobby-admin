@@ -71,9 +71,11 @@
             </tr>
         </ng-template>
     </p-table>
+
+
     <p-dialog [(visible)]="isDialogOpen" [modal]="true" [closable]="true" [style]="{width: '70vw'}" [baseZIndex]="10000"
         header="Detalles del Ticket">
-        <div *ngIf="selectedTicket" class="grid">
+        <div *ngIf="selectedTicket" class="grid ">
 
             <div class="col-6">
                 <h4 class="mb-3">Información del Usuario</h4>
