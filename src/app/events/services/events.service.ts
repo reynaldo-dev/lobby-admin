@@ -85,6 +85,7 @@ export class EventsService {
       .pipe(
         tap((event) => {
           this.getEvents().subscribe();
+          this.getEventsAtDate(new Date().toISOString()).subscribe();
         }),
         catchError((err) => {
           return throwError(() => err.error.message);
