@@ -1,1 +1,5 @@
 
+.overlay-calendar {
+    position: absolute;
+    z-index: 9999; /* Un valor alto para asegurarse de que esté por encima de otros elementos */
+  }

@@ -11,9 +11,7 @@ export class CommunityService {
 
   private _community: ICommunities | any = {};
 
-  constructor(private http: HttpClient) {
-    this.getCommunities().subscribe();
-  }
+  constructor(private http: HttpClient) {}
 
   get communities() {
     return this._communities;

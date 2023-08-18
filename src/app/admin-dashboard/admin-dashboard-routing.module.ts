@@ -10,6 +10,7 @@ import { TicketsComponent } from '../tickets/screens/tickets/tickets.component';
 import { UsersComponent } from '../users/screens/users/users.component';
 import { DashboardLayoutComponent } from './layout/dashboard-layout/dashboard-layout.component';
 import { DashboardMainComponent } from './screens/dashboard-main/dashboard-main.component';
+import { roleGuard } from '../auth/guards/role-guard.guard';
 
 const routes: Routes = [
   {
@@ -22,7 +23,6 @@ const routes: Routes = [
         data: {
           expectedRole: [AllowedRoles.ADMIN, AllowedRoles.SPONSOR],
         },
-
         component: DashboardMainComponent,
       },
       {
@@ -62,7 +62,7 @@ const routes: Routes = [
         path: 'eventos/:id',
         canActivate: [authGuard],
         data: {
-          expectedRole: [AllowedRoles.ADMIN],
+          expectedRole: [AllowedRoles.ADMIN, AllowedRoles.SPONSOR],
         },
         component: EventComponent,
       },

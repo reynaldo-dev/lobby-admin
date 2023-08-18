@@ -21,7 +21,6 @@ export class AssistanceTicketsService {
     this.headers = new HttpHeaders({
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     });
-    this.init();
   }
 
   private handleError(error: any) {

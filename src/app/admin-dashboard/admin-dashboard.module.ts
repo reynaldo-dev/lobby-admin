@@ -13,6 +13,7 @@ import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { DashboardLayoutComponent } from './layout/dashboard-layout/dashboard-layout.component';
 import { DashboardMainComponent } from './screens/dashboard-main/dashboard-main.component';
 import { TicketsModule } from '../tickets/tickets.module';
+import { AppCommonModule } from '../common/common.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { TicketsModule } from '../tickets/tickets.module';
   ],
   imports: [
     CommonModule,
+    AppCommonModule,
     AdminDashboardRoutingModule,
     CommunityModule,
     AuthModule,

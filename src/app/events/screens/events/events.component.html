@@ -1,5 +1,9 @@
 <h3 class="text-500 mt-5">Eventos</h3>
 
+<div class="col-12 mt-5">
+    <app-events-stats [asLink]="false" [activeEvents]="activeEventsCount" [inactiveEvents]="inactiveEventsCount"  />
+</div>
+
 <div class="mt-7 bg-primary">
     <p-table #dt1 [value]="events" dataKey="id" [rows]="3" [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[3,10,20]" [loading]="loading" [paginator]="true"

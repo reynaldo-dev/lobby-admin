@@ -1,0 +1,24 @@
+<div class="grid gap-2 mb-2">
+    <div class="col-4 bg-primary border-round-lg flex justify-content-between">
+        <div class="m-2 flex gap-2">
+            <span class="font-bold text-xl text-white">{{activeEvents}}</span>
+            <p>Eventos Activos</p>
+        </div>
+        
+        <a *ngIf="asLink" class="align-self-end text-white" routerLink="/dashboard/eventos">
+            <i class="pi pi-chevron-right "></i>
+        </a>
+    </div>
+
+    <div class="col-4 bg-primary border-round-lg flex justify-content-between">
+        <div class="m-2 flex gap-2">
+            <span class="font-bold text-xl text-white  ">{{inactiveEvents}}</span>
+            <p>Eventos Finalizados</p>
+        </div>
+
+
+        <a *ngIf="asLink" class="align-self-end text-white" routerLink="/dashboard/eventos" >
+            <i class="pi pi-chevron-right "></i>
+        </a>
+    </div>
+</div>

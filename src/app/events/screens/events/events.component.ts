@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommunityService } from 'src/app/community-module/services/community.service';
 import { IEvent } from '../../interfaces/event.interface';
 import { EventsService } from '../../services/events.service';
@@ -9,7 +9,7 @@ import { EventsCategoryService } from 'src/app/events-category/services/events-c
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.css'],
 })
-export class EventsComponent {
+export class EventsComponent implements OnInit {
   public loading: boolean = false;
   public filter = '';
   public filterEventState = '';
@@ -48,6 +48,21 @@ export class EventsComponent {
   ) {
     this.eventsService.modalCreateStatus.subscribe();
     this.eventsService.modalUpdateStatus.subscribe();
+  }
+  ngOnInit(): void {
+    this.eventsService.getEvents().subscribe();
+    this.communityService.getCommunities().subscribe();
+    this.eventsCategoryService.getEventCategories().subscribe();
+    this.eventsService.getInActiveEventsCount().subscribe();
+    this.eventsService.getActiveEventsCount().subscribe();
+  }
+
+  get inactiveEventsCount(): number {
+    return this.eventsService.inactiveEvents;
+  }
+
+  get activeEventsCount(): number {
+    return this.eventsService.activeEvents;
   }
 
   get communities() {

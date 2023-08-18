@@ -1,15 +1,6 @@
-import { Injectable, inject } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  CanActivateFn,
-  Router,
-  RouterStateSnapshot,
-  UrlTree,
-} from '@angular/router';
-import { Observable } from 'rxjs';
+import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { MessageService } from 'primeng/api';
 
 export const roleGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
@@ -20,5 +11,6 @@ export const roleGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
+  router.navigate(['/dashboard/inicio']);
   return false;
 };

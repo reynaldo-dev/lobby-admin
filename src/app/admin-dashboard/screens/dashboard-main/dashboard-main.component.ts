@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
+import { AllowedRoles } from 'src/app/auth/roles/AllowedRoles';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CommunityService } from 'src/app/community-module/services/community.service';
 import { EventsCategoryService } from 'src/app/events-category/services/events-category.service';
@@ -16,7 +17,9 @@ export class DashboardMainComponent implements OnInit {
   public searchValue: string | undefined;
   public nameValue: string | undefined;
   public descriptionValue: string | undefined;
+
   public items: MenuItem[] | [] = [];
+
   public visible: boolean = false;
   public color: string = '#ffffff';
 
@@ -41,24 +44,49 @@ export class DashboardMainComponent implements OnInit {
     return this.eventsService.eventsAtDate;
   }
 
+  get activeEventsCount(): number {
+    return this.eventsService.activeEvents;
+  }
+
+  get inactiveEventsCount(): number {
+    return this.eventsService.inactiveEvents;
+  }
+
   ngOnInit(): void {
-    this.items = [
-      {
-        label: 'Comunidad',
-        icon: 'pi pi-users',
-        command: () => {
-          this.toggleDialog();
-        },
-      },
-      {
-        label: 'Evento',
-        icon: 'pi pi-calendar-plus',
-        command: () => {
-          this.createEvent();
-        },
-      },
-    ];
     this.communityService.getCommunities().subscribe();
+    this.eventsService.getEventsAtDate(new Date().toISOString()).subscribe();
+    this.eventsService.getInActiveEventsCount().subscribe();
+    this.eventsService.getActiveEventsCount().subscribe();
+    if (this.authService.authState.user.role === AllowedRoles.SPONSOR) {
+      this.items = [
+        {
+          label: 'Evento',
+          icon: 'pi pi-calendar-plus',
+          command: () => {
+            this.createEvent();
+          },
+        },
+      ];
+    }
+
+    if (this.authService.authState.user.role === AllowedRoles.ADMIN) {
+      this.items = [
+        {
+          label: 'Comunidad',
+          icon: 'pi pi-users',
+          command: () => {
+            this.toggleDialog();
+          },
+        },
+        {
+          label: 'Evento',
+          icon: 'pi pi-calendar-plus',
+          command: () => {
+            this.createEvent();
+          },
+        },
+      ];
+    }
   }
 
   createEvent() {

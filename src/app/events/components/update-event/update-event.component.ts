@@ -17,12 +17,10 @@ export class UpdateEventComponent implements OnInit {
   public updateEventForm = this.fb.group({
     title: ['', Validators.required],
     description: ['', Validators.required],
-    status: ['', Validators.required],
     isPrivate: ['', Validators.required],
     place: ['', Validators.required],
     // dateTime: ['', Validators.required],
     communityId: ['', Validators.required],
-    eventCategoryId: ['', Validators.required],
     score: [0, Validators.required],
   });
   public selectedEventId: string | undefined;
@@ -43,12 +41,10 @@ export class UpdateEventComponent implements OnInit {
       this.updateEventForm.patchValue({
         title: event?.title,
         description: event?.description,
-        status: event?.status,
         isPrivate: event?.isPrivate,
         place: event?.place,
         // dateTime: new Date(event?.dateTime).toDateString(),
         communityId: event?.communityId,
-        eventCategoryId: event?.eventCategoryId,
         score: event?.score,
       });
     });

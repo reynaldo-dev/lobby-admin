@@ -2,11 +2,11 @@
     <div class="col-6 flex justify-content-center alignt-items-center mt-4">
         <span class="p-input-icon-left w-full ">
             <i class="pi pi-search"></i>
-            <input type="text" class="w-full border-none" pInputText [(ngModel)]="searchValue" (keyup.enter)="onKey()" />
+            <input type="text" class="w-full border" pInputText [(ngModel)]="searchValue" (keyup.enter)="onKey()" />
         </span>
     </div>
     <div class="col-6 flex  align-items-end flex-column justify-content-center ">
-        <div class="flex justify-content-center align-items-center flex-column" >
+        <div class="flex justify-content-center align-items-center gap-2" >
             <h5 class="text-600">
                 {{user?.name}}
                 {{user?.lastname}} 
@@ -20,6 +20,8 @@
     </div>
 
 </div>
+
+
 
 <!-- create new community dialog -->
 <div>
@@ -55,18 +57,21 @@
 <!-- create event dialog -->
 <app-create-event />
 
-<div>
+<div class="col-12">
+    <app-events-stats [asLink]="true" [activeEvents]="activeEventsCount" [inactiveEvents]="inactiveEventsCount"  />
     <app-communities-carousel />
     <div>
         <div class="w-8">
-            <h1 class="my-4 text-500 text-md">Proximos eventos</h1>
+            <h2 class="mt-4 text-500 ">Proximos eventos</h2>
             <!-- <div class="col-12" *ngFor="let event of events" >
                 <app-event-card [communityColor]="event.community.color" [event]="event" />
             </div> -->
 
-            <p-scroller [items]="eventsAtDate" [itemSize]="70" scrollHeight="400px" styleClass=" col-12" >
-                <ng-template pTemplate="event" let-event let-options="options">
-                <app-event-card [communityColor]="event.community.color" [event]="event" />
+            <p-scroller [items]="eventsAtDate" [itemSize]="70" scrollHeight="400px"  styleClass="col-12" >
+                <ng-template pTemplate="event" let-event let-options="options" >
+                    <a routerLink="/dashboard/eventos" style="text-decoration: none;">
+                        <app-event-card [communityColor]="event.community.color" [event]="event" />
+                    </a>
                 </ng-template>
             </p-scroller>
         </div>

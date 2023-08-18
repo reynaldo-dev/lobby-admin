@@ -8,6 +8,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventCardComponent } from './components/event-card/event-card.component';
 import { CreateEventComponent } from './components/create-event/create-event.component';
 import { UpdateEventComponent } from './components/update-event/update-event.component';
+import { AdminDashboardModule } from '../admin-dashboard/admin-dashboard.module';
+import { AppCommonModule } from '../common/common.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { UpdateEventComponent } from './components/update-event/update-event.com
   ],
   imports: [
     CommonModule,
+    AppCommonModule,
     EventsRoutingModule,
     PrimeNgModule,
     FormsModule,

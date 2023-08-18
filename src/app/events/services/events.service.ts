@@ -9,6 +9,8 @@ import { IEvent } from '../interfaces/event.interface';
 export class EventsService {
   private _events: IEvent[] = [];
   private _eventsAtDate: IEvent[] = [];
+  private _activeEvents!: number;
+  private _inactiveEvents!: number;
   public isModalCreateVisible = false;
   public modalCreateStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
   public isModalUpdateVisible = false;
@@ -23,8 +25,6 @@ export class EventsService {
     this.headers = new HttpHeaders({
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     });
-    this.getEvents().subscribe();
-    this.getEventsAtDate(new Date().toISOString()).subscribe();
   }
 
   getSelectedEvent(): Observable<IEvent> {
@@ -40,6 +40,18 @@ export class EventsService {
 
   get eventsAtDate(): IEvent[] {
     return this._eventsAtDate;
+  }
+
+  get activeEvents(): number {
+    return this._activeEvents;
+  }
+
+  get inactiveEvents(): number {
+    return this._inactiveEvents;
+  }
+
+  get isUpdateModalVisible(): Observable<boolean> {
+    return this.modalUpdateStatus.asObservable();
   }
 
   getEvents() {
@@ -65,16 +77,49 @@ export class EventsService {
       .pipe(
         tap((events: IEvent[]) => {
           this._eventsAtDate = events;
+          console.log('events', events);
         }),
         catchError((err) => {
-          console.log(err);
+          console.log('err', err);
           return throwError(() => err.error.message);
         })
       );
   }
 
-  get isUpdateModalVisible(): Observable<boolean> {
-    return this.modalUpdateStatus.asObservable();
+  getActiveEventsCount() {
+    return this.http
+      .get<{ activeEvents: number }>(
+        `http://localhost:4000/api/events/active-events`,
+        {
+          headers: this.headers,
+        }
+      )
+      .pipe(
+        tap((data) => {
+          this._activeEvents = data.activeEvents;
+        }),
+        catchError((err) => {
+          return throwError(() => err.error.message);
+        })
+      );
+  }
+
+  getInActiveEventsCount() {
+    return this.http
+      .get<{ inactiveEvents: number }>(
+        `http://localhost:4000/api/events/inactive-events`,
+        {
+          headers: this.headers,
+        }
+      )
+      .pipe(
+        tap((data) => {
+          this._inactiveEvents = data.inactiveEvents;
+        }),
+        catchError((err) => {
+          return throwError(() => err.error.message);
+        })
+      );
   }
 
   createEvent(event: any) {
@@ -132,5 +177,10 @@ export class EventsService {
   toggleUpdateModal() {
     this.isModalUpdateVisible = !this.isModalUpdateVisible;
     this.modalUpdateStatus.next(this.isModalUpdateVisible);
+  }
+
+  clearEvents() {
+    this._events = [];
+    this._eventsAtDate = [];
   }
 }

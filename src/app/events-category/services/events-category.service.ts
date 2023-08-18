@@ -12,7 +12,6 @@ export class EventsCategoryService {
     this.headers = new HttpHeaders({
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     });
-    this.getEventCategories().subscribe();
   }
 
   get eventCategories() {

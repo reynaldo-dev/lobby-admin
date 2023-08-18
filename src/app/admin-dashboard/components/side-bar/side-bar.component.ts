@@ -33,11 +33,7 @@ export class SideBarComponent implements OnInit {
       icon: 'pi pi-users mr-4',
       path: '/dashboard/comunidades',
     },
-    {
-      name: 'Reconocimientos',
-      icon: 'pi pi-star mr-4',
-      path: '/auth/login',
-    },
+
     {
       name: 'Cupones',
       icon: 'pi pi-ticket mr-4',
