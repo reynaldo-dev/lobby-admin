@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IAssistanceData } from '../../interfaces/assistance.interface';
 import { AssistanceTicketsService } from '../../services/assistance-tickets.service';
+import { PdfMakerService } from 'src/app/common/services/pdf-maker.service';
 
 @Component({
   selector: 'app-assistance-tickets',
@@ -38,7 +39,10 @@ export class AssistanceTicketsComponent {
     },
   ];
 
-  constructor(private assistanceTicketsService: AssistanceTicketsService) {}
+  constructor(
+    private assistanceTicketsService: AssistanceTicketsService,
+    private pdfMakerService: PdfMakerService
+  ) {}
 
   ngOnInit(): void {
     this.assistanceTicketsService.tickets$.subscribe(
@@ -49,8 +53,6 @@ export class AssistanceTicketsComponent {
 
     this.assistanceTicketsService.isDialogOpen.subscribe(
       (isVisible: boolean) => {
-        console.log('Dialog should be:', isVisible);
-
         this.isDialogOpen = isVisible;
       }
     );
@@ -63,5 +65,8 @@ export class AssistanceTicketsComponent {
 
   closeDialog(): void {
     this.assistanceTicketsService.toggleDialogDetails(false);
+  }
+  downloadReport(): void {
+    this.pdfMakerService.generatePdf();
   }
 }

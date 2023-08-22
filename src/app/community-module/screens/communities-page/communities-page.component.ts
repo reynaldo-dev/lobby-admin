@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommunityService } from '../../services/community.service';
 
 @Component({
@@ -6,13 +6,15 @@ import { CommunityService } from '../../services/community.service';
   templateUrl: './communities-page.component.html',
   styleUrls: ['./communities-page.component.css'],
 })
-export class CommunitiesPageComponent {
+export class CommunitiesPageComponent implements OnInit {
   searchValue: string | undefined;
 
   constructor(private communityService: CommunityService) {}
+  ngOnInit(): void {
+    this.communityService.getCommunities().subscribe();
+  }
 
   get communities() {
-    // console.log(this.communityService.communities);
     return this.communityService.communities;
   }
   onKey() {

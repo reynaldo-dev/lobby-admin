@@ -2,11 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { IEvent } from '../interfaces/event.interface';
+import { IEventDetails } from '../interfaces/event-details.interface';
+import { IEventAssistanceConfirmation } from '../interfaces/event-assistance-confirmation.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventsService {
+  private _event!: IEventDetails;
   private _events: IEvent[] = [];
   private _eventsAtDate: IEvent[] = [];
   private _activeEvents!: number;
@@ -20,6 +23,8 @@ export class EventsService {
     {} as IEvent
   );
   private headers!: HttpHeaders;
+
+  private _eventAssistanceConfirmation!: IEventAssistanceConfirmation;
 
   constructor(private readonly http: HttpClient) {
     this.headers = new HttpHeaders({
@@ -54,6 +59,14 @@ export class EventsService {
     return this.modalUpdateStatus.asObservable();
   }
 
+  get event(): IEventDetails {
+    return this._event;
+  }
+
+  get eventAssistanceConfirmation(): IEventAssistanceConfirmation {
+    return this._eventAssistanceConfirmation;
+  }
+
   getEvents() {
     return this.http
       .get<IEvent[]>('http://localhost:4000/api/events', {
@@ -62,6 +75,21 @@ export class EventsService {
       .pipe(
         tap((events: IEvent[]) => {
           this._events = events;
+        })
+      );
+  }
+
+  getEventById(eventId: string) {
+    return this.http
+      .get<IEventDetails>(`http://localhost:4000/api/events/${eventId}`, {
+        headers: this.headers,
+      })
+      .pipe(
+        tap((event) => {
+          this._event = event;
+        }),
+        catchError((err) => {
+          return throwError(() => err.error.message);
         })
       );
   }
@@ -77,7 +105,6 @@ export class EventsService {
       .pipe(
         tap((events: IEvent[]) => {
           this._eventsAtDate = events;
-          console.log('events', events);
         }),
         catchError((err) => {
           console.log('err', err);
@@ -115,6 +142,24 @@ export class EventsService {
       .pipe(
         tap((data) => {
           this._inactiveEvents = data.inactiveEvents;
+        }),
+        catchError((err) => {
+          return throwError(() => err.error.message);
+        })
+      );
+  }
+
+  getAssistanceConfirmation(eventId: string) {
+    return this.http
+      .get<IEventAssistanceConfirmation>(
+        `http://localhost:4000/api/assistance-tickets/confirmations/${eventId}`,
+        {
+          headers: this.headers,
+        }
+      )
+      .pipe(
+        tap((data) => {
+          this._eventAssistanceConfirmation = data;
         }),
         catchError((err) => {
           return throwError(() => err.error.message);

@@ -1,5 +1,5 @@
 
-<div class="border-round-3xl  relative border-1 p-3 mt-4 bg-white mx-8" routerLink="./eventos" [style]="{'border-color': communityColor}" >
+<div class="border-round-3xl  relative border-1 p-3 mt-4 bg-white mx-8 border-200" [routerLink]="['/dashboard/eventos', event.id]"  >
     <div class="absolute top-0 left-0 bottom-0 border-round-left-3xl w-3rem" [style]="{'background-color': communityColor}">
     </div>
     <div class="flex flex-row justify-content-between  gap-2 ml-6">
@@ -31,7 +31,7 @@
 
 
         <div class="flex gap-1 justify-content-center align-items-center" >
-            <span>
+            <span class="text-500">
                 {{event?.score}}
             </span>
             <i class="pi pi-star-fill"  [style]="{'font-size': '1rem', 'color' : communityColor}"></i>

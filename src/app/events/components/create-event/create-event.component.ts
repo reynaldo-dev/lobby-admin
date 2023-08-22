@@ -1,4 +1,4 @@
-import { Component, effect } from '@angular/core';
+import { Component, OnInit, effect } from '@angular/core';
 import { EventsService } from '../../services/events.service';
 import {
   FormBuilder,
@@ -31,20 +31,22 @@ interface IEventForm {
   styleUrls: ['./create-event.component.css'],
   providers: [MessageService],
 })
-export class CreateEventComponent {
+export class CreateEventComponent implements OnInit {
+  public isVirtual = false;
   public isModalCreateVisible = false;
   public createEventForm = this.fb.group({
     title: ['', Validators.required],
     description: ['', Validators.required],
-    status: ['', Validators.required],
-    isPrivate: ['', Validators.required],
+    isPrivate: [''],
     dateTime: ['', Validators.required],
     communityId: ['', Validators.required],
     eventCategoryId: ['', Validators.required],
     score: ['', Validators.required],
-    place: ['', Validators.required],
-    link: ['', Validators.required],
+    place: [''],
+    link: [''],
   });
+
+  public isLoading: boolean = false;
 
   constructor(
     private eventsService: EventsService,
@@ -56,6 +58,9 @@ export class CreateEventComponent {
     this.eventsService.modalCreateStatus.subscribe((modalStatus) => {
       this.isModalCreateVisible = modalStatus;
     });
+  }
+  ngOnInit(): void {
+    this.eventsCategoryService.getEventCategories().subscribe();
   }
 
   get communities() {
@@ -73,39 +78,56 @@ export class CreateEventComponent {
     );
 
     if (category.name === 'Presencial') {
-      this.createEventForm.get('link')?.disable();
-      this.createEventForm.get('place')?.enable();
-
+      this.createEventForm.get('link')?.reset();
+      this.createEventForm.get('link')?.clearValidators();
+      this.createEventForm.get('link')?.updateValueAndValidity();
+      this.createEventForm.get('place')?.setValidators(Validators.required);
+      this.createEventForm.get('place')?.updateValueAndValidity();
+      this.isVirtual = false;
       return;
     }
 
     if (category.name === 'Virtual') {
-      this.createEventForm.get('place')?.disable();
-      this.createEventForm.get('link')?.enable();
+      this.createEventForm.get('place')?.reset();
+      this.createEventForm.get('place')?.clearValidators();
+      this.createEventForm.get('place')?.updateValueAndValidity();
+      this.createEventForm.get('link')?.setValidators(Validators.required);
+      this.createEventForm.get('link')?.updateValueAndValidity();
+      this.isVirtual = true;
       return;
     }
   };
 
   createEvent() {
+    this.isLoading = true;
     const isPrivate =
       this.createEventForm.get('isPrivate')?.value?.toString() === 'true'
         ? 'Si'
         : 'No';
     this.createEventForm.patchValue({ isPrivate });
+    if (this.createEventForm.valid) {
+      this.eventsService.createEvent(this.createEventForm.value).subscribe({
+        next: (res) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Evento creado',
+          });
+          this.createEventForm.reset();
+        },
 
-    this.eventsService.createEvent(this.createEventForm.value).subscribe({
-      next: (res) => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Evento creado',
-        });
-        this.createEventForm.reset();
-      },
+        error: (err) => {
+          this.messageService.add({ severity: 'error', summary: err });
+        },
+      });
+      this.isLoading = false;
+      return;
+    }
 
-      error: (err) => {
-        this.messageService.add({ severity: 'error', summary: err });
-      },
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Formulario invalido, verifica que ningun campo quede vacío',
     });
+    this.isLoading = false;
   }
 
   closeModalCreate() {

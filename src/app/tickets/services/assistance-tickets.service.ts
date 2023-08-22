@@ -55,7 +55,9 @@ export class AssistanceTicketsService {
         headers: this.headers,
       })
       .pipe(
-        tap((response: IAssistance) => this._tickets.next(response.data)),
+        tap((response: IAssistance) => {
+          this._tickets.next(response.data);
+        }),
         catchError(this.handleError)
       );
   }

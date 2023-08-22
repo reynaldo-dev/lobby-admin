@@ -11,6 +11,7 @@ import { UsersComponent } from '../users/screens/users/users.component';
 import { DashboardLayoutComponent } from './layout/dashboard-layout/dashboard-layout.component';
 import { DashboardMainComponent } from './screens/dashboard-main/dashboard-main.component';
 import { roleGuard } from '../auth/guards/role-guard.guard';
+import { ProfileScreenComponent } from '../common/screens/profile-screen/profile-screen.component';
 
 const routes: Routes = [
   {
@@ -73,6 +74,15 @@ const routes: Routes = [
           expectedRole: [AllowedRoles.ADMIN],
         },
         component: TicketsComponent,
+      },
+
+      {
+        path: 'perfil',
+        canActivate: [authGuard],
+        data: {
+          expectedRole: [AllowedRoles.ADMIN, AllowedRoles.SPONSOR],
+        },
+        component: ProfileScreenComponent,
       },
     ],
   },

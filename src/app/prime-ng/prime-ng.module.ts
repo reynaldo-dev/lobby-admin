@@ -25,6 +25,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ScrollerModule } from 'primeng/scroller';
+import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
   declarations: [],
@@ -55,6 +56,7 @@ import { ScrollerModule } from 'primeng/scroller';
     MultiSelectModule,
     InputNumberModule,
     ScrollerModule,
+    TabViewModule,
   ],
   exports: [
     ButtonModule,
@@ -82,6 +84,7 @@ import { ScrollerModule } from 'primeng/scroller';
     MultiSelectModule,
     InputNumberModule,
     ScrollerModule,
+    TabViewModule,
   ],
 })
 export class PrimeNgModule {}

@@ -121,7 +121,8 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-event>
-            <tr>
+       
+            <tr [routerLink]="[ '/dashboard/eventos', event.id ]" class="cursor-pointer" >
                 <td class="text-500">
                     {{ event.title }}
                 </td>

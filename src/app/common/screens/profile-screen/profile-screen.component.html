@@ -1,0 +1,28 @@
+<main>
+    <div class="grid mt-8">
+        
+        <div class="col-12">
+            <h1 class="text-500">Perfil</h1>
+        </div>
+  
+  
+        <div class=" mt-8 col-12">
+            <div class="col-12 flex flex-column align-items-center gap-4">
+                <app-profile-sign  [name]="user.name" [lastname]="user.lastname" ></app-profile-sign>
+                <div class="flex gap-2">
+                    <h1 class="text-600">{{user.name}}</h1>
+                    <h1 class="text-600">{{user.lastname}}</h1>
+                </div>
+                
+                <div class="flex gap-2 align-items-center">
+                    <i class=" pi pi-envelope text-500"></i>
+                    <h4 class="text-500">{{user.email}}</h4>
+                </div>
+                <div [class]=" user.isActive ? 'w-fit p-2 border-circle bg-green-100' :  'w-fit p-2 border-circle bg-red-100' ">
+                   <span [class]=" user.isActive ? 'text-green-500' : 'text-red-500'">{{user.isActive ? 'Activo' : 'Inactivo'}}</span>
+                </div>
+                <p-button label="Editar Perfil" styleClass="p-button-outlined p-button-rounded"></p-button>
+            </div>
+        </div>
+    </div>
+</main>

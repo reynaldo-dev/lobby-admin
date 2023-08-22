@@ -1,1 +1,198 @@
-<p>event works!</p>
+<main>
+
+
+    <div class="text-600 md:mt-8 w-full flex justify-content-between">
+        <div>
+            <h1>{{event.title}}</h1>
+            <p-tag [severity]="event.status == eventStatuses.ACTIVE ? 'success' : 'danger'" [value]=" event.status === eventStatuses.ACTIVE ? 'Activo' : 'Inactivo' "></p-tag>
+        </div>
+        <p-button (onClick)="generateReport()" label="Generar reporte" icon="pi pi-chart-bar" styleClass="p-button-rounded"></p-button>
+    </div>
+
+    <div class="col-12 mt-8">
+        <p-tabView >
+            <p-tabPanel header="Detalles">
+                <div class="grid w-full">
+                    <div class="col-12 flex gap-2 justify-content-between mb-5">
+                        <!-- puntaje -->
+                        <div class="col-5">
+                            <p-divider align="left">
+                                <div class="inline-flex align-items-center">
+                                    <i class="pi pi-star-fill mr-2"></i>
+                                    <b>Puntaje</b>
+                                </div>
+                            </p-divider>
+                            <div class="col-12 flex flex-column gap-2">
+                                <p-tag [rounded]="true">{{event.score }}</p-tag>
+                            </div>
+                        </div>
+            
+                        <!-- description -->
+                        <div class="col-5">
+                            <p-divider align="left">
+                                <div class="inline-flex align-items-center">
+                                    <i class="pi pi-info mr-2"></i>
+                                    <b>Descripcion</b>
+                                </div>
+                            </p-divider>
+                            <div class="col-12 flex flex-column gap-2">
+                                <p>{{event.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+            
+            
+                    <div class="col-12 flex gap-2 justify-content-between mb-5">
+            
+                        <!-- Tipo de evento -->
+                        <div class="col-5">
+                            <p-divider align="left">
+                                <div class="inline-flex align-items-center">
+                                    <i class="pi pi-lock mr-2"></i>
+                                    <b>Tipo de evento</b>
+                                </div>
+                            </p-divider>
+                            <div class="col-12 flex flex-column gap-2">
+                                <p>{{event.isPrivate === 'Si' ? 'Privado' : 'Publico'}}</p>
+                            </div>
+                        </div>
+            
+                        <!-- fecha de creacion -->
+                        <div class="col-5">
+                            <p-divider align="left">
+                                <div class="inline-flex align-items-center">
+                                    <i class="pi pi-calendar mr-2"></i>
+                                    <b>Fecha de creación</b>
+                                </div>
+                            </p-divider>
+                            <div class="col-12 flex flex-column gap-2">
+                                <p>{{event.createdAt | date: "dd 'de' MMMM 'del' YYYY" }}</p>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="col-12 flex gap-2 justify-content-between mb-5">
+            
+                        <!-- fecha de evento -->
+                        <div class="col-5">
+                            <p-divider align="left">
+                                <div class="inline-flex align-items-center">
+                                    <i class="pi pi-calendar-times mr-2"></i>
+                                    <b>Fecha de ejecución</b>
+                                </div>
+                            </p-divider>
+                            <div class="col-12 flex flex-column gap-2">
+                                <p>{{event.dateTime | date: "dd 'de' MMMM 'del' YYYY" }}</p>
+                            </div>
+                        </div>
+            
+                        <!-- lugar -->
+                        <div *ngIf="event.place" class="col-5">
+                            <p-divider align="left">
+                                <div class="inline-flex align-items-center">
+                                    <i class="pi pi-map-marker mr-2"></i>
+                                    <b>Lugar</b>
+                                </div>
+                            </p-divider>
+                            <div class="col-12 flex flex-column gap-2">
+                                <p>{{event.place }}</p>
+                            </div>
+                        </div>
+                    </div>
+            
+            
+                    <div class="col-12 flex gap-2 justify-content-between mb-5">
+            
+                        <!-- link -->
+                        <div *ngIf="event.link" class="col-5">
+                            <p-divider align="left">
+                                <div class="inline-flex align-items-center">
+                                    <i class="pi pi-external-link mr-2"></i>
+                                    <b>Link</b>
+                                </div>
+                            </p-divider>
+                            <div class="col-12 flex flex-column gap-2">
+                                <a [href]="event.link">{{event.link}}</a>
+                            </div>
+                        </div>
+            
+            
+                        <!-- comunidad -->
+                        <div class="col-5">
+                            <p-divider align="left">
+                                <div class="inline-flex align-items-center">
+                                    <i class="pi pi-users mr-2"></i>
+                                    <b>Comunidad</b>
+                                </div>
+                            </p-divider>
+                            <div class="col-12 flex flex-column gap-2">
+                                <p-tag [routerLink]="[ '/dashboard/comunidad', event.community.id ]" styleClass="cursor-pointer"
+                                    [rounded]="true" [style]="{'background-color': event.community.color}">{{event.community.name
+                                    }}</p-tag>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <!-- categoria -->
+                    <div class="col-12 mb-5">
+                        <p-divider align="left">
+                            <div class="inline-flex align-items-center">
+                                <i class="pi pi-th-large mr-2"></i>
+                                <b>Categoría</b>
+                            </div>
+                        </p-divider>
+                        <div class="col-12 flex flex-column gap-2">
+                            <p-tag [rounded]="true">{{event.eventCategory.name }}</p-tag>
+                        </div>
+                    </div>
+                </div>
+            </p-tabPanel>
+
+            <p-tabPanel header="Confirmaciones">
+                <div class="grid">
+                    <div class="col-12 flex gap-2">
+                        <div class="bg-blue-100 p-2 border-round-2xl flex gap-2 align-items-center">
+                            <h3 class="text-blue-400">{{eventAssistanceConfirmation.confirmations}}</h3>
+                            <div class="flex gap-2">
+                                <span class="text-blue-400">Usuarios confirmados</span>
+                                <i class="pi pi-check text-blue-400"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <app-event-user-confirmation-grid [usersEventAssistanceConfirmation]="eventAssistanceConfirmation.users" />
+                    </div>
+                </div>
+            </p-tabPanel>
+
+
+            <p-tabPanel header="Consumibles">
+                <ng-template [ngIf]="event.Consumable.length === 0">
+                    <div class="col-12 flex gap-2 justify-content-center align-items-center">
+                        <h3 class="text-500">No hay consumibles en este evento</h3>
+                    </div>
+                </ng-template>
+
+                <ng-template [ngIf]="event.Consumable.length > 0" >
+                    <p-table [value]="event.Consumable" [tableStyle]="{ 'min-width': '50rem' }">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-consumable>
+                            <tr>
+                                <td>{{ consumable.id }}</td>
+                                <td>{{ consumable.name }}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </ng-template>
+                
+            </p-tabPanel>
+        </p-tabView>
+    </div>
+
+</main>

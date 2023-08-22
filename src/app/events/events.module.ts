@@ -10,6 +10,7 @@ import { CreateEventComponent } from './components/create-event/create-event.com
 import { UpdateEventComponent } from './components/update-event/update-event.component';
 import { AdminDashboardModule } from '../admin-dashboard/admin-dashboard.module';
 import { AppCommonModule } from '../common/common.module';
+import { EventUserConfirmationGridComponent } from './components/event-user-confirmation-grid/event-user-confirmation-grid.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { AppCommonModule } from '../common/common.module';
     EventCardComponent,
     CreateEventComponent,
     UpdateEventComponent,
+    EventUserConfirmationGridComponent,
   ],
   imports: [
     CommonModule,

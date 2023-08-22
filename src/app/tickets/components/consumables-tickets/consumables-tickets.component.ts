@@ -49,8 +49,6 @@ export class ConsumablesTicketsComponent {
 
     this.consumablesTicketsService.isDialogOpen.subscribe(
       (isVisible: boolean) => {
-        console.log('Dialog should be:', isVisible);
-
         this.isDialogOpen = isVisible;
       }
     );

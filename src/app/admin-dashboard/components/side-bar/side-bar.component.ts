@@ -12,48 +12,6 @@ export class SideBarComponent implements OnInit {
   @Input()
   isVisible: boolean = false;
 
-  public adminRoutes = [
-    {
-      name: 'Inicio',
-      icon: 'pi pi-home mr-4',
-      path: '/dashboard/inicio',
-    },
-    {
-      name: 'Usuarios',
-      icon: 'pi pi-user mr-4',
-      path: '/dashboard/usuarios',
-    },
-    {
-      name: 'Eventos',
-      icon: 'pi pi-calendar-plus mr-4',
-      path: '/dashboard/eventos',
-    },
-    {
-      name: 'Comunidades',
-      icon: 'pi pi-users mr-4',
-      path: '/dashboard/comunidades',
-    },
-
-    {
-      name: 'Cupones',
-      icon: 'pi pi-ticket mr-4',
-      path: '/dashboard/cupones',
-    },
-  ];
-
-  public sponsorRoutes = [
-    {
-      name: 'Inicio',
-      icon: 'pi pi-home mr-4',
-      path: '/dashboard/inicio',
-    },
-    {
-      name: 'Eventos',
-      icon: 'pi pi-calendar-plus mr-4',
-      path: '/dashboard/eventos',
-    },
-  ];
-
   public routes = [
     {
       name: 'Eventos',
@@ -69,11 +27,49 @@ export class SideBarComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.authState.user.role === AllowedRoles.ADMIN) {
-      this.routes = this.adminRoutes;
+      this.routes = [
+        {
+          name: 'Inicio',
+          icon: 'pi pi-home mr-4',
+          path: '/dashboard/inicio',
+        },
+        {
+          name: 'Usuarios',
+          icon: 'pi pi-user mr-4',
+          path: '/dashboard/usuarios',
+        },
+        {
+          name: 'Eventos',
+          icon: 'pi pi-calendar-plus mr-4',
+          path: '/dashboard/eventos',
+        },
+        {
+          name: 'Comunidades',
+          icon: 'pi pi-users mr-4',
+          path: '/dashboard/comunidades',
+        },
+
+        {
+          name: 'Cupones',
+          icon: 'pi pi-ticket mr-4',
+          path: '/dashboard/cupones',
+        },
+      ];
     }
 
     if (this.authState.user.role === AllowedRoles.SPONSOR) {
-      this.routes = this.sponsorRoutes;
+      this.routes = [
+        {
+          name: 'Inicio',
+          icon: 'pi pi-home mr-4',
+          path: '/dashboard/inicio',
+        },
+        {
+          name: 'Eventos',
+          icon: 'pi pi-calendar-plus mr-4',
+          path: '/dashboard/eventos',
+        },
+      ];
     }
   }
 
