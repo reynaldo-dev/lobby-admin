@@ -11,6 +11,9 @@ import {
   tap,
   throwError,
 } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { AllowedRoles } from 'src/app/auth/roles/AllowedRoles';
 
 export interface IRole {
   id: string;
@@ -29,19 +32,22 @@ interface IRoleResponse {
 export class UsersService {
   private _users = new BehaviorSubject<UserData[]>([]);
   private headers!: HttpHeaders;
-  private readonly baseUrl = 'http://localhost:4000/api/user';
+  private readonly baseUrl = `${environment.apiUrl}/user`;
   public roles: IRole[] = [];
 
   public isModalCreateVisible = new BehaviorSubject<boolean>(false);
   public isModalUpdateVisible = new BehaviorSubject<boolean>(false);
   public selectedUser = new BehaviorSubject<UserData | null>(null);
 
-  constructor(private readonly http: HttpClient) {
+  constructor(
+    private readonly http: HttpClient,
+    private readonly authService: AuthService
+  ) {
     this.headers = new HttpHeaders({
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     });
+
     this.init();
-    this.getRoles().subscribe();
   }
 
   private handleError(error: any) {
@@ -53,6 +59,7 @@ export class UsersService {
 
   private init() {
     this.getUsers().subscribe();
+    this.getRoles().subscribe();
   }
 
   get users$(): Observable<UserData[]> {
@@ -64,7 +71,7 @@ export class UsersService {
   }
 
   getRoles(): Observable<IRole[]> {
-    const rolesUrl = 'http://localhost:4000/api/roles';
+    const rolesUrl = `${environment.apiUrl}/roles`;
     return this.http
       .get<IRoleResponse>(rolesUrl, { headers: this.headers })
       .pipe(

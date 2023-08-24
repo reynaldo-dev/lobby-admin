@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,7 @@ export class EventsCategoryService {
 
   getEventCategories() {
     return this.http
-      .get('http://localhost:4000/api/event-category', {
+      .get(`${environment.apiUrl}/event-category`, {
         headers: this.headers,
       })
       .pipe(tap((categories) => (this._eventCategories = categories as any[])));

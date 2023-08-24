@@ -5,6 +5,7 @@ import {
   IConsumableData,
   IConsumable,
 } from '../interfaces/consumable.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ import {
 export class ConsumablesTicketsService {
   private _consumables = new BehaviorSubject<IConsumableData[]>([]);
   private headers!: HttpHeaders;
-  private readonly baseUrl = 'http://localhost:4000/api/consumables-tickets';
+  private readonly baseUrl = `${environment.apiUrl}/consumables-tickets`;
   public selectedConsumable = new BehaviorSubject<IConsumableData | null>(null);
 
   public isDialogOpen = new BehaviorSubject<boolean>(false);

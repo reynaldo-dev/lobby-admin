@@ -43,7 +43,6 @@ export class UpdateEventComponent implements OnInit {
         description: event?.description,
         isPrivate: event?.isPrivate,
         place: event?.place,
-        // dateTime: new Date(event?.dateTime).toDateString(),
         communityId: event?.communityId,
         score: event?.score,
       });

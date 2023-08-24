@@ -14,6 +14,7 @@ import { DashboardLayoutComponent } from './layout/dashboard-layout/dashboard-la
 import { DashboardMainComponent } from './screens/dashboard-main/dashboard-main.component';
 import { TicketsModule } from '../tickets/tickets.module';
 import { AppCommonModule } from '../common/common.module';
+import { AllianceModule } from '../alliance/alliance.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { AppCommonModule } from '../common/common.module';
     CommonModule,
     AppCommonModule,
     AdminDashboardRoutingModule,
+    AllianceModule,
     CommunityModule,
     AuthModule,
     PrimeNgModule,

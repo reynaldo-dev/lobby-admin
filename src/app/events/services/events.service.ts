@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { IEvent } from '../interfaces/event.interface';
 import { IEventDetails } from '../interfaces/event-details.interface';
 import { IEventAssistanceConfirmation } from '../interfaces/event-assistance-confirmation.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -69,7 +70,7 @@ export class EventsService {
 
   getEvents() {
     return this.http
-      .get<IEvent[]>('http://localhost:4000/api/events', {
+      .get<IEvent[]>(`${environment.apiUrl}/events`, {
         headers: this.headers,
       })
       .pipe(
@@ -81,7 +82,7 @@ export class EventsService {
 
   getEventById(eventId: string) {
     return this.http
-      .get<IEventDetails>(`http://localhost:4000/api/events/${eventId}`, {
+      .get<IEventDetails>(`${environment.apiUrl}/events/${eventId}`, {
         headers: this.headers,
       })
       .pipe(
@@ -96,12 +97,9 @@ export class EventsService {
 
   getEventsAtDate(date: string) {
     return this.http
-      .get<IEvent[]>(
-        `http://localhost:4000/api/events/at-date?fromDate=${date}`,
-        {
-          headers: this.headers,
-        }
-      )
+      .get<IEvent[]>(`${environment.apiUrl}/events/at-date?fromDate=${date}`, {
+        headers: this.headers,
+      })
       .pipe(
         tap((events: IEvent[]) => {
           this._eventsAtDate = events;
@@ -116,7 +114,7 @@ export class EventsService {
   getActiveEventsCount() {
     return this.http
       .get<{ activeEvents: number }>(
-        `http://localhost:4000/api/events/active-events`,
+        `${environment.apiUrl}/events/active-events`,
         {
           headers: this.headers,
         }
@@ -134,7 +132,7 @@ export class EventsService {
   getInActiveEventsCount() {
     return this.http
       .get<{ inactiveEvents: number }>(
-        `http://localhost:4000/api/events/inactive-events`,
+        `${environment.apiUrl}/events/inactive-events`,
         {
           headers: this.headers,
         }
@@ -152,7 +150,7 @@ export class EventsService {
   getAssistanceConfirmation(eventId: string) {
     return this.http
       .get<IEventAssistanceConfirmation>(
-        `http://localhost:4000/api/assistance-tickets/confirmations/${eventId}`,
+        `${environment.apiUrl}/assistance-tickets/confirmations/${eventId}`,
         {
           headers: this.headers,
         }
@@ -169,7 +167,7 @@ export class EventsService {
 
   createEvent(event: any) {
     return this.http
-      .post('http://localhost:4000/api/events', event, {
+      .post(`${environment.apiUrl}/events`, event, {
         headers: this.headers,
       })
       .pipe(
@@ -185,7 +183,7 @@ export class EventsService {
 
   updateEvent(event: IEvent, id: string) {
     return this.http
-      .patch(`http://localhost:4000/api/events/${id}`, event, {
+      .patch(`${environment.apiUrl}/events/${id}`, event, {
         headers: this.headers,
       })
       .pipe(
@@ -200,7 +198,7 @@ export class EventsService {
 
   deleteEvent(eventId: string) {
     return this.http
-      .delete(`http://localhost:4000/api/events/${eventId}`, {
+      .delete(`${environment.apiUrl}/events/${eventId}`, {
         headers: this.headers,
       })
       .pipe(

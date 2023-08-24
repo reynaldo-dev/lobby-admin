@@ -61,11 +61,8 @@
     <app-events-stats [asLink]="true" [activeEvents]="activeEventsCount" [inactiveEvents]="inactiveEventsCount"  />
     <app-communities-carousel />
     <div>
-        <div class="w-8">
+        <div class="w-8 mb-5">
             <h2 class="mt-4 text-500 ">Proximos eventos</h2>
-            <!-- <div class="col-12" *ngFor="let event of events" >
-                <app-event-card [communityColor]="event.community.color" [event]="event" />
-            </div> -->
 
             <p-scroller [items]="eventsAtDate" [itemSize]="70" scrollHeight="400px"  styleClass="col-12" >
                 <ng-template pTemplate="event" let-event let-options="options" >

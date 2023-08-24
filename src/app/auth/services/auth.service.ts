@@ -7,6 +7,7 @@ import { EventsService } from 'src/app/events/services/events.service';
 import { CommunityService } from 'src/app/community-module/services/community.service';
 import { UsersService } from 'src/app/users/services/users.service';
 import { EventsCategoryService } from 'src/app/events-category/services/events-category.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -17,14 +18,7 @@ export class AuthService {
   private _user: any;
   private lastRoute = localStorage.getItem('url') || '/dashboard/inicio';
 
-  constructor(
-    private router: Router,
-    private http: HttpClient,
-    private readonly eventService: EventsService,
-    private readonly communityService: CommunityService,
-    private readonly userService: UsersService,
-    private readonly eventCategoryService: EventsCategoryService
-  ) {
+  constructor(private router: Router, private http: HttpClient) {
     this.whoAmI().subscribe();
   }
 
@@ -44,7 +38,7 @@ export class AuthService {
     const payload = { email, password };
 
     return this.http
-      .post<LoginResponse>('http://localhost:4000/api/auth', payload)
+      .post<LoginResponse>(`${environment.apiUrl}/auth`, payload)
       .pipe(
         tap((res) => {
           this._isAuthenticated = true;
@@ -69,20 +63,18 @@ export class AuthService {
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     });
 
-    return this.http
-      .get('http://localhost:4000/api/auth/whoami', { headers })
-      .pipe(
-        tap((res: any) => {
-          this._isAuthenticated = true;
-          this._user = res.user;
-          localStorage.setItem('access_token', res.access_token);
-          this._authState = { isAuthenticated: true, user: res.user };
-        }),
-        tap(() => {
-          this.router.navigateByUrl(this.lastRoute);
-        }),
-        map(() => true)
-      );
+    return this.http.get(`${environment.apiUrl}/auth/whoami`, { headers }).pipe(
+      tap((res: any) => {
+        this._isAuthenticated = true;
+        this._user = res.user;
+        localStorage.setItem('access_token', res.access_token);
+        this._authState = { isAuthenticated: true, user: res.user };
+      }),
+      tap(() => {
+        this.router.navigateByUrl(this.lastRoute);
+      }),
+      map(() => true)
+    );
   }
 
   logout() {

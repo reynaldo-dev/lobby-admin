@@ -5,6 +5,7 @@ import {
   IAssistanceData,
   IAssistance,
 } from '../interfaces/assistance.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ import {
 export class AssistanceTicketsService {
   private _tickets = new BehaviorSubject<IAssistanceData[]>([]);
   private headers!: HttpHeaders;
-  private readonly baseUrl = 'http://localhost:4000/api/assistance-tickets';
+  private readonly baseUrl = `${environment.apiUrl}/assistance-tickets`;
   public selectedTicket = new BehaviorSubject<IAssistanceData | null>(null);
 
   public isDialogOpen = new BehaviorSubject<boolean>(false);

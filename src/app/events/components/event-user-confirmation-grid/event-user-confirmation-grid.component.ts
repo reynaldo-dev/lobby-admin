@@ -7,5 +7,7 @@ import { IUserAssistanceConfirmation } from '../../interfaces/event-assistance-c
   styleUrls: ['./event-user-confirmation-grid.component.css'],
 })
 export class EventUserConfirmationGridComponent {
-  @Input() usersEventAssistanceConfirmation!: IUserAssistanceConfirmation[];
+  @Input() usersEventAssistanceConfirmation:
+    | IUserAssistanceConfirmation[]
+    | undefined;
 }

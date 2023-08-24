@@ -12,6 +12,8 @@ import { DashboardLayoutComponent } from './layout/dashboard-layout/dashboard-la
 import { DashboardMainComponent } from './screens/dashboard-main/dashboard-main.component';
 import { roleGuard } from '../auth/guards/role-guard.guard';
 import { ProfileScreenComponent } from '../common/screens/profile-screen/profile-screen.component';
+import { AlliancesComponent } from '../alliance/screen/alliances/alliances.component';
+import { AllianceComponent } from '../alliance/screen/alliance/alliance.component';
 
 const routes: Routes = [
   {
@@ -74,6 +76,24 @@ const routes: Routes = [
           expectedRole: [AllowedRoles.ADMIN],
         },
         component: TicketsComponent,
+      },
+
+      {
+        path: 'alianzas',
+        canActivate: [authGuard],
+        data: {
+          expectedRole: [AllowedRoles.ADMIN],
+        },
+        component: AlliancesComponent,
+      },
+
+      {
+        path: 'alianzas/:id',
+        canActivate: [authGuard],
+        data: {
+          expectedRole: [AllowedRoles.ADMIN],
+        },
+        component: AllianceComponent,
       },
 
       {
