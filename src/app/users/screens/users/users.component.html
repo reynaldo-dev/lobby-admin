@@ -40,6 +40,30 @@
                             [showAddButton]="false"></p-columnFilter>
                     </div>
                 </th>
+                <th style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Departamento
+                        <p-columnFilter type="text" field="email" placeholder="Busca un email" display="menu"
+                            matchMode="contains" [showMatchModes]="false" [showOperator]="false"
+                            [showAddButton]="false"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Ciudad
+                        <p-columnFilter type="text" field="email" placeholder="Busca un email" display="menu"
+                            matchMode="contains" [showMatchModes]="false" [showOperator]="false"
+                            [showAddButton]="false"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Telefono
+                        <p-columnFilter type="text" field="email" placeholder="Busca un email" display="menu"
+                            matchMode="contains" [showMatchModes]="false" [showOperator]="false"
+                            [showAddButton]="false"></p-columnFilter>
+                    </div>
+                </th>
                 <th style="min-width:10rem">
                     <div class="flex align-items-center">
                         Rol
@@ -65,6 +89,15 @@
                 </td>
                 <td>
                     {{ user.email }}
+                </td>
+                <td>
+                    {{ user.department }}
+                </td>
+                <td>
+                    {{ user.city }}
+                </td>
+                <td>
+                    {{ user.phone }}
                 </td>
                 <td>
                     {{ user.rol.role }}

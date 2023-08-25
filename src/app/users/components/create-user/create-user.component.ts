@@ -4,6 +4,8 @@ import { MessageService } from 'primeng/api';
 import { UserData } from '../../interfaces/user.interface';
 import { IRole, UsersService } from '../../services/users.service';
 import { BehaviorSubject } from 'rxjs';
+import { IDepartment } from '../../interfaces/department.interface';
+import { departments } from 'src/app/helpers/departments/departments.data';
 
 @Component({
   selector: 'app-create-user',
@@ -13,15 +15,20 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class CreateUserComponent {
   public isModalCreateVisible = false;
+
   public createUserForm = this.fb.group({
     email: ['', Validators.required],
     name: ['', Validators.required],
     lastname: ['', Validators.required],
     password: ['', Validators.required],
+    department: ['', Validators.required],
+    city: ['', Validators.required],
+    phone: ['', Validators.required],
     rolId: ['', Validators.required],
   });
 
   public roles: IRole[] = [];
+  public departaments: IDepartment[];
 
   constructor(
     private usersService: UsersService,
@@ -32,6 +39,7 @@ export class CreateUserComponent {
       this.isModalCreateVisible = modalStatus;
     });
     this.getRoles();
+    this.departaments = departments;
   }
 
   getRoles(): void {

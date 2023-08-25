@@ -12,6 +12,9 @@ export interface UserData {
   createdAt: Date;
   rolId: string;
   rol: Rol;
+  phone: string;
+  department: string;
+  city: string;
 }
 
 export interface Rol {
