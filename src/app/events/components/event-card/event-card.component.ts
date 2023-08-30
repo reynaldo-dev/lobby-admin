@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { getFormattedDate } from 'src/app/helpers/departments/get-formatted-date/getFormattedDate';
 
 @Component({
   selector: 'app-event-card',
@@ -8,4 +9,8 @@ import { Component, Input } from '@angular/core';
 export class EventCardComponent {
   @Input() event: any;
   @Input() communityColor: string = '';
+
+  getFormattedDate(date: string): string {
+    return getFormattedDate(date);
+  }
 }

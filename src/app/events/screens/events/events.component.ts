@@ -3,6 +3,7 @@ import { CommunityService } from 'src/app/community-module/services/community.se
 import { IEvent } from '../../interfaces/event.interface';
 import { EventsService } from '../../services/events.service';
 import { EventsCategoryService } from 'src/app/events-category/services/events-category.service';
+import { getFormattedDate } from 'src/app/helpers/departments/get-formatted-date/getFormattedDate';
 
 @Component({
   selector: 'app-events',
@@ -88,5 +89,9 @@ export class EventsComponent implements OnInit {
   deleteEvent(event: IEvent) {
     // this.eventsService.deleteEvent(event.id).subscribe();
     throw new Error('Method not implemented.');
+  }
+
+  getFormattedDate(date: string): string {
+    return getFormattedDate(date);
   }
 }

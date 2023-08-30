@@ -1,8 +1,16 @@
-import { catchError, map, switchMap, tap, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  map,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ICommunities } from 'src/app/admin-dashboard/interfaces/communities.interface';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { ICommunityMembers } from '../interfaces/community-members-response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -10,12 +18,29 @@ import { environment } from 'src/environments/environment';
 export class CommunityService {
   private _communities: ICommunities[] | [] = [];
 
+  private isCommunityMembersModalVisible!: BehaviorSubject<boolean>;
+
+  private _communityMembers!: ICommunityMembers;
+
   private _community: ICommunities | any = {};
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.isCommunityMembersModalVisible = new BehaviorSubject<boolean>(false);
+  }
 
   get communities() {
     return this._communities;
+  }
+
+  get communityMembers() {
+    return this._communityMembers;
+  }
+  get communityMembersModalVisible() {
+    return this.isCommunityMembersModalVisible.asObservable();
+  }
+
+  setIsCommunityMembersModalVisibleValue(value: boolean) {
+    this.isCommunityMembersModalVisible.next(value);
   }
 
   getCommunities() {
@@ -46,6 +71,19 @@ export class CommunityService {
           };
         }),
 
+        catchError((err) => {
+          return throwError(() => err.error.message);
+        })
+      );
+  }
+
+  getCommunityMembers(id: string) {
+    return this.http
+      .get<ICommunityMembers>(`${environment.apiUrl}/communities/${id}/members`)
+      .pipe(
+        tap((res) => {
+          this._communityMembers = res;
+        }),
         catchError((err) => {
           return throwError(() => err.error.message);
         })

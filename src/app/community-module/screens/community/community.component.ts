@@ -25,11 +25,17 @@ export class CommunityComponent {
     private messageService: MessageService
   ) {}
 
+  get communityMembers() {
+    return this.communityService.communityMembers;
+  }
+
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id') as string;
     this.communityService.getCommunityById(id).subscribe((res) => {
       this.community = res;
     });
+
+    this.communityService.getCommunityMembers(id).subscribe();
 
     this.nameValue = this.community?.name;
     this.descriptionValue = this.community?.description;
@@ -73,5 +79,9 @@ export class CommunityComponent {
     this.nameValue = this.community?.name;
     this.descriptionValue = this.community?.description;
     this.color = this.community?.color as string;
+  }
+
+  openModalCommunityMembers() {
+    this.communityService.setIsCommunityMembersModalVisibleValue(true);
   }
 }

@@ -39,6 +39,6 @@ export class EventComponent implements OnInit {
   }
 
   generateReport() {
-    this.pdfMakerService.generatePdf();
+    this.pdfMakerService.generatePdf(this.eventId);
   }
 }

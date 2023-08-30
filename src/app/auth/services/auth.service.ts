@@ -8,12 +8,14 @@ import { CommunityService } from 'src/app/community-module/services/community.se
 import { UsersService } from 'src/app/users/services/users.service';
 import { EventsCategoryService } from 'src/app/events-category/services/events-category.service';
 import { environment } from 'src/environments/environment';
+import { IProfileResponse } from 'src/app/common/interfaces/profile-response.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private _authState: any;
+  private _profile!: IProfileResponse;
   private _isAuthenticated: boolean = false;
   private _user: any;
   private lastRoute = localStorage.getItem('url') || '/dashboard/inicio';
@@ -24,6 +26,10 @@ export class AuthService {
 
   get isAuthenticated(): boolean {
     return this._isAuthenticated;
+  }
+
+  get profile(): IProfileResponse {
+    return this._profile;
   }
 
   get user(): any {
@@ -75,6 +81,22 @@ export class AuthService {
       }),
       map(() => true)
     );
+  }
+
+  getProfile(id: string): Observable<IProfileResponse> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http
+      .get<IProfileResponse>(`${environment.apiUrl}/user/profile/${id}`, {
+        headers,
+      })
+      .pipe(
+        tap((res) => {
+          this._profile = res;
+        })
+      );
   }
 
   logout() {

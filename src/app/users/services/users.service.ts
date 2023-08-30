@@ -14,6 +14,7 @@ import {
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { AllowedRoles } from 'src/app/auth/roles/AllowedRoles';
+import { User } from 'src/app/auth/interfaces/user.interface';
 
 export interface IRole {
   id: string;
@@ -37,6 +38,7 @@ export class UsersService {
 
   public isModalCreateVisible = new BehaviorSubject<boolean>(false);
   public isModalUpdateVisible = new BehaviorSubject<boolean>(false);
+  public isModalUpdateProfileVisible = new BehaviorSubject<boolean>(false);
   public selectedUser = new BehaviorSubject<UserData | null>(null);
 
   constructor(
@@ -108,10 +110,11 @@ export class UsersService {
     );
   }
 
-  updateUser(user: UserData, id: string) {
+  updateUser(user: UserData, id: string): Observable<UserData | IUser> {
     return this.http
       .patch(`${this.baseUrl}/${id}`, user, { headers: this.headers })
       .pipe(
+        tap(() => this.authService.getProfile(id).subscribe()),
         switchMap(() => this.getUsers()),
         catchError(this.handleError)
       );
@@ -123,5 +126,9 @@ export class UsersService {
 
   toggleUpdateModal(visible: boolean) {
     this.isModalUpdateVisible.next(visible);
+  }
+
+  toggleUpdateProfileModal(visible: boolean) {
+    this.isModalUpdateProfileVisible.next(visible);
   }
 }

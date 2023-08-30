@@ -153,7 +153,7 @@
                     <p *ngIf="!event.place" >No aplica</p>
                 </td>
                 <td class="text-500">
-                    {{ event.dateTime | date:'dd/MM/yyyy hh:mm' }}
+                    {{ getFormattedDate(event.dateTime) }}
                 </td>
                 <td class="text-500">
                     {{ event.community.name || 'No tiene comunidad' }}

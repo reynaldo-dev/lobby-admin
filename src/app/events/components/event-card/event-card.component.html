@@ -9,7 +9,7 @@
             </p>
          
                 <p-chip  icon="pi pi-calendar" styleClass="mt-2" >
-                    {{event?.dateTime | date: 'dd/MM/yyyy HH:mm' }}
+                    {{ getFormattedDate(event?.dateTime) }}
                 </p-chip>
           
         </div>

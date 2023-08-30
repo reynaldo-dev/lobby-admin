@@ -96,10 +96,16 @@ export class EventsService {
   }
 
   getEventsAtDate(date: string) {
+    const dateToIso = new Date(date).toISOString();
+    const time = new Date(date).toLocaleTimeString();
+    const dateIso = `${dateToIso.split('T')[0]}T${time}Z`;
     return this.http
-      .get<IEvent[]>(`${environment.apiUrl}/events/at-date?fromDate=${date}`, {
-        headers: this.headers,
-      })
+      .get<IEvent[]>(
+        `${environment.apiUrl}/events/at-date?fromDate=${dateIso}`,
+        {
+          headers: this.headers,
+        }
+      )
       .pipe(
         tap((events: IEvent[]) => {
           this._eventsAtDate = events;

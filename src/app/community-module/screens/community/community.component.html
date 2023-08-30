@@ -14,12 +14,14 @@
                 (onClick)="toggleDialog()" />
         </div>
         <div class="col-12 mt-5">
-            <p-chip styleClass="p-2">
+            <p-button styleClass="p-button-rounded" (onClick)="openModalCommunityMembers()" >
                 {{community?.membersCount?.toString()}} Miembros
-            </p-chip>
+                <i class="ml-2 pi pi-window-maximize"></i>
+            </p-button>
         </div>
     </div>
 
+    <app-community-members />
 
     <!-- eventos -->
     <h3 class="mt-5" >Eventos</h3>

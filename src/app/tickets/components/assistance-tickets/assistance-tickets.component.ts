@@ -66,7 +66,4 @@ export class AssistanceTicketsComponent {
   closeDialog(): void {
     this.assistanceTicketsService.toggleDialogDetails(false);
   }
-  downloadReport(): void {
-    this.pdfMakerService.generatePdf();
-  }
 }

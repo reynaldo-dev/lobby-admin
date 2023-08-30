@@ -1,6 +1,21 @@
+import {
+  HttpClient,
+  HttpClientModule,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { Observable, tap } from 'rxjs';
+import {
+  IAssistanceTicket,
+  IConsumable,
+  IConsumablesTicket,
+  IEvent,
+  IEventReportResponse,
+} from '../interfaces/report-response.interface';
+import { environment } from 'src/environments/environment';
+import { getFormattedDate } from 'src/app/helpers/departments/get-formatted-date/getFormattedDate';
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
@@ -8,39 +23,181 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
   providedIn: 'root',
 })
 export class PdfMakerService {
-  constructor() {}
+  private headers!: HttpHeaders;
+  private _data!: IEventReportResponse;
+  private apiURL = `${environment.apiUrl}/events`;
+  constructor(private http: HttpClient) {
+    this.headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+  }
 
-  generatePdf() {
-    const logoPNG =
-      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAWh0lEQVR4Xu2cDXBV5ZnHb0JIQhICIYEEg1ICglLlo1pQsOLoAO22akVdVlfU6awIuEO3q7SutgPdTrdTwe1qFdp1u1jo2t1ZB9pt1QK7flRll63bVVS0KEgQJBAhIV+EEML+/odzbk8uibkulw6a/5l55557zvuc857feZ73fZ7nfe9NJLyZgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAmYgAlklMCsCVMmz7jwojO6u+ic8y+5nPP5Gb2pL2YCpwuBbXnXNjQnZh/rqj0Yxxd0bm/O9SecnzJ5UvaSkVd8Tec3lFz5/OnyPG5H7yGQc6ofFSUfUrEpp7/uM3/stFte6X9oI7u1lD6UieWNfS/UuaL27AR1tf9O2KZiPodUHM6p1PcpdQWXcH4Mu3sobZTDGzf9d5dGd6qfydfvPQSyTuWjbiy++itc/7bxDfnn6j5vF7Y1NPfpkOInt8Kj2YlRzbnB91eKW2U4rZQGSgclu/xwzjCMZEB4/td85jXldBzYWNKyfn1Z41q+12Aoh3t6Dly0oum1/RfuzTuyjbpHRrbkXbC24uA317/0XzK2k9ow/NmF7VnF5Yf7VuzLa9+1dOszK9O5IAbfZ3xjP8nmIDsU2feQXZ2OrOv8YQicEgPBJSqn+Wso51GKpOgZfhwZz9F1g5ueWlZV+1eyPYykW0VHEctn1Qz48/nVg74eb8fqYfXfnbdr3d0n0zaufdaGTSOq49eYPvmdUtpzoKfrakRE9s2wXjufOciWIFvfk6zP/2EIZNzFwjjOp+kTtxW2LaaXr2P/0jm7Bv4Nn/nrBzet3ZvXvlX7lIGUMkaI8TNqi4bpcVHYh/joS4mU/Rijz6RxDfkX6Djnv1PYnj14al3BFchVzqwtmkmvu3tVZd13Od9JSVPw9dlY0ryGa80oOpqdO7Il9zyuo2c/kgHM9WsqGp4b35h/zsjmXHUM2g6led0GZH+FbBWyI0MZjbA2kDQBnupqGTUQjEPxQg6G8eT0ul+8n2gmdpg8qQ4DWSJlxEBuWLHluaQ7xLliXIw/xUCW60FR9Ef4kFFJcQsoJTcnShIYyEXNOR2tnFe9QyuG7x9w/xtDf8zxC6+pKb6Z4w9wrQJ63pZugO1Z8/LG9xjSJlOvDNkXkB2DS7fhZAFzz4bE5EnX8xyXLNtSoVFT29F0rovsHmTnIjse2V+EMhpxvZ0mBDLm+uCHK5D4C0pVYBzhhhJsp5e8nhFlTdw4dFrKta3g8K83F7fKeF7hUCNlP0Xy9ZTWF0uaNzDqJLjGP4THMLtEy6ph9Uv5zCe4LyBGkTEdD2S62FKCeY1e/cJqmXp+jXjxNHQ0kiRbo3ijm+bJXYzLDqBut89ymuhNr2lGxkYQlL9tWWL21ZDbmUpvTs1T6zmmcsJGkPx60+RJJZwopHTERoEDKErFtoK2V2+a8G5VaDTNUnaO5/FdRVtWeVvfypq89hr269N4c/GAXu5clxv3UHz2CUoZRcqtUU3Jg4O0YV9ciO8Hx4+dFr/WJ5CX0ouvXCadO6zRVM9IqUNG+9rUnk4GwvdPUVcJC21RUkOjo+6t5+yuzTLMQ8GolrJxvb4cz4RL2d3tP5bHM2YgIZ0hfF5D+f6HpCUlkXF08t35voUXO4hzSucei40Eane87VLgyGB6urV6+yjG6TJJwT2VOZt40+6SO4l3pikFre3FQS1bcR//FbdIrtRW2tMUu1my7cQ5I66pGXAHruNsrhNUIYOXWF/W9CiZs1V87cs9NILKSBScy2iCDdkKZOcge2OK7PINgxufQG6HuET1mUc68+K6whuJYy6buqngs7TvtcWTJ10aGeDS4dPvmfF+0Z+N2pQ7YsXwAcvXVBxcyLm0XMCeQPaG85k2EKVjR39YcLwwKUk7L1+z6VL0Fo7tDa8jd0MGoB5Yx6VMUuz4HIi+d+fCpDZH108qZOpJZaVmvN9fGa9FkWFEdaYeKBhNuZc5mevIns3n+DMx+WT8s/SNoY+Quu7kJimVPap50K0o662Lzt0zu6lPx8vcSz266iUVFtmVUdo7unYouwDZBcheH3LYofMrXqvcmdJOcVFHVcfk6ztF1dlKgATvGeNTZyN3VK6stzQIZMxAiEE+mTjer+kF9Ljxks+mklwL9eZScLlZUhaVNs7LrZIya3SRiyIFzOF45N5ESiVll1KkG090O9LILSJgnrloW9kiPQCx0T5in6/W5B3ZXnS0T3969QWUz2MkY5r6lH4b13AuBvta+LBJ103GQczVurqyfiGyO5DtRwbt8yQr5krZl2wt/+e7zt3zR2G79fxJY9d5ZBPIzg3vW4jsTGQXhLI/RPYqZHbQ3pzNW1tfwmCDyVZGj98sHr33y+wGnQsj1vpRLbkTyPidT1HcJYMUcxtIjxp6vEK6SpXO5UrDSico4Oqhn3uM5SY7cAfUgymzdfHNu0u+s/rlMzeTcr2YQ4MpxVPrCqdxbD09+KzwRWYrJcux56h/l+pQZEAyKCmWjCRyUdKd01GnEClk6vOPvWtb2d+Hyrb5znP3XEmSYO3qV194nhUA65ZW1d6xdOT7GjkSpJgvpm1BalaKykdyVMKwfjvvvN2fQfbnxFAvafUAmba/XTH8wLdVH4XPwhA1R6T4RoqbNBAZBwZwNbLrkP1PZJ9F9n5kvxXKDkL2bI10YrRqWF0wt0OWL7F0ZO0SdqujeRRiv9t5hukkOd4O342e1wmAEEY6H5k0kGjk6DSC8CKHoEw34E+fRTAdGVGW5iTkY49v6HdZqCS59ITTdYweWgYSjBCcn3a8Xv7loVHosJQxmCyMK2Y6D0yduCEln19BOQpfHvn9pJK/Qd0DUcArv51Szez90yjxdt1rRm3/P0buHHblGiZdPAxJk5eKUfYpFqAoK8ecx0HNAwXNnHKgQKOAEhNxg00sOXvv7bhf7yKzUwmL8P77kX0M2UA4lK1g9yzacIuOvVjS8ipyTdR/L4WDOMVTxxnzGtLk/ZGulklYXbpWUpLFY/vNZYgvIdP1VkhrJ0p005S6wj9ZP7hRSyvknhxBKRfTa87i2KPhsSIU4wH2+zLRp+A2iFUoMgwpZNQbpjt66PZBwN/FWxvG8pMgfpISkxWL0s2pVVte6d/6NBN7Vbgvn+JklIEK2oDxvInsrtRMEt/3YEyFXPt1WHwSWU1+atNzBO0J7xutNUveV1kyZAdwfhuyY5D9NCeDkZr9afpkTmddyCa1vWIVpbV1Tm5qVizh0QUKH4oIZNJAuh26cROeT/Sn59YqqONbO0r0HsqvuQ1lf5S6PEYPmMuxB8MXrZhELzeLY5phr9fLpWjhYwfXfBOf++VwX4YXpU17ertRzJJaL5fR40wdbMzpeFftoXS5xgt35mAoHLl5SQNlrZkMq7tN1zw+hISdgp4vvJcMRHGWvnfK5oUp5w6Y7RyXSGjBZmTkepYgdYusRrUTOoogM1h8dbxDyKTX0BPrj/z5TMJKXouAXVmU+KbYoUQTYBT1mPK9Newr+JbSt/Iilb7UMhRNBOqcej3FLGUo7nCKFjzK71ZWRvfaT0B6FeVa9pX3T05O9vBW4inOuFG30gs/LVmCYRmK7h8YTMpWyuih+EGjjJSyk8FVteSqncHq5fjGcw/k+8CCo9nBiIOsgvtO6VZm9zUKi8cg6sffjWQHcO0gGEdWK56jkTS4jQJ5PgrD2CQ4phFLhd3oWpExfpgR9wQAvelARkaQoIfrnBeRAQTZJr0wFgreOK4xfzqp0VsYJaTIAwnEv0DMcdXqyrqv41YFk1+hEsmYyglEz2EZyZeIRybEXwhzEc+srWh4SCMIx3UtKZn8/HSXvkuxIoUp4p5SaI1A7czq72Z0OMY6rQ7aPJWR6985v4drB0+nzBqGOoZ2Sxnl1jzLR5R21jXbSLnmIXs5cyUaXdQ+ZZTUYQwlxhmD8WkEiMvqa7LtyM7gvr/kmAJxtVUdSr6SFchqVJWsfhuj6ze/XdC2CcMaruU4icrEP3JMHZGqqdOQGxZMwOpAuOmaNpAYkA/azdQIopEgrqBBD6oRg49hzCl8GUUfi48v5ZDxFBK438yxs8lcfZbv2WFPpxGjcv7O0gWsTXow1Th0D45N5dxPqPOXfB9KyQnnRtJ85GQco/r9UXgF2WOlRBhvM2ldLazsM2f3wIW0TcZTpZQ0ZRxGe9nit8qVTVOssYeA/Tfsynj07FI6LdU/iuzdysixP4oygTIa2anL3hh6n2Rxh9qQ3chuMEEaygbtR/Z2Oo+p7CpDprVtw3Xfu7YPlvIHcQrx2HPs1lNqNg5q+amOM4KUU0crk4eHckqTBxOWGI84aYu7eOEhf3wQgYyMINxAhtBVDy5XqXXJ6H0LCS7PoNffHNZtXT58/x0o0ZVhzCEl0Ystm19dOn9WTfEXQ2WQwi5FGXfx/SiuzWDOzeNa5bP2FM/mjh0E9stQXv14SgqTzqYeNJhJx9CW65PU7Z0o7Ep2m0mprkLZrkCpPr1k65BHcGf2opRv8LuVAnrwiWp/kFKtqtVvXfTMijnUIYiBeuxWRpFiZL+HrBT6d7R3FIYYZLmQbcMtvIPdaN2ZGCXZadKPeZi7mfe4G9ld4e9hgufSfZGdgyHv5XmDTBoj1VMw+pmYKfXMzL9Syxq9Oxh1KlImETvN2qcDq7fXydQIkjqLHbxwXuIBKQw5/ecwBPV06jFfpTTxEt9CGf+Ol62AVPL96SnH8KKV4k2wePHxeefvvg65F6qac0dQqtjfxLFbmWf4H9Wh7g2aE2BXblm6Wzv3VKZIsU4jSliLa/VsqLByh95m7mAWS+vvRSFrUWxN8k0IXaM2EgOPM8dxBe3/neoGQfDvl83ncb39yN4jZQ7T02Mi46Ddr3Pt25CVeygD0RJ9BdmByxPKPhCT1ZKX4LmQrUb2WmS1qDO+xEXZv9uZJ/me5GQQtHcIJTAO5LbQwewM4eheUZIgXV69ul6mRhAZWurSD7lYevG6x0BKFMwq+FVPqx5XcjqveoWMCkFOH0Wp4aU/LOOR376getC9x5Xk0JsoyE560Xt+8Grlo/SuFcgsZGT6CvdKazEeCt209MKL5uDundnU5+ghrqe5jtQAX8vQf4gB/xQDlEuo9ubszT1yhFGhlvq/z8dxgu9vK+a4a2zNTOq0UUdzHs9zDxmu3M8sjLCe55ELpk7ifWQ0KopRA+3fiuyNyDYgy+9LDj6JbLQkpgPZg8gqwyV5zY0ECh8G8sEqAmQepfwL7ZVbGLhSPN9unq+B5Sg/CbVcI6fun268For13o9MGYgUPB4IRkGgJgY1Qz55CMrMQr2f8V1ZnEIU/yzmQT7HsZW8/ONBcF2BfG8tbX+IYwrc81mmoSA8WGA4rqFfpQJ6TYhp+TuxzTdCGT2HSlqrVVlBrJFNpdstdNnqCRSi3vcDtSSY2EuzbvxCmh/huwxSqWV1GBrhsjGaqHPRZ7CSuItYS/WHEHv8inVWrUwyfjV0Y5OjEpxLGf3kviq4fzK8jg0kTZvPpIHEoUfGot43B388CE63F7a9xgtUijJrQXXpffj5g3j72fTUK/QiozbjEihWkW8/gCIXJkiHMpJ8a0JD/kuMIHdSRy6OtmO4IcfoeT/SmRlNBqb5zuLVgpQwsYd+xZkgCfAjlp58c3tB225G1zxGoaroZ8aMyjtg/78fItv3/2jOx0/kVBlIfDJMPyt9DCUegasQKXWC35M/LJ0nPvknKXlkBOF+9L0Bt+Ogfk1I6jUIgukp5bbIAONrvtRjxkewj9+b6vqJxOkQfB8nHruOuKPq/i1DfxyykCsVTLTCr4FOZTb79b0FTKaeM5MGckKb6K3ewU9WpmkJJ6MVuXqp5WSNHqf8nH351SVh5kXXULZqono79g8wMmwmKP4i67gUyPfFyDSyHKOOgnNtWdTRRKOu06s2nlk/ATioJTqke3/ESuObMJKpjB5a/HmMUfYNlsVsxI29T4xC1r2K0ck+bKYMRO2IRo1OcQAvsZqXqF5f638CN4LvClA1eSal14SWev9iMkRPE1NcxgThbazHejZcfKdf1tUio+Be1yljFKmkThDQI6M5gbRij5OFdTrKK8EAm2Y6lBrKb8P30MjxI0GeTqXb3yCejk90erUpUwZyGFdoR/hobfTun2FfLyvaFB/k8SLz1OuxHy3wk4FopreekrtmaMNDGMjluGOl86pLF/5g+P77kXk9NADNF5RiHGdw7kvU0eRXFjLLerOBBJ3E8VRzp/Vbp5eafXRbk7HAVj08/xbyHwTe4/ljt4ZVlfUPbis8rJ9QaXSIskwRKRmGymEt7sO90u8V1JaSRdsHL8ZVCJZy6Hfm+NcruY6WgvQd2Zw3Al/7VoxDS72zmSt5ggm7r7GvZeWdF7t8dN+JW34aEciYgeiZ+JPpCzCSJwmoo98fxGfYdS8ZRfyeSt+ygrdhNX70QvYHUgZgJPdiJPrFnbbUNuq7jOOXGMdfs691WEqRejOBjBPIqIGERjKOFO73wz97S21w6v2C1DDK/m/X1D5xo/YZieR+VTHhdZYmAXG5Lo1fhJjjBdyqh/G3NerUU/TXo87rZ1w1fMGueueMUEHJB+MGlZF50holZa80cmhSSwYSFQX1UnB+gHRIs9mdfkfBNTQKabGe/r+2jFlhZpTbFOQrdamMjNyq+JKLjLTdFzGBOIGMjyDp4sUAorjE/9KeLjTXMwETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAETMAET6InA/wGWf3sCZjhIgwAAAABJRU5ErkJggg==';
-    const documentDefinition = {
-      styles: {
+  getReportData(eventId: string): Observable<IEventReportResponse> {
+    return this.http
+      .get<IEventReportResponse>(`${this.apiURL}/event-report/${eventId}`, {
+        headers: this.headers,
+      })
+      .pipe(
+        tap((data) => {
+          console.log(data);
+          this._data = data;
+        })
+      );
+  }
+
+  generatePdf(eventId: string) {
+    this.getReportData(eventId).subscribe(() => {
+      const documentDefinition = {
+        pageOrientation: 'landscape',
         header: {
-          width: '50%',
-          alignment: 'left',
-          fontSize: 16,
+          text: `Reporte del Evento: ${this._data.event.title}`,
+          style: 'title',
         },
-        logo: {
-          width: '50%',
-          alignment: 'right',
-        },
-      },
-      content: [
-        {
-          columns: [
-            {
-              text: 'Reporte de tickets de asistencia',
-              style: 'header',
-            },
-            {
-              image: logoPNG,
-              width: 150,
-            },
-          ],
-        },
-      ],
-    };
+        content: [
+          { text: 'Evento', style: 'header' },
+          this.createTableFromEvent(this._data?.event),
+          { text: 'Consumibles', style: 'header' },
+          this.createTableFromConsumables(this._data.consumables, [
+            'No.',
+            'ID',
+            'Nombre',
+          ]),
+          { text: 'Tickets de Asistencia', style: 'header' },
+          this.createTableFromAssistanceTickets(this._data?.assistanceTickets, [
+            'No.',
+            'ID',
+            'Activo',
+            'Presente',
+            'Escaneado en',
+            'Usuario',
+          ]),
+          { text: 'Tickets de Consumibles', style: 'header' },
+          this.createTableFromConsumablesTickets(
+            this._data?.consumablesTickets,
+            ['No.', 'ID', 'Activo', 'Consumido', 'Usuario', 'Consumible']
+          ),
+        ],
+        styles: {
+          header: {
+            fontSize: 14,
+            margin: [0, 20, 0, 0],
+            color: '#94a3b8',
+          },
 
-    pdfMake.createPdf(documentDefinition as any).open();
+          title: {
+            fontSize: 15,
+            margin: [10, 15, 0, 10],
+            color: '#64748b',
+          },
+        },
+      };
+      pdfMake.createPdf(documentDefinition as any).open();
+    });
+  }
+
+  createTableFromEvent(event: IEvent) {
+    return {
+      table: {
+        widths: ['*', '*'],
+        body: [
+          ['ID', event.id],
+          ['Título', event.title],
+          ['Descripción', event.description],
+          ['Fecha y Hora', getFormattedDate(event.dateTime)],
+          ['Puntuación', event.score],
+        ],
+      },
+      layout: 'borders',
+    };
+  }
+
+  createTableFromConsumables(consumables: IConsumable[], headers: string[]) {
+    const tableBody = consumables.map((consumable) => [
+      { text: consumables.indexOf(consumable) + 1, padding: [10, 10] },
+      { text: consumable.id, padding: [10, 10] },
+      { text: consumable.name, padding: [10, 10] },
+    ]);
+
+    return {
+      table: {
+        headerRows: 1,
+        widths: Array(headers.length).fill('*'),
+        body: [headers, ...tableBody],
+      },
+      layout: 'borders',
+    };
+  }
+
+  createTableFromAssistanceTickets(
+    assistanceTickets: IAssistanceTicket[],
+    headers: string[]
+  ) {
+    const tableBody = assistanceTickets.map((assistanceTicket) => [
+      {
+        text: assistanceTickets.indexOf(assistanceTicket) + 1,
+        padding: [10, 10],
+      },
+      { text: assistanceTicket.id, padding: [10, 10] },
+      { text: assistanceTicket.isActive ? 'Sí' : 'No', padding: [10, 10] },
+      { text: assistanceTicket.wasPresent ? 'Sí' : 'No', padding: [10, 10] },
+      { text: assistanceTicket.scannedAt || '-', padding: [10, 10] },
+      {
+        text: assistanceTicket.user.name + ' ' + assistanceTicket.user.lastname,
+        padding: [10, 10],
+      },
+    ]);
+
+    return {
+      table: {
+        headerRows: 1,
+        widths: Array(headers.length).fill('*'),
+        body: [headers, ...tableBody],
+      },
+      layout: 'borders',
+    };
+  }
+
+  createTableFromConsumablesTickets(
+    consumablesTickets: IConsumablesTicket[],
+    headers: string[]
+  ) {
+    const tableBody = consumablesTickets.map((consumablesTicket) => [
+      {
+        text: consumablesTickets.indexOf(consumablesTicket) + 1,
+        padding: [10, 10],
+      },
+      {
+        text: consumablesTicket.id,
+        padding: [10, 10],
+      },
+
+      {
+        text: consumablesTicket.isActive ? 'Sí' : 'No',
+        padding: [10, 10],
+      },
+      {
+        text: consumablesTicket.isConsumed ? 'Sí' : 'No',
+        padding: [10, 10],
+      },
+      {
+        text:
+          consumablesTicket.user.name + ' ' + consumablesTicket.user.lastname,
+        padding: [10, 10],
+      },
+      {
+        text: consumablesTicket.consumable.name,
+        padding: [10, 10],
+      },
+    ]);
+
+    return {
+      table: {
+        alignment: 'center',
+        headerRows: 1,
+        widths: Array(headers.length).fill('*'),
+        body: [headers, ...tableBody],
+      },
+      layout: 'borders',
+    };
   }
 }

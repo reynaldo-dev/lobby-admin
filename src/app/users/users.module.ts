@@ -9,6 +9,6 @@ import { UpdateUserComponent } from './components/update-user/update-user.compon
 @NgModule({
   declarations: [UsersComponent, CreateUserComponent, UpdateUserComponent],
   imports: [CommonModule, PrimeNgModule, FormsModule, ReactiveFormsModule],
-  exports: [UsersComponent],
+  exports: [UsersComponent, CreateUserComponent, UpdateUserComponent],
 })
 export class UsersModule {}

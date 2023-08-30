@@ -1,0 +1,52 @@
+<p-dialog header="Header" [(visible)]="isModalUpdateProfileVisible" [style]="{ width: '50vw' }" (onHide)="closeModalUpdateProfile()"
+    [modal]="true" styleClass="h-auto">
+    <ng-template pTemplate="header">
+        <span class="text-xl font-bold">Actualizar usuario</span>
+    </ng-template>
+
+    <div class="">
+        <form [formGroup]="updateProfileForm" class="grid gap-3">
+            <div class="col-12">
+                <span class="p-float-label w-full">
+                    <input pInputText id="name" formControlName="name" class="w-full" />
+                    <label htmlFor="name">Nombre</label>
+                </span>
+            </div>
+
+            <div class="col-12">
+                <span class="p-float-label w-full">
+                    <input pInputText id="lastname" formControlName="lastname" class="w-full" />
+                    <label htmlFor="lastname">Apellido</label>
+                </span>
+            </div>
+
+            <div class="col-12">
+                <span class="p-float-label w-full ">
+                    <input pInputText id="phone" formControlName="phone" class="w-full" />
+                    <label htmlFor="phone">Teléfono</label>
+                </span>
+            </div>
+
+            <div class="col-12">
+                <span class="p-float-label w-full">
+                    <p-dropdown [options]="departmentsOptions" formControlName="department" optionLabel="name" optionValue="name"
+                        placeholder="Selecciona un departamento" styleClass="w-full" inputId="department"></p-dropdown>
+                    <label for="department">Selecciona un departamento</label>
+                </span>
+            </div>
+
+            <div class="col-12">
+                <span class="p-float-label w-full ">
+                    <input pInputText id="city" formControlName="city" class="w-full" />
+                    <label htmlFor="city">Ciudad</label>
+                </span>
+            </div>
+
+            <p-button (click)="updateProfile()" icon="pi pi-check" label="Actualizar"
+                styleClass="p-button-text"></p-button>
+
+        </form>
+    </div>
+
+</p-dialog>
+<p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
