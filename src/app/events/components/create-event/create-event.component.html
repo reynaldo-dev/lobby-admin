@@ -1,97 +1,134 @@
 
-<p-dialog header="Header" [(visible)]="isModalCreateVisible" [style]="{ width: '50vw' }" (onHide)="closeModalCreate()" [modal]="true" styleClass="h-screen" >
-    <ng-template pTemplate="header">
-        <span class="text-xl font-bold">Crear un nuevo evento</span>
-    </ng-template>
+<p-dialog  [(visible)]="isModalCreateVisible" [style]="{ width: '50vw' }" (onHide)="closeModalCreate()" [modal]="true" styleClass="h-screen" id="createEventModal" >
 
+    <p-tabView [activeIndex]="activeIndexTab">
+        <p-tabPanel [disabled]="isDisabledEventTab">
+            <ng-template pTemplate="header">
+                <span class="text-xl font-bold">Evento</span>
+            </ng-template>
 
-    <div class="">
-        <form [formGroup]="createEventForm" class="grid gap-3" >
-
-            <div class="col-12">
-                <span class="p-float-label w-full">
-                    <p-dropdown (onChange)="changeCreateEventForm($event )" [options]="eventCategories" formControlName="eventCategoryId" optionLabel="name" optionValue="id" placeholder="Selecciona una categoría para este evento" styleClass="w-full"  inputId="eventCategory"></p-dropdown>
-                    <label for="eventCategory">Selecciona una categoríapara este evento</label>
-                </span>
+            <div class="">
+                <form [formGroup]="createEventForm" class="grid gap-3" >
+        
+                    <div class="col-12">
+                        <span class="p-float-label w-full">
+                            <p-dropdown (onChange)="changeCreateEventForm($event )" [options]="eventCategories" formControlName="eventCategoryId" optionLabel="name" optionValue="id" placeholder="Selecciona una categoría para este evento" styleClass="w-full"  inputId="eventCategory"></p-dropdown>
+                            <label for="eventCategory">Selecciona una categoríapara este evento</label>
+                        </span>
+                    </div>
+        
+        
+                    <div class="col-12" >
+                        <span class="p-float-label w-full ">
+                            <input pInputText id="username" formControlName="title" class="w-full" />
+                            <label htmlFor="username">Titulo</label>
+                        </span>
+                    </div>
+        
+                    <div class="col-12" >
+                        <span class="p-float-label w-full">
+                            <input pInputText id="username" formControlName="description" class="w-full" />
+                            <label htmlFor="username">Descripción</label>
+                        </span>
+                    </div>
+        
+                    <div class=" col-6 flex mb-3" >
+                        <p-checkbox [binary]="true" label="El evento será privado?" formControlName="isPrivate"></p-checkbox>
+                    </div>
+        
+                    <div *ngIf="!isVirtual" class="col-12">
+                            <span class="p-float-label w-full">
+                                <input pInputText id="place" formControlName="place" class="w-full" />
+                                <label for="place">Lugar</label>
+                            </span>
+                    </div>
+                   
+        
+                    <div *ngIf="isVirtual" class="col-12">
+                        <span class="p-float-label w-full">
+                            <input pInputText id="link" formControlName="link" class="w-full" />
+                            <label for="link">Link</label>
+                        </span>
+                </div>
+        
+                    <div class="col-6 flex gap-3 justiy-content-center align-items-center relative" >
+                            <p-calendar  [showSeconds]="false"  formControlName="dateTime" [showTime]="true" styleClass="" placeholder="Fecha y Hora" [panelStyle]="{'margin-top': '200px'}" ></p-calendar>
+                    </div>
+        
+        
+                    <div class="col-12">
+                        <span class="p-float-label w-full">
+                            <p-dropdown [options]="communities" formControlName="communityId" optionLabel="name" optionValue="id" placeholder="Selecciona una comunidad" styleClass="w-full"  inputId="community"></p-dropdown>
+                            <label for="community">Selecciona una comunidad</label>
+                        </span>
+                    </div>
+        
+                  
+        
+                    <div class="col-12" >
+                        <label htmlFor="score" class="text-400">
+                            Puntaje
+                        </label>
+                        <span class="p-float-label w-full">
+                            <p-inputNumber 
+                                inputId="locale-us" 
+                                locale="en-US" 
+                                id="score" 
+                                inputId="integeronly" 
+                                inputId="minmax" 
+                                [showButtons]="true" 
+                                inputId="minmax-buttons"  
+                                [min]="1" 
+                                [max]="100" 
+                                formControlName="score" 
+                                class="w-full" 
+                            />
+                        </span>
+                    </div>
+        
+                    <div class="w-full flex justify-content-end">
+        
+                        <p-button [loading]="isLoading" (click)="createEvent()" icon="pi pi-check"  label="Crear" styleClass="p-button-rounded"></p-button>
+                    </div>
+                    
+                    
+                </form>
             </div>
-
-
-            <div class="col-12" >
-                <span class="p-float-label w-full ">
-                    <input pInputText id="username" formControlName="title" class="w-full" />
-                    <label htmlFor="username">Titulo</label>
-                </span>
-            </div>
-
-            <div class="col-12" >
-                <span class="p-float-label w-full">
-                    <input pInputText id="username" formControlName="description" class="w-full" />
-                    <label htmlFor="username">Descripción</label>
-                </span>
-            </div>
-
-            <div class=" col-6 flex mb-3" >
-                <p-checkbox [binary]="true" label="El evento será privado?" formControlName="isPrivate"></p-checkbox>
-            </div>
-
-            <div *ngIf="!isVirtual" class="col-12">
-                    <span class="p-float-label w-full">
-                        <input pInputText id="place" formControlName="place" class="w-full" />
-                        <label for="place">Lugar</label>
-                    </span>
-            </div>
-           
-
-            <div *ngIf="isVirtual" class="col-12">
-                <span class="p-float-label w-full">
-                    <input pInputText id="link" formControlName="link" class="w-full" />
-                    <label for="link">Link</label>
-                </span>
-        </div>
-
-            <div class="col-6 flex gap-3 justiy-content-center align-items-center" >
-                    <p-calendar  [showSeconds]="false"  formControlName="dateTime" [showTime]="true" styleClass="" placeholder="Fecha y Hora" panelStyleClass="mt-8  "></p-calendar>
-            </div>
-
-
-            <div class="col-12">
-                <span class="p-float-label w-full">
-                    <p-dropdown [options]="communities" formControlName="communityId" optionLabel="name" optionValue="id" placeholder="Selecciona una comunidad" styleClass="w-full"  inputId="community"></p-dropdown>
-                    <label for="community">Selecciona una comunidad</label>
-                </span>
-            </div>
-
-          
-
-            <div class="col-12" >
-                <label htmlFor="score" class="text-400">
-                    Puntaje
-                </label>
-                <span class="p-float-label w-full">
-                    <p-inputNumber 
-                        inputId="locale-us" 
-                        locale="en-US" 
-                        id="score" 
-                        inputId="integeronly" 
-                        inputId="minmax" 
-                        [showButtons]="true" 
-                        inputId="minmax-buttons"  
-                        [min]="1" 
-                        [max]="100" 
-                        formControlName="score" 
-                        class="w-full" 
-                    />
-                </span>
-            </div>
-
-            <div class="w-full flex justify-content-end">
-
-                <p-button [loading]="isLoading" (click)="createEvent()" icon="pi pi-check"  label="Crear" styleClass="p-button-rounded"></p-button>
-            </div>
+        </p-tabPanel>
+        <p-tabPanel *ngIf="!createEventForm.get('link')?.value" [disabled]="isDisabledConsumableTab">
+            <ng-template pTemplate="header">
+                <span class="text-xl font-bold">Consumible</span>
+            </ng-template>
+        
+            <form [formGroup]="consumableForm" class="grid gap-3">
             
+                <div formArrayName="consumables" class="col-12  h-25rem overflow-y-scroll mb-5 mt-5">
+                    <div class="flex justify-content-between align-items-center">
+                        <span class="text-500" *ngIf="consumablesControls.controls.length > 0">Consumibles para este evento</span>
+                        <p-button label="Agregar consumible" styleClass="p-button-outlined p-button-sm"
+                            (onClick)="addConsumable()"></p-button>
+                    </div>
             
-        </form>
-    </div>
+                    <div class="col-12 flex gap-2 align-items-center"
+                        *ngFor="let consumable of consumablesControls.controls; let i = index">
+                        <span class="p-float-label w-full">
+                            <input pInputText id="consumable" [formControlName]="i" class="w-full" placeholder="Consumible {{i + 1}}" />
+                        </span>
+                        <p-button icon="pi pi-times" (onClick)="removeConsumable(i)"
+                            styleClass="p-button-rounded p-button-danger p-button-sm">
+                        </p-button>
+                    </div>
+                </div>|
+            
+                <p-button [loading]="isLoading" (click)="createConsumables()" icon="pi pi-check" label="Crear"
+                    styleClass="p-button-rounded absolute bottom-0 right-0 m-2"></p-button>
+            
+            </form>
+        
+        </p-tabPanel>
+    
+    </p-tabView>
+
 
 
 

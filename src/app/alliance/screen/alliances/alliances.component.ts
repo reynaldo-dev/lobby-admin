@@ -15,8 +15,10 @@ export class AlliancesComponent implements OnInit {
     this.allianceService.getAlliances().subscribe();
   }
 
-  get alliances(): IAlliance[] {
-    return this.allianceService.alliances;
+  get alliances(): IAlliance[] | null {
+    return this.allianceService.alliances
+      ? this.allianceService.alliances
+      : null;
   }
 
   createAlliance(): void {

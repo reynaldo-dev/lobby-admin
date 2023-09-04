@@ -1,6 +1,14 @@
-<main>
 
 
+<div *ngIf="!event">
+    <app-loader />
+</div>
+
+
+
+
+
+<main *ngIf="event">
     <div class="text-600 md:mt-8 w-full flex justify-content-between">
         <div>
             <h1>{{event?.title}}</h1>
@@ -160,8 +168,8 @@
                         </div>
                     </div>
 
-                    <div class="col-12">
-                        <app-event-user-confirmation-grid [usersEventAssistanceConfirmation]="eventAssistanceConfirmation?.users" />
+                    <div class="col-12" *ngIf="eventAssistanceConfirmation.users.length > 0">
+                        <app-event-user-confirmation-grid [usersEventAssistanceConfirmation]="eventAssistanceConfirmation.users" />
                     </div>
                 </div>
             </p-tabPanel>
@@ -174,7 +182,7 @@
                     </div>
                 </ng-template>
 
-                <ng-template [ngIf]="event.Consumable.length > 0" >
+                <div *ngIf="event.Consumable.length > 0" >
                     <p-table [value]="event.Consumable" [tableStyle]="{ 'min-width': '50rem' }">
                         <ng-template pTemplate="header">
                             <tr>
@@ -189,7 +197,7 @@
                             </tr>
                         </ng-template>
                     </p-table>
-                </ng-template>
+                </div>
                 
             </p-tabPanel>
         </p-tabView>

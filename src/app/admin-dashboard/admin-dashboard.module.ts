@@ -15,6 +15,7 @@ import { DashboardMainComponent } from './screens/dashboard-main/dashboard-main.
 import { TicketsModule } from '../tickets/tickets.module';
 import { AppCommonModule } from '../common/common.module';
 import { AllianceModule } from '../alliance/alliance.module';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { AllianceModule } from '../alliance/alliance.module';
     EventsModule,
     UsersModule,
     TicketsModule,
+    ComponentsModule,
   ],
 })
 export class AdminDashboardModule {}

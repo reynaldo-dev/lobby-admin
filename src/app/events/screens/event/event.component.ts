@@ -11,6 +11,7 @@ import { PdfMakerService } from 'src/app/common/services/pdf-maker.service';
   styleUrls: ['./event.component.css'],
 })
 export class EventComponent implements OnInit {
+  public isLoadingData = true;
   private eventId!: string;
   public eventStatuses = {
     ACTIVE: EventStatus.ACTIVE,
@@ -27,6 +28,7 @@ export class EventComponent implements OnInit {
       this.eventId = params.get('id')!;
       this.eventService.getEventById(this.eventId).subscribe();
       this.eventService.getAssistanceConfirmation(this.eventId).subscribe();
+      this.isLoadingData = false;
     });
   }
 

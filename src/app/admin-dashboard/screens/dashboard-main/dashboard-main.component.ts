@@ -36,11 +36,11 @@ export class DashboardMainComponent implements OnInit {
     return this.authService.user;
   }
 
-  get events(): IEvent[] {
+  get events(): IEvent[] | null {
     return this.eventsService.events;
   }
 
-  get eventsAtDate(): IEvent[] {
+  get eventsAtDate(): IEvent[] | null {
     return this.eventsService.eventsAtDate;
   }
 
@@ -57,6 +57,8 @@ export class DashboardMainComponent implements OnInit {
     this.eventsService.getEventsAtDate(new Date().toISOString()).subscribe();
     this.eventsService.getInActiveEventsCount().subscribe();
     this.eventsService.getActiveEventsCount().subscribe();
+    this.eventsService.getEvents().subscribe();
+
     if (this.authService.authState.user.role === AllowedRoles.SPONSOR) {
       this.items = [
         {

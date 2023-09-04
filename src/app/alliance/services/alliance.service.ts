@@ -9,7 +9,7 @@ import { ICreateAlliance } from '../interfaces/create-alliance.interface';
   providedIn: 'root',
 })
 export class AllianceService {
-  private _alliances: IAlliance[] = [];
+  private _alliances: IAlliance[] | null = null;
   private _selectedAlliance: BehaviorSubject<IAlliance> =
     new BehaviorSubject<IAlliance>({} as IAlliance);
   private _apiUrl = `${environment.apiUrl}/alliance`;
@@ -25,7 +25,7 @@ export class AllianceService {
     });
   }
 
-  get alliances(): IAlliance[] {
+  get alliances(): IAlliance[] | null {
     return this._alliances;
   }
 

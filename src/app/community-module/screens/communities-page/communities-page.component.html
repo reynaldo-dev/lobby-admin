@@ -1,4 +1,10 @@
-<section class="grid">
+
+<div *ngIf="!communities" >
+    <app-loader/>
+</div>
+
+
+<section class="grid" *ngIf="communities">
 
     <div *ngFor="let community of communities" class="md:col-3 col-12">
        <app-community-card [community]="community" />

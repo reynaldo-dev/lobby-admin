@@ -1,29 +1,16 @@
-import { Component, OnInit, effect } from '@angular/core';
-import { EventsService } from '../../services/events.service';
+import { Component, OnInit } from '@angular/core';
 import {
+  FormArray,
   FormBuilder,
   FormControl,
-  FormGroup,
   Validators,
 } from '@angular/forms';
-import { IEvent } from '../../interfaces/event.interface';
 import { MessageService } from 'primeng/api';
+import { DropdownChangeEvent } from 'primeng/dropdown';
 import { CommunityService } from 'src/app/community-module/services/community.service';
 import { EventsCategoryService } from 'src/app/events-category/services/events-category.service';
-import { DropdownChangeEvent } from 'primeng/dropdown';
-
-interface IEventForm {
-  title: FormControl<string | null>;
-  description: FormControl<string | null>;
-  status: FormControl<string | null>;
-  isPrivate: FormControl<string | null>;
-  dateTime: FormControl<string | null>;
-  communityId: FormControl<string | null>;
-  eventCategoryId: FormControl<string | null>;
-  score: FormControl<number | null>;
-  place?: FormControl<string | null>;
-  link?: FormControl<string | null>;
-}
+import { ICreateConsumable } from '../../interfaces/create-consumable.interface';
+import { EventsService } from '../../services/events.service';
 
 @Component({
   selector: 'app-create-event',
@@ -32,8 +19,13 @@ interface IEventForm {
   providers: [MessageService],
 })
 export class CreateEventComponent implements OnInit {
+  public activeIndexTab: number = 0;
+  public isDisabledEventTab: boolean = false;
+  public isDisabledConsumableTab: boolean = true;
+  public createdEventId!: string;
   public isVirtual = false;
   public isModalCreateVisible = false;
+
   public createEventForm = this.fb.group({
     title: ['', Validators.required],
     description: ['', Validators.required],
@@ -45,8 +37,11 @@ export class CreateEventComponent implements OnInit {
     place: [''],
     link: [''],
   });
-
   public isLoading: boolean = false;
+
+  public consumableForm = this.fb.group({
+    consumables: this.fb.array([this.fb.control('', [Validators.required])]),
+  });
 
   constructor(
     private eventsService: EventsService,
@@ -69,6 +64,10 @@ export class CreateEventComponent implements OnInit {
 
   get eventCategories() {
     return this.eventsCategoryService.eventCategories;
+  }
+
+  get consumablesControls() {
+    return this.consumableForm.get('consumables') as FormArray;
   }
 
   public changeCreateEventForm = (event: DropdownChangeEvent) => {
@@ -107,12 +106,16 @@ export class CreateEventComponent implements OnInit {
     this.createEventForm.patchValue({ isPrivate });
     if (this.createEventForm.valid) {
       this.eventsService.createEvent(this.createEventForm.value).subscribe({
-        next: (res) => {
+        next: (res: any) => {
+          this.createdEventId = res.data.id;
+          this.isDisabledEventTab = true;
+          this.isDisabledConsumableTab = false;
+          this.activeIndexTab = 1;
+          this.createEventForm.reset();
           this.messageService.add({
             severity: 'success',
             summary: 'Evento creado',
           });
-          this.createEventForm.reset();
         },
 
         error: (err) => {
@@ -130,7 +133,44 @@ export class CreateEventComponent implements OnInit {
     this.isLoading = false;
   }
 
+  createConsumables() {
+    this.isLoading = true;
+    const payload: ICreateConsumable = {
+      eventId: this.createdEventId,
+      consumables: this.consumableForm.value.consumables as string[],
+    };
+
+    if (this.consumableForm.valid) {
+      this.eventsService.createConsumablesForEvent(payload).subscribe({
+        next: (res) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Consumibles creados',
+          });
+        },
+
+        error: (err) => {
+          this.messageService.add({ severity: 'error', summary: err });
+        },
+      });
+      this.consumableForm.reset();
+    }
+    this.isLoading = false;
+
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Formulario invalido, verifica que ningun campo quede vacío',
+    });
+  }
+
   closeModalCreate() {
     this.eventsService.toggleCreateModal();
+  }
+
+  removeConsumable(i: number) {
+    this.consumablesControls.removeAt(i);
+  }
+  addConsumable() {
+    this.consumablesControls.push(this.fb.control('', [Validators.required]));
   }
 }

@@ -5,14 +5,15 @@ import { IEvent } from '../interfaces/event.interface';
 import { IEventDetails } from '../interfaces/event-details.interface';
 import { IEventAssistanceConfirmation } from '../interfaces/event-assistance-confirmation.interface';
 import { environment } from 'src/environments/environment';
+import { ICreateConsumable } from '../interfaces/create-consumable.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventsService {
   private _event!: IEventDetails;
-  private _events: IEvent[] = [];
-  private _eventsAtDate: IEvent[] = [];
+  private _events!: IEvent[] | null;
+  private _eventsAtDate!: IEvent[] | null;
   private _activeEvents!: number;
   private _inactiveEvents!: number;
   public isModalCreateVisible = false;
@@ -40,11 +41,11 @@ export class EventsService {
     this.selectedEvent.next(event);
   }
 
-  get events(): IEvent[] {
+  get events(): IEvent[] | null {
     return this._events;
   }
 
-  get eventsAtDate(): IEvent[] {
+  get eventsAtDate(): IEvent[] | null {
     return this._eventsAtDate;
   }
 
@@ -145,6 +146,7 @@ export class EventsService {
       )
       .pipe(
         tap((data) => {
+          console.log('data', data);
           this._inactiveEvents = data.inactiveEvents;
         }),
         catchError((err) => {
@@ -178,6 +180,22 @@ export class EventsService {
       })
       .pipe(
         tap((event) => {
+          this.getEvents().subscribe();
+          this.getEventsAtDate(new Date().toISOString()).subscribe();
+        }),
+        catchError((err) => {
+          return throwError(() => err.error.message);
+        })
+      );
+  }
+
+  createConsumablesForEvent(payload: ICreateConsumable) {
+    return this.http
+      .post(`${environment.apiUrl}/consumables`, payload, {
+        headers: this.headers,
+      })
+      .pipe(
+        tap((data) => {
           this.getEvents().subscribe();
           this.getEventsAtDate(new Date().toISOString()).subscribe();
         }),

@@ -7,6 +7,7 @@ import { AllianceComponent } from './screen/alliance/alliance.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateAllianceComponent } from './components/create-alliance/create-alliance.component';
 import { UpdateAllianceComponent } from './components/update-alliance/update-alliance.component';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { UpdateAllianceComponent } from './components/update-alliance/update-all
     AppCommonModule,
     FormsModule,
     ReactiveFormsModule,
+    ComponentsModule,
   ],
   exports: [AlliancesComponent, AllianceComponent],
 })

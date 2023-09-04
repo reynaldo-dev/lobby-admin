@@ -26,10 +26,12 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ScrollerModule } from 'primeng/scroller';
 import { TabViewModule } from 'primeng/tabview';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [],
   imports: [
+    ProgressSpinnerModule,
     ButtonModule,
     CardModule,
     CarouselModule,

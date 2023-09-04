@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { CommunityCardComponent } from './components/community-card/community-card.component';
 import { EventsModule } from '../events/events.module';
 import { CommunityMembersComponent } from './components/community-members/community-members.component';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,13 @@ import { CommunityMembersComponent } from './components/community-members/commun
     CommunityCardComponent,
     CommunityMembersComponent,
   ],
-  imports: [CommonModule, PrimeNgModule, FormsModule, EventsModule],
+  imports: [
+    CommonModule,
+    PrimeNgModule,
+    FormsModule,
+    EventsModule,
+    ComponentsModule,
+  ],
   exports: [
     CommunitiesPageComponent,
     CommunityComponent,

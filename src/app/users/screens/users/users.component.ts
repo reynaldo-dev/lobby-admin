@@ -8,7 +8,8 @@ import { UsersService } from '../../services/users.service';
   styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit {
-  users: UserData[] = [];
+  public isLoadingData = true;
+  users: UserData[] | null = null;
   selectedUser: UserData | null = null;
   isModalCreateVisible = false;
   isModalUpdateVisible = false;
@@ -18,7 +19,7 @@ export class UsersComponent implements OnInit {
   constructor(private usersService: UsersService) {}
 
   ngOnInit(): void {
-    this.usersService.users$.subscribe((users: UserData[]) => {
+    this.usersService.users$.subscribe((users: UserData[] | null) => {
       this.users = users;
     });
 
@@ -29,13 +30,9 @@ export class UsersComponent implements OnInit {
     this.usersService.isModalUpdateVisible.subscribe((isVisible: boolean) => {
       this.isModalUpdateVisible = isVisible;
     });
-  }
 
-  // getUser(id: string): void {
-  //   this.usersService.getUser(id).subscribe((user: UserData | null) => {
-  //     this.selectedUser = user;
-  //   });
-  // }
+    this.isLoadingData = false;
+  }
 
   openCreateModal(): void {
     this.usersService.toggleCreateModal(true);

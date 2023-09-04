@@ -11,6 +11,7 @@ import { UpdateEventComponent } from './components/update-event/update-event.com
 import { AdminDashboardModule } from '../admin-dashboard/admin-dashboard.module';
 import { AppCommonModule } from '../common/common.module';
 import { EventUserConfirmationGridComponent } from './components/event-user-confirmation-grid/event-user-confirmation-grid.component';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { EventUserConfirmationGridComponent } from './components/event-user-conf
     PrimeNgModule,
     FormsModule,
     ReactiveFormsModule,
+    ComponentsModule,
   ],
   exports: [
     EventsComponent,

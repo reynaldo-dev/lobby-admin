@@ -31,7 +31,7 @@ interface IRoleResponse {
   providedIn: 'root',
 })
 export class UsersService {
-  private _users = new BehaviorSubject<UserData[]>([]);
+  private _users = new BehaviorSubject<UserData[] | null>(null);
   private headers!: HttpHeaders;
   private readonly baseUrl = `${environment.apiUrl}/user`;
   public roles: IRole[] = [];
@@ -64,7 +64,7 @@ export class UsersService {
     this.getRoles().subscribe();
   }
 
-  get users$(): Observable<UserData[]> {
+  get users$(): Observable<UserData[] | null> {
     return this._users.asObservable();
   }
 

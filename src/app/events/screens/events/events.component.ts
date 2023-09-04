@@ -11,6 +11,7 @@ import { getFormattedDate } from 'src/app/helpers/departments/get-formatted-date
   styleUrls: ['./events.component.css'],
 })
 export class EventsComponent implements OnInit {
+  public isLoadingData = true;
   public loading: boolean = false;
   public filter = '';
   public filterEventState = '';
@@ -56,6 +57,7 @@ export class EventsComponent implements OnInit {
     this.eventsCategoryService.getEventCategories().subscribe();
     this.eventsService.getInActiveEventsCount().subscribe();
     this.eventsService.getActiveEventsCount().subscribe();
+    this.isLoadingData = false;
   }
 
   get inactiveEventsCount(): number {
@@ -69,7 +71,7 @@ export class EventsComponent implements OnInit {
   get communities() {
     return this.communityService.communities;
   }
-  get events(): IEvent[] {
+  get events(): IEvent[] | null {
     return this.eventsService.events;
   }
 

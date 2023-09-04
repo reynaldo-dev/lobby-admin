@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EventsStatsComponent } from './components/events-stats/events-stats.component';
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
@@ -15,7 +15,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     ProfileSignComponent,
     UpdateProfileComponent,
   ],
-  exports: [EventsStatsComponent, ProfileScreenComponent, ProfileSignComponent],
-  imports: [CommonModule, PrimeNgModule, UsersModule, ReactiveFormsModule],
+  exports: [
+    EventsStatsComponent,
+    ProfileScreenComponent,
+    ProfileSignComponent,
+    UpdateProfileComponent,
+  ],
+  imports: [CommonModule, PrimeNgModule, ReactiveFormsModule, UsersModule],
 })
 export class AppCommonModule {}

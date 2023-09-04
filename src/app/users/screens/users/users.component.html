@@ -1,124 +1,133 @@
-<h3 class="text-500 mt-5">Usuarios</h3>
 
-<div class="mt-7">
-    <p-table #dt1 [value]="users" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
-        [rowsPerPageOptions]="[10,20,30]" [loading]="loading" [paginator]="true"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [globalFilterFields]="['name', 'email', 'lastname', 'rol.role']">
-        <ng-template pTemplate="caption">
-            <div class="flex">
-                <span class="p-input-icon-left ml-auto">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" [placeholder]="'Buscar usuarios'" [(ngModel)]="filter"
-                        (input)="dt1.filterGlobal(filter, 'contains')" />
-                </span>
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="min-width:15rem">
-                    <div class="flex align-items-center">
-                        Nombre
-                        <p-columnFilter type="text" field="name" placeholder="Busca un nombre" display="menu"
-                            matchMode="contains" [showMatchModes]="false" [showOperator]="false"
-                            [showAddButton]="false"></p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:15rem">
-                    <div class="flex align-items-center">
-                        Apellido
-                        <p-columnFilter type="text" field="lastname" placeholder="Busca un apellido" display="menu"
-                            matchMode="contains" [showMatchModes]="false" [showOperator]="false"
-                            [showAddButton]="false"></p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:15rem">
-                    <div class="flex align-items-center">
-                        Email
-                        <p-columnFilter type="text" field="email" placeholder="Busca un email" display="menu"
-                            matchMode="contains" [showMatchModes]="false" [showOperator]="false"
-                            [showAddButton]="false"></p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:15rem">
-                    <div class="flex align-items-center">
-                        Departamento
-                        <p-columnFilter type="text" field="email" placeholder="Busca un email" display="menu"
-                            matchMode="contains" [showMatchModes]="false" [showOperator]="false"
-                            [showAddButton]="false"></p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:15rem">
-                    <div class="flex align-items-center">
-                        Ciudad
-                        <p-columnFilter type="text" field="email" placeholder="Busca un email" display="menu"
-                            matchMode="contains" [showMatchModes]="false" [showOperator]="false"
-                            [showAddButton]="false"></p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:15rem">
-                    <div class="flex align-items-center">
-                        Telefono
-                        <p-columnFilter type="text" field="email" placeholder="Busca un email" display="menu"
-                            matchMode="contains" [showMatchModes]="false" [showOperator]="false"
-                            [showAddButton]="false"></p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:10rem">
-                    <div class="flex align-items-center">
-                        Rol
-                        <p-columnFilter field="rol.role" placeholder="Busca por rol" matchMode="contains" display="menu"
-                            [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                        </p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:10rem">
-                    <div class="flex align-items-center">
-                        Acciones
-                    </div>
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-user>
-            <tr>
-                <td>
-                    {{ user.name }}
-                </td>
-                <td>
-                    {{ user.lastname }}
-                </td>
-                <td>
-                    {{ user.email }}
-                </td>
-                <td>
-                    {{ user.department }}
-                </td>
-                <td>
-                    {{ user.city }}
-                </td>
-                <td>
-                    {{ user.phone }}
-                </td>
-                <td>
-                    {{ user.rol.role }}
-                </td>
-                <td class="flex gap-2">
-                    <button pButton pRipple type="button" icon="pi pi-pencil"
-                        class="p-button-rounded  p-button-primary p-mr-3 p-button-sm"
-                        (click)="openUpdateModal(user)"></button>
-                    <!-- <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-sm" (click)="deleteUser(user)"></button> -->
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-            <tr>
-                <td colspan="4">Usuarios no encontrados.</td>
-            </tr>
-        </ng-template>
-    </p-table>
-    <app-update-user />
-    <app-create-user />
-    <button pButton type="button" icon="pi pi-plus"
-        class="p-button-rounded  p-button-primary md:p-5 sm:p-1  p-button-lg absolute bottom-0 right-0 mr-5 mb-5"
-        (click)="openCreateModal()"></button>
+<div *ngIf="!users" >
+    <app-loader/>
+</div>
+
+
+
+<div *ngIf="users" >
+    <h3 class="text-500 mt-5">Usuarios</h3>
+    
+    <div class="mt-7">
+        <p-table #dt1 [value]="users" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10,20,30]" [loading]="loading" [paginator]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [globalFilterFields]="['name', 'email', 'lastname', 'rol.role']">
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <span class="p-input-icon-left ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" [placeholder]="'Buscar usuarios'" [(ngModel)]="filter"
+                            (input)="dt1.filterGlobal(filter, 'contains')" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="min-width:15rem">
+                        <div class="flex align-items-center">
+                            Nombre
+                            <p-columnFilter type="text" field="name" placeholder="Busca un nombre" display="menu"
+                                matchMode="contains" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th style="min-width:15rem">
+                        <div class="flex align-items-center">
+                            Apellido
+                            <p-columnFilter type="text" field="lastname" placeholder="Busca un apellido" display="menu"
+                                matchMode="contains" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th style="min-width:15rem">
+                        <div class="flex align-items-center">
+                            Email
+                            <p-columnFilter type="text" field="email" placeholder="Busca un email" display="menu"
+                                matchMode="contains" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th style="min-width:15rem">
+                        <div class="flex align-items-center">
+                            Departamento
+                            <p-columnFilter type="text" field="email" placeholder="Busca un email" display="menu"
+                                matchMode="contains" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th style="min-width:15rem">
+                        <div class="flex align-items-center">
+                            Ciudad
+                            <p-columnFilter type="text" field="email" placeholder="Busca un email" display="menu"
+                                matchMode="contains" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th style="min-width:15rem">
+                        <div class="flex align-items-center">
+                            Telefono
+                            <p-columnFilter type="text" field="email" placeholder="Busca un email" display="menu"
+                                matchMode="contains" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th style="min-width:10rem">
+                        <div class="flex align-items-center">
+                            Rol
+                            <p-columnFilter field="rol.role" placeholder="Busca por rol" matchMode="contains" display="menu"
+                                [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                            </p-columnFilter>
+                        </div>
+                    </th>
+                    <th style="min-width:10rem">
+                        <div class="flex align-items-center">
+                            Acciones
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-user>
+                <tr>
+                    <td>
+                        {{ user.name }}
+                    </td>
+                    <td>
+                        {{ user.lastname }}
+                    </td>
+                    <td>
+                        {{ user.email }}
+                    </td>
+                    <td>
+                        {{ user.department }}
+                    </td>
+                    <td>
+                        {{ user.city }}
+                    </td>
+                    <td>
+                        {{ user.phone }}
+                    </td>
+                    <td>
+                        {{ user.rol.role }}
+                    </td>
+                    <td class="flex gap-2">
+                        <button pButton pRipple type="button" icon="pi pi-pencil"
+                            class="p-button-rounded  p-button-primary p-mr-3 p-button-sm"
+                            (click)="openUpdateModal(user)"></button>
+                        <!-- <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-sm" (click)="deleteUser(user)"></button> -->
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="4">Usuarios no encontrados.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <app-update-user />
+        <app-create-user />
+        <button pButton type="button" icon="pi pi-plus"
+            class="p-button-rounded  p-button-primary md:p-5 sm:p-1  p-button-lg absolute bottom-0 right-0 mr-5 mb-5"
+            (click)="openCreateModal()"></button>
+    </div>
 </div>

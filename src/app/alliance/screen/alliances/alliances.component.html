@@ -1,9 +1,16 @@
-<main>
+
+
+<div *ngIf="!alliances">
+    <app-loader/>
+</div>
+
+
+<main *ngIf="alliances">
     <div class="mt-8">
         <h1 class="text-500">Alianzas</h1>
     </div>
 
-    <div class="mt-5">
+    <div class="mt-5" >
         <p-table #dt1 [value]="alliances" dataKey="id" [rows]="3" [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[3,10,20]"  [paginator]="true"
         currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros"
