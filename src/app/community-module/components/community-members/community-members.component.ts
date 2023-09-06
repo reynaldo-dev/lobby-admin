@@ -17,7 +17,7 @@ export class CommunityMembersComponent {
   }
 
   get communityMembers() {
-    return this.communityService.communityMembers.users;
+    return this.communityService.communityMembers?.users;
   }
 
   closeModal() {

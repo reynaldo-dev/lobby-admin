@@ -1,17 +1,17 @@
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppCommonModule } from '../common/common.module';
+import { ComponentsModule } from '../components/components.module';
+import { PrimeNgModule } from '../prime-ng/prime-ng.module';
+import { CreateEventComponent } from './components/create-event/create-event.component';
+import { EventCardComponent } from './components/event-card/event-card.component';
+import { EventUserConfirmationGridComponent } from './components/event-user-confirmation-grid/event-user-confirmation-grid.component';
+import { UpdateEventComponent } from './components/update-event/update-event.component';
+import { EventsRoutingModule } from './events-routing.module';
 import { EventComponent } from './screens/event/event.component';
 import { EventsComponent } from './screens/events/events.component';
-import { EventsRoutingModule } from './events-routing.module';
-import { NgModule } from '@angular/core';
-import { PrimeNgModule } from '../prime-ng/prime-ng.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EventCardComponent } from './components/event-card/event-card.component';
-import { CreateEventComponent } from './components/create-event/create-event.component';
-import { UpdateEventComponent } from './components/update-event/update-event.component';
-import { AdminDashboardModule } from '../admin-dashboard/admin-dashboard.module';
-import { AppCommonModule } from '../common/common.module';
-import { EventUserConfirmationGridComponent } from './components/event-user-confirmation-grid/event-user-confirmation-grid.component';
-import { ComponentsModule } from '../components/components.module';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   declarations: [
@@ -23,6 +23,7 @@ import { ComponentsModule } from '../components/components.module';
     EventUserConfirmationGridComponent,
   ],
   imports: [
+    QRCodeModule,
     CommonModule,
     AppCommonModule,
     EventsRoutingModule,

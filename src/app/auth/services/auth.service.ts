@@ -1,14 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginResponse } from '../interfaces/user.interface';
-import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { EventsService } from 'src/app/events/services/events.service';
-import { CommunityService } from 'src/app/community-module/services/community.service';
-import { UsersService } from 'src/app/users/services/users.service';
-import { EventsCategoryService } from 'src/app/events-category/services/events-category.service';
-import { environment } from 'src/environments/environment';
+import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import { IProfileResponse } from 'src/app/common/interfaces/profile-response.interface';
+import { environment } from 'src/environments/environment';
+import { LoginResponse } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root',

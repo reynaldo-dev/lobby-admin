@@ -60,11 +60,11 @@ export class EventsComponent implements OnInit {
     this.isLoadingData = false;
   }
 
-  get inactiveEventsCount(): number {
+  get inactiveEventsCount(): number | null {
     return this.eventsService.inactiveEvents;
   }
 
-  get activeEventsCount(): number {
+  get activeEventsCount(): number | null {
     return this.eventsService.activeEvents;
   }
 

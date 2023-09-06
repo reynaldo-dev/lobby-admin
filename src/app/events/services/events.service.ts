@@ -6,16 +6,18 @@ import { IEventDetails } from '../interfaces/event-details.interface';
 import { IEventAssistanceConfirmation } from '../interfaces/event-assistance-confirmation.interface';
 import { environment } from 'src/environments/environment';
 import { ICreateConsumable } from '../interfaces/create-consumable.interface';
+import { IEventQRData } from '../interfaces/event-qr.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventsService {
   private _event!: IEventDetails;
+  private eventQR: IEventQRData | null = null;
   private _events!: IEvent[] | null;
   private _eventsAtDate!: IEvent[] | null;
-  private _activeEvents!: number;
-  private _inactiveEvents!: number;
+  private _activeEvents!: number | null;
+  private _inactiveEvents!: number | null;
   public isModalCreateVisible = false;
   public modalCreateStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
   public isModalUpdateVisible = false;
@@ -49,11 +51,11 @@ export class EventsService {
     return this._eventsAtDate;
   }
 
-  get activeEvents(): number {
+  get activeEvents(): number | null {
     return this._activeEvents;
   }
 
-  get inactiveEvents(): number {
+  get inactiveEvents(): number | null {
     return this._inactiveEvents;
   }
 
@@ -67,6 +69,10 @@ export class EventsService {
 
   get eventAssistanceConfirmation(): IEventAssistanceConfirmation {
     return this._eventAssistanceConfirmation;
+  }
+
+  get eventQRData(): IEventQRData | null {
+    return this.eventQR;
   }
 
   getEvents() {
@@ -97,16 +103,13 @@ export class EventsService {
   }
 
   getEventsAtDate(date: string) {
-    const dateToIso = new Date(date).toISOString();
-    const time = new Date(date).toLocaleTimeString();
-    const dateIso = `${dateToIso.split('T')[0]}T${time}Z`;
+    // const dateToIso = new Date(date).toISOString();
+    // const time = new Date(date).toLocaleTimeString();
+    // const dateIso = `${dateToIso.split('T')[0]}T${time}Z`;
     return this.http
-      .get<IEvent[]>(
-        `${environment.apiUrl}/events/at-date?fromDate=${dateIso}`,
-        {
-          headers: this.headers,
-        }
-      )
+      .get<IEvent[]>(`${environment.apiUrl}/events/at-date?fromDate=${date}`, {
+        headers: this.headers,
+      })
       .pipe(
         tap((events: IEvent[]) => {
           this._eventsAtDate = events;
@@ -146,7 +149,6 @@ export class EventsService {
       )
       .pipe(
         tap((data) => {
-          console.log('data', data);
           this._inactiveEvents = data.inactiveEvents;
         }),
         catchError((err) => {
@@ -166,6 +168,21 @@ export class EventsService {
       .pipe(
         tap((data) => {
           this._eventAssistanceConfirmation = data;
+        }),
+        catchError((err) => {
+          return throwError(() => err.error.message);
+        })
+      );
+  }
+
+  getEventQRData(eventId: string) {
+    return this.http
+      .get<IEventQRData>(`${environment.apiUrl}/event-qr/qr-event/${eventId}`, {
+        headers: this.headers,
+      })
+      .pipe(
+        tap((data) => {
+          this.eventQR = data;
         }),
         catchError((err) => {
           return throwError(() => err.error.message);

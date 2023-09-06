@@ -18,10 +18,11 @@ export class UpdateEventComponent implements OnInit {
     title: ['', Validators.required],
     description: ['', Validators.required],
     isPrivate: ['', Validators.required],
-    place: ['', Validators.required],
+    place: [''],
+    link: [''],
     // dateTime: ['', Validators.required],
     communityId: ['', Validators.required],
-    score: [0, Validators.required],
+    score: [1, Validators.required],
   });
   public selectedEventId: string | undefined;
 
@@ -43,6 +44,7 @@ export class UpdateEventComponent implements OnInit {
         description: event?.description,
         isPrivate: event?.isPrivate,
         place: event?.place,
+        link: event?.link,
         communityId: event?.communityId,
         score: event?.score,
       });
@@ -70,23 +72,32 @@ export class UpdateEventComponent implements OnInit {
         : 'No';
     this.updateEventForm.patchValue({ isPrivate });
 
-    this.eventsService
-      .updateEvent(
-        this.updateEventForm.value as IEvent,
-        this.selectedEventId as string
-      )
-      .subscribe({
-        next: (res) => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Evento actualizado',
-          });
-          this.updateEventForm.reset();
-        },
-        error: (err) => {
-          this.messageService.add({ severity: 'error', summary: err });
-        },
-      });
+    if (this.updateEventForm.valid) {
+      this.eventsService
+        .updateEvent(
+          this.updateEventForm.value as IEvent,
+          this.selectedEventId as string
+        )
+        .subscribe({
+          next: (res) => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Evento actualizado',
+            });
+            this.updateEventForm.reset();
+          },
+          error: (err) => {
+            this.messageService.add({ severity: 'error', summary: err });
+          },
+        });
+      return;
+    }
+
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Por favor, complete todos los campos',
+    });
   }
 
   formatDate(date: string) {

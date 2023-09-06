@@ -33,14 +33,14 @@ export class CreateEventComponent implements OnInit {
     dateTime: ['', Validators.required],
     communityId: ['', Validators.required],
     eventCategoryId: ['', Validators.required],
-    score: ['', Validators.required],
+    score: [1, Validators.required],
     place: [''],
     link: [''],
   });
   public isLoading: boolean = false;
 
   public consumableForm = this.fb.group({
-    consumables: this.fb.array([this.fb.control('', [Validators.required])]),
+    consumables: this.fb.array([this.fb.control('', Validators.required)]),
   });
 
   constructor(
@@ -107,6 +107,18 @@ export class CreateEventComponent implements OnInit {
     if (this.createEventForm.valid) {
       this.eventsService.createEvent(this.createEventForm.value).subscribe({
         next: (res: any) => {
+          if (this.createEventForm.get('link')?.value) {
+            this.isDisabledEventTab = false;
+            this.isDisabledConsumableTab = true;
+            this.activeIndexTab = 0;
+            this.createEventForm.reset();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Evento creado',
+            });
+            this.isLoading = false;
+            return;
+          }
           this.createdEventId = res.data.id;
           this.isDisabledEventTab = true;
           this.isDisabledConsumableTab = false;
@@ -143,6 +155,10 @@ export class CreateEventComponent implements OnInit {
     if (this.consumableForm.valid) {
       this.eventsService.createConsumablesForEvent(payload).subscribe({
         next: (res) => {
+          this.consumableForm.reset();
+          this.activeIndexTab = 0;
+          this.isDisabledEventTab = false;
+          this.isDisabledConsumableTab = true;
           this.messageService.add({
             severity: 'success',
             summary: 'Consumibles creados',
@@ -153,7 +169,6 @@ export class CreateEventComponent implements OnInit {
           this.messageService.add({ severity: 'error', summary: err });
         },
       });
-      this.consumableForm.reset();
     }
     this.isLoading = false;
 
@@ -171,6 +186,6 @@ export class CreateEventComponent implements OnInit {
     this.consumablesControls.removeAt(i);
   }
   addConsumable() {
-    this.consumablesControls.push(this.fb.control('', [Validators.required]));
+    this.consumablesControls.push(this.fb.control('', Validators.required));
   }
 }

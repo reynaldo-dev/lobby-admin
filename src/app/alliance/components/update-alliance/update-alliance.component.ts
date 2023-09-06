@@ -12,7 +12,7 @@ import { MessageService } from 'primeng/api';
 export class UpdateAllianceComponent {
   public isModalUpdateVisible: boolean = false;
   public isLoading: boolean = false;
-  updateAllianceForm: FormGroup;
+  public updateAllianceForm: FormGroup;
   public allicanceId!: string;
 
   get benefitsControls() {
@@ -40,7 +40,7 @@ export class UpdateAllianceComponent {
     this.updateAllianceForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      benefits: this.fb.array([this.fb.control('')]),
+      benefits: this.fb.array([this.fb.control('', Validators.required)]),
       initialDate: ['', Validators.required],
       endDate: ['', Validators.required],
     });
@@ -92,6 +92,6 @@ export class UpdateAllianceComponent {
     this.benefitsControls.removeAt(i);
   }
   addBenefit() {
-    this.benefitsControls.push(this.fb.control(''));
+    this.benefitsControls.push(this.fb.control('', Validators.required));
   }
 }

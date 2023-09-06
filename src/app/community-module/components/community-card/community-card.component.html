@@ -1,7 +1,7 @@
-<div class="h-15rem p-2" >
+<div class="h-15rem p-2"  >
     <a [routerLink]="['/dashboard/comunidad', community?.id]" style="color: inherit; text-decoration: none;" class="border-none">
-        <p-card [header]="community?.name"  class="border-round-sm cursor-pointer"
-        [style]="{ 'margin': '10px 10px'}">
+        <p-card [header]="community?.name" class="border-round-sm cursor-pointer"
+        [style]="{ 'margin': '10px 10px', 'border' : '0.3px solid ' + community?.color}">
                 <p-chip [style]="{'background-color': community?.color, 'color': 'white'}">
                     <div class="py-1">{{community?.users?.length}} <i class="pi pi-users"></i>  </div>
                 </p-chip>

@@ -1,6 +1,9 @@
 
 <p-dialog  [(visible)]="isModalCreateVisible" [style]="{ width: '50vw' }" (onHide)="closeModalCreate()" [modal]="true" styleClass="h-screen" id="createEventModal" >
 
+    <div *ngIf="isLoading" >
+        <app-loader />
+    </div>
     <p-tabView [activeIndex]="activeIndexTab">
         <p-tabPanel [disabled]="isDisabledEventTab">
             <ng-template pTemplate="header">
@@ -128,13 +131,6 @@
         </p-tabPanel>
     
     </p-tabView>
-
-
-
-
-   
-
-
 </p-dialog>
 <p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
 

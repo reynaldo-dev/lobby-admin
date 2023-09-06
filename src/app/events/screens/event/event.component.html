@@ -200,6 +200,12 @@
                 </div>
                 
             </p-tabPanel>
+            <p-tabPanel header="QR Asistencia">
+                <div class="col-12 flex justify-content-center align-items-center flex-column">
+                    <qrcode (qrCodeURL)="onChangeURL($event)" [qrdata]="eventQRData" [width]="500" [errorCorrectionLevel]="'M'"></qrcode>
+                    <a [href]="qrCodeDownloadLink" download="qrcode" class="no-underline bg-blue-500 text-white p-2 border-round-2xl">Descargar QR</a>
+                </div>
+            </p-tabPanel>
         </p-tabView>
     </div>
 

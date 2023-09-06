@@ -27,10 +27,12 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ScrollerModule } from 'primeng/scroller';
 import { TabViewModule } from 'primeng/tabview';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { InputMaskModule } from 'primeng/inputmask';
 
 @NgModule({
   declarations: [],
   imports: [
+    InputMaskModule,
     ProgressSpinnerModule,
     ButtonModule,
     CardModule,
@@ -61,6 +63,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     TabViewModule,
   ],
   exports: [
+    InputMaskModule,
     ButtonModule,
     CardModule,
     CarouselModule,

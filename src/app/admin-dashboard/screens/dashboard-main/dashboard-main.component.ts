@@ -44,11 +44,11 @@ export class DashboardMainComponent implements OnInit {
     return this.eventsService.eventsAtDate;
   }
 
-  get activeEventsCount(): number {
+  get activeEventsCount(): number | null {
     return this.eventsService.activeEvents;
   }
 
-  get inactiveEventsCount(): number {
+  get inactiveEventsCount(): number | null {
     return this.eventsService.inactiveEvents;
   }
 

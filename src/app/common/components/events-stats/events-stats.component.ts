@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./events-stats.component.css'],
 })
 export class EventsStatsComponent {
-  @Input() activeEvents!: number;
-  @Input() inactiveEvents!: number;
+  @Input() activeEvents!: number | null;
+  @Input() inactiveEvents!: number | null;
   @Input() asLink: boolean = false;
 }

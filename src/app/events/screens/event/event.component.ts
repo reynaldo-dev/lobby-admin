@@ -4,6 +4,7 @@ import { switchMap } from 'rxjs';
 import { EventsService } from '../../services/events.service';
 import { EventStatus } from '../../event-status/event-status.enum';
 import { PdfMakerService } from 'src/app/common/services/pdf-maker.service';
+import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-event',
@@ -12,6 +13,8 @@ import { PdfMakerService } from 'src/app/common/services/pdf-maker.service';
 })
 export class EventComponent implements OnInit {
   public isLoadingData = true;
+  public qrCodeDownloadLink: SafeUrl = '';
+  public qrCodeData = '';
   private eventId!: string;
   public eventStatuses = {
     ACTIVE: EventStatus.ACTIVE,
@@ -27,6 +30,7 @@ export class EventComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.eventId = params.get('id')!;
       this.eventService.getEventById(this.eventId).subscribe();
+      this.eventService.getEventQRData(this.eventId).subscribe();
       this.eventService.getAssistanceConfirmation(this.eventId).subscribe();
       this.isLoadingData = false;
     });
@@ -36,8 +40,16 @@ export class EventComponent implements OnInit {
     return this.eventService.event;
   }
 
+  get eventQRData(): string {
+    return JSON.stringify(this.eventService.eventQRData);
+  }
+
   get eventAssistanceConfirmation() {
     return this.eventService.eventAssistanceConfirmation;
+  }
+
+  onChangeURL(url: SafeUrl) {
+    this.qrCodeDownloadLink = url;
   }
 
   generateReport() {

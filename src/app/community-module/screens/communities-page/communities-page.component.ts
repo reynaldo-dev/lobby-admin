@@ -16,9 +16,7 @@ export class CommunitiesPageComponent implements OnInit {
   }
 
   get communities(): ICommunities[] | null {
-    return this.communityService.communities
-      ? this.communityService.communities
-      : null;
+    return this.communityService.communities;
   }
   onKey() {
     console.log(this.searchValue);

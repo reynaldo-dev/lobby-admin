@@ -1,4 +1,4 @@
-<section class="">
+<section class="" *ngIf="community">
 
     <div class="grid mt-2" >
         <div class="span12 h-10rem border-round-top-md w-full" [style]="{'background-color': community?.color}">
@@ -26,9 +26,9 @@
     <!-- eventos -->
     <h3 class="mt-5" >Eventos</h3>
     <div class="grid mt-2"  >
-        <div class="col-12" *ngFor="let event of community?.Event" >
+        <a class="col-12 cursor-pointer" style="text-decoration: none;" *ngFor="let event of community?.Event" [routerLink]="['/dashboard/eventos', event.id]" >
             <app-event-card [communityColor]="community.color" [event]="event" />
-        </div>
+        </a>
     </div>
 
     <!-- create new community dialog -->
@@ -60,3 +60,7 @@
 
     </p-dialog>
 </section>
+
+<div *ngIf="!community" >
+    <app-loader />
+</div>

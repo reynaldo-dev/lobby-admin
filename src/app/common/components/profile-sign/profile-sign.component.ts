@@ -8,6 +8,9 @@ import { Component, Input } from '@angular/core';
 export class ProfileSignComponent {
   @Input() name!: string;
   @Input() lastname!: string;
+  @Input() email!: string;
+  @Input() role!: string;
+  @Input() padding = 0;
 
   get userInitials(): string {
     return this.name[0].toUpperCase() + this.lastname[0].toUpperCase();

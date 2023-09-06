@@ -39,7 +39,6 @@ export class PdfMakerService {
       })
       .pipe(
         tap((data) => {
-          console.log(data);
           this._data = data;
         })
       );

@@ -66,7 +66,6 @@ export class AllianceService {
       .post<IAlliance>(this._apiUrl, alliance, { headers: this.headers })
       .pipe(
         tap((alliance) => {
-          console.log(alliance);
           this.getAlliances().subscribe();
         }),
         catchError((err) => {

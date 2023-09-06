@@ -25,12 +25,19 @@
                 <p-checkbox [binary]="true" label="El evento será privado?" formControlName="isPrivate"></p-checkbox>
             </div>
 
-        >
+        
 
-            <div class="col-12" >
+            <div class="col-12" *ngIf="updateEventForm.get('place')?.value" >
                 <span class="p-float-label w-full">
                     <input pInputText id="place" formControlName="place" class="w-full" />
                     <label htmlFor="place">Lugar</label>
+                </span>
+            </div>
+
+            <div class="col-12" *ngIf="updateEventForm.get('link')?.value">
+                <span class="p-float-label w-full">
+                    <input pInputText id="link" formControlName="link" class="w-full" />
+                    <label htmlFor="link">Link</label>
                 </span>
             </div>
 

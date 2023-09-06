@@ -24,7 +24,7 @@ export class CreateAllianceComponent {
     this.createAllianceForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      benefits: this.fb.array([this.fb.control('')]),
+      benefits: this.fb.array([this.fb.control('', Validators.required)]),
       initialDate: ['', Validators.required],
       endDate: ['', Validators.required],
     });
@@ -39,6 +39,7 @@ export class CreateAllianceComponent {
   }
 
   createAlliance() {
+    this.isLoading = true;
     const createAlliancePayload: ICreateAlliance = {
       name: this.createAllianceForm.get('name')?.value,
       description: this.createAllianceForm.get('description')?.value,
@@ -46,25 +47,33 @@ export class CreateAllianceComponent {
       initialDate: this.createAllianceForm.get('initialDate')?.value,
       endDate: this.createAllianceForm.get('endDate')?.value,
     };
-    this.isLoading = true;
-    this.allianceService.createAlliance(createAlliancePayload).subscribe({
-      next: (alliances) => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Alianza creada con éxito',
-        });
 
-        this.allianceService.setIsModalCreateVisible(false);
-      },
-
-      error: (err) => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: err,
-        });
-      },
+    if (this.createAllianceForm.valid) {
+      this.allianceService.createAlliance(createAlliancePayload).subscribe({
+        next: (alliances) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Alianza creada con éxito',
+          });
+          this.createAllianceForm.reset();
+          this.allianceService.setIsModalCreateVisible(false);
+        },
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: err,
+          });
+        },
+      });
+      this.isLoading = false;
+      return;
+    }
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'No debe haber campos vacíos',
     });
     this.isLoading = false;
   }
@@ -73,7 +82,7 @@ export class CreateAllianceComponent {
     this.benefitsControls.removeAt(i);
   }
   addBenefit() {
-    this.benefitsControls.push(this.fb.control(''));
+    this.benefitsControls.push(this.fb.control('', Validators.required));
   }
 
   closeModal(): void {
