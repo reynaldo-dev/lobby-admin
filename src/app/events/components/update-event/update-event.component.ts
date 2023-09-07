@@ -13,6 +13,7 @@ import { EventsCategoryService } from 'src/app/events-category/services/events-c
   providers: [MessageService],
 })
 export class UpdateEventComponent implements OnInit {
+  public selectedEvent!: IEvent;
   public isModalUpdateOpen = false;
   public updateEventForm = this.fb.group({
     title: ['', Validators.required],
@@ -38,7 +39,18 @@ export class UpdateEventComponent implements OnInit {
     });
 
     this.eventsService.getSelectedEvent().subscribe((event) => {
+      this.selectedEvent = event;
       this.selectedEventId = event?.id;
+
+      if (event.link) {
+        this.updateEventForm.get('place')?.setValidators([]);
+        this.updateEventForm.get('link')?.setValidators([Validators.required]);
+      }
+      if (event.place) {
+        this.updateEventForm.get('link')?.setValidators([]);
+        this.updateEventForm.get('place')?.setValidators([Validators.required]);
+      }
+
       this.updateEventForm.patchValue({
         title: event?.title,
         description: event?.description,

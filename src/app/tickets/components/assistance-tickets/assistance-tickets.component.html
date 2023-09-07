@@ -145,8 +145,8 @@
                     </p-tag>
                 </div>
                 <div class="mb-3"><span class="font-bold">Asistió al evento:</span>
-                    <p-tag [severity]="selectedTicket.isActive ? 'success': 'danger'"
-                        [value]="selectedTicket.isActive ? 'Si' : 'No'">
+                    <p-tag [severity]="selectedTicket.wasPresent ? 'success': 'danger'"
+                        [value]="selectedTicket.wasPresent ? 'Si' : 'No'">
                     </p-tag>
                 </div>
                 <div>

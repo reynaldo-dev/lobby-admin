@@ -26,6 +26,7 @@ export interface Event {
   status: string;
   place: string;
   dateTime: Date;
+  link: string;
 }
 
 export interface User {

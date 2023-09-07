@@ -65,9 +65,9 @@ export class ConsumablesTicketsService {
     return this.http
       .get<IConsumableData>(`${this.baseUrl}/${id}`, { headers: this.headers })
       .pipe(
-        tap((consumable: IConsumableData) =>
-          this.selectedConsumable.next(consumable)
-        ),
+        tap((consumable: IConsumableData) => {
+          this.selectedConsumable.next(consumable);
+        }),
         catchError(this.handleError)
       );
   }

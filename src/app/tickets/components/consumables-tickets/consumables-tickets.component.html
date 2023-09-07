@@ -133,7 +133,9 @@
                 </div>
                 <div class="mb-3"><span class="font-bold">Fecha y Hora:</span> {{ selectedConsumable.event.dateTime |
                     date:'dd/MM/yyyy HH:mm' }}</div>
-                <div class="mb-3"><span class="font-bold">Lugar:</span> {{ selectedConsumable.event.place }}</div>
+                <div *ngIf="selectedConsumable.event.place" class="mb-3"><span class="font-bold">Lugar:</span> {{ selectedConsumable.event.place }}</div>
+                <div *ngIf="selectedConsumable.event.link" class="mb-3"><span class="font-bold">Enlace:</span> {{ selectedConsumable.event.link }}</div>
+
                 <div class="mb-3"><span class="font-bold">Estado:</span>
                     <p-tag [severity]="isActiveToString(selectedConsumable.isActive) === 'Activo' ? 'success': 'danger'"
                         [value]="isActiveToString(selectedConsumable.isActive)">

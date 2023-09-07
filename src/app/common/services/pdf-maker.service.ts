@@ -64,7 +64,6 @@ export class PdfMakerService {
           { text: 'Tickets de Asistencia', style: 'header' },
           this.createTableFromAssistanceTickets(this._data?.assistanceTickets, [
             'No.',
-            'ID',
             'Activo',
             'Presente',
             'Escaneado en',
@@ -136,7 +135,6 @@ export class PdfMakerService {
         text: assistanceTickets.indexOf(assistanceTicket) + 1,
         padding: [10, 10],
       },
-      { text: assistanceTicket.id, padding: [10, 10] },
       { text: assistanceTicket.isActive ? 'Sí' : 'No', padding: [10, 10] },
       { text: assistanceTicket.wasPresent ? 'Sí' : 'No', padding: [10, 10] },
       { text: assistanceTicket.scannedAt || '-', padding: [10, 10] },

@@ -27,14 +27,14 @@
 
         
 
-            <div class="col-12" *ngIf="updateEventForm.get('place')?.value" >
+            <div class="col-12" *ngIf="selectedEvent.place" >
                 <span class="p-float-label w-full">
                     <input pInputText id="place" formControlName="place" class="w-full" />
                     <label htmlFor="place">Lugar</label>
                 </span>
             </div>
 
-            <div class="col-12" *ngIf="updateEventForm.get('link')?.value">
+            <div class="col-12" *ngIf="selectedEvent.link">
                 <span class="p-float-label w-full">
                     <input pInputText id="link" formControlName="link" class="w-full" />
                     <label htmlFor="link">Link</label>
