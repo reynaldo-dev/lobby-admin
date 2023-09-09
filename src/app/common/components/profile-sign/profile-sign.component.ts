@@ -11,6 +11,7 @@ export class ProfileSignComponent {
   @Input() email!: string;
   @Input() role!: string;
   @Input() padding = 0;
+  @Input() picture!: string | null;
 
   get userInitials(): string {
     return this.name[0].toUpperCase() + this.lastname[0].toUpperCase();

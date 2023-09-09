@@ -7,6 +7,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PrimeNgModule } from './prime-ng/prime-ng.module';
+import { AppCommonModule } from './common/common.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +19,7 @@ import { PrimeNgModule } from './prime-ng/prime-ng.module';
     AppRoutingModule,
     PrimeNgModule,
     BrowserAnimationsModule,
+    AppCommonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

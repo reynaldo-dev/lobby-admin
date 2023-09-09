@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { MessageService } from 'primeng/api';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login-screen',
@@ -15,8 +16,16 @@ export class LoginScreenComponent {
 
   constructor(
     private authService: AuthService,
-    private messageService: MessageService
-  ) {}
+    private messageService: MessageService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      const { id } = params;
+      if (id) {
+        this.authService.googleAuth(id).subscribe();
+      }
+    });
+  }
 
   login() {
     this.authService.login(this.email.value, this.password.value).subscribe({

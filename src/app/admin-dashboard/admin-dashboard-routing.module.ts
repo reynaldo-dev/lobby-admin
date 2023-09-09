@@ -30,7 +30,7 @@ const routes: Routes = [
       },
       {
         path: 'usuarios',
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuard],
         data: {
           expectedRole: [AllowedRoles.ADMIN],
         },
@@ -38,7 +38,7 @@ const routes: Routes = [
       },
       {
         path: 'comunidades',
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuard],
         data: {
           expectedRole: [AllowedRoles.ADMIN],
         },
@@ -46,7 +46,7 @@ const routes: Routes = [
       },
       {
         path: 'comunidad/:id',
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuard],
         data: {
           expectedRole: [AllowedRoles.ADMIN],
         },
@@ -55,7 +55,7 @@ const routes: Routes = [
 
       {
         path: 'eventos',
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuard],
         data: {
           expectedRole: [AllowedRoles.SPONSOR, AllowedRoles.ADMIN],
         },
@@ -63,7 +63,7 @@ const routes: Routes = [
       },
       {
         path: 'eventos/:id',
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuard],
         data: {
           expectedRole: [AllowedRoles.ADMIN, AllowedRoles.SPONSOR],
         },
@@ -71,7 +71,7 @@ const routes: Routes = [
       },
       {
         path: 'cupones',
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuard],
         data: {
           expectedRole: [AllowedRoles.ADMIN],
         },
@@ -80,7 +80,7 @@ const routes: Routes = [
 
       {
         path: 'alianzas',
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuard],
         data: {
           expectedRole: [AllowedRoles.ADMIN],
         },
@@ -89,7 +89,7 @@ const routes: Routes = [
 
       {
         path: 'alianzas/:id',
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuard],
         data: {
           expectedRole: [AllowedRoles.ADMIN],
         },
@@ -98,7 +98,7 @@ const routes: Routes = [
 
       {
         path: 'perfil',
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuard],
         data: {
           expectedRole: [AllowedRoles.ADMIN, AllowedRoles.SPONSOR],
         },

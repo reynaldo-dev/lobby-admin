@@ -12,6 +12,7 @@ export interface IProfileResponse {
   createdAt: string;
   rolId: string;
   rol: Rol;
+  picture: string | null;
 }
 
 export interface Rol {

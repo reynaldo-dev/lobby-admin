@@ -7,6 +7,7 @@ import { ProfileSignComponent } from './components/profile-sign/profile-sign.com
 import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
 import { UsersModule } from '../users/users.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UnauthorizedScreenComponent } from './screens/unauthorized-screen/unauthorized-screen.component';
 
 @NgModule({
   declarations: [
@@ -14,12 +15,14 @@ import { ReactiveFormsModule } from '@angular/forms';
     ProfileScreenComponent,
     ProfileSignComponent,
     UpdateProfileComponent,
+    UnauthorizedScreenComponent,
   ],
   exports: [
     EventsStatsComponent,
     ProfileScreenComponent,
     ProfileSignComponent,
     UpdateProfileComponent,
+    UnauthorizedScreenComponent,
   ],
   imports: [CommonModule, PrimeNgModule, ReactiveFormsModule, UsersModule],
 })

@@ -12,7 +12,7 @@
         </div> -->
     <div class="col-12 flex align-items-end flex-column justify-content-center relative">
       <div class="flex justify-content-center align-items-center gap-2">
-       <app-profile-sign [name]="user.name" [lastname]="user.lastname" [email]="user.email" [role]="user.role" [padding]="15" />
+       <app-profile-sign [name]="user.name" [lastname]="user.lastname" [email]="user.email" [role]="user.role" [padding]="15" [picture]="user.picture" />
       </div>
     </div>
 
@@ -84,7 +84,10 @@
       [activeEvents]="activeEventsCount"
       [inactiveEvents]="inactiveEventsCount"
     />
-    <app-communities-carousel />
+
+    <div *ngIf="userRole === allowedRoles.ADMIN">
+      <app-communities-carousel />
+    </div>
     <div>
       <div class="w-8 mb-8">
         <h2 class="mt-4 text-500">Proximos eventos</h2>

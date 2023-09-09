@@ -79,6 +79,27 @@ export class AuthService {
     );
   }
 
+  googleAuth(id: string) {
+    return this.http
+      .post(`${environment.apiUrl}/auth/login-with-google?id=${id}`, {})
+      .pipe(
+        tap((res: any) => {
+          this._user = res.user;
+          localStorage.setItem('access_token', res.access_token);
+          this._authState = { isAuthenticated: true, user: res.user };
+          this._isAuthenticated = true;
+        }),
+        tap(() => {
+          this.router.navigateByUrl(this.lastRoute);
+          location.reload();
+        }),
+        map(() => true),
+        catchError((err) => {
+          return throwError(() => err.error.message);
+        })
+      );
+  }
+
   getProfile(id: string): Observable<IProfileResponse> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,

@@ -17,6 +17,7 @@ export class DashboardMainComponent implements OnInit {
   public searchValue: string | undefined;
   public nameValue: string | undefined;
   public descriptionValue: string | undefined;
+  public allowedRoles = AllowedRoles;
 
   public items: MenuItem[] | [] = [];
 
@@ -52,12 +53,15 @@ export class DashboardMainComponent implements OnInit {
     return this.eventsService.inactiveEvents;
   }
 
+  get userRole(): string {
+    return this.authService.authState.user.role;
+  }
+
   ngOnInit(): void {
-    this.communityService.getCommunities().subscribe();
-    this.eventsService.getEventsAtDate(new Date().toISOString()).subscribe();
     this.eventsService.getInActiveEventsCount().subscribe();
     this.eventsService.getActiveEventsCount().subscribe();
     this.eventsService.getEvents().subscribe();
+    this.eventsService.getEventsAtDate(new Date().toISOString()).subscribe();
 
     if (this.authService.authState.user.role === AllowedRoles.SPONSOR) {
       this.items = [
@@ -72,6 +76,7 @@ export class DashboardMainComponent implements OnInit {
     }
 
     if (this.authService.authState.user.role === AllowedRoles.ADMIN) {
+      this.communityService.getCommunities().subscribe();
       this.items = [
         {
           label: 'Comunidad',
