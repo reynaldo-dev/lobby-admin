@@ -11,8 +11,8 @@ import { ActivatedRoute } from '@angular/router';
   providers: [MessageService],
 })
 export class LoginScreenComponent {
-  email = new FormControl<string>('reynaldo@gmail.com');
-  password = new FormControl<string>('12345678');
+  email = new FormControl<string>('');
+  password = new FormControl<string>('');
 
   constructor(
     private authService: AuthService,

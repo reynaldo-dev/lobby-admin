@@ -8,12 +8,12 @@
                 {{event?.title}}
             </p>
          
-                <p-chip  icon="pi pi-calendar" styleClass="mt-2" >
+                <p  styleClass="mt-2 " >
                     {{ getFormattedDate(event?.dateTime) }}
-                </p-chip>
+                </p>
           
         </div>
-        <div class="flex gap-1 justify-content-center align-items-center text-500" >
+        <!-- <div class="flex gap-1 justify-content-center align-items-center text-500 max-w-2rem" >
             <i [class]="event.place ? 'pi pi-map-marker' : 'pi pi-link'" style="font-size: 1rem"></i>
             <span *ngIf="event.place" >
                 {{event?.place}}
@@ -22,7 +22,7 @@
             <span *ngIf="event.link">
                 {{event?.link}}
             </span>
-        </div>
+        </div> -->
         <div class="flex gap-1 justify-content-center align-items-center" >
             <p-tag [severity]="event?.status == 'Activo' ? 'success' : 'danger' ">
                 {{event?.status}}
@@ -30,12 +30,12 @@
         </div>
 
 
-        <div class="flex gap-1 justify-content-center align-items-center" >
+        <!-- <div class="flex gap-1 justify-content-center align-items-center" >
             <span class="text-500">
                 {{event?.score}}
             </span>
             <i class="pi pi-star-fill"  [style]="{'font-size': '1rem', 'color' : communityColor}"></i>
-        </div>
+        </div> -->
     </div>
 </div>
 

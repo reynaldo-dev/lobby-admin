@@ -4,6 +4,8 @@ import { MessageService } from 'primeng/api';
 import { UserData } from '../../interfaces/user.interface';
 import { IRole, UsersService } from '../../services/users.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { IDepartment } from '../../interfaces/department.interface';
+import { departments } from 'src/app/helpers/departments/departments.data';
 
 @Component({
   selector: 'app-update-user',
@@ -13,11 +15,16 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 })
 export class UpdateUserComponent {
   public isModalUpdateOpen = false;
+  public departaments: IDepartment[] = departments;
+
   public updateUserForm = this.fb.group({
     email: ['', Validators.required],
     name: ['', Validators.required],
     lastname: ['', Validators.required],
     rolId: ['', Validators.required],
+    department: ['', Validators.required],
+    city: ['', Validators.required],
+    phone: ['', Validators.required],
   });
 
   public roles: IRole[] = [];
@@ -45,6 +52,9 @@ export class UpdateUserComponent {
             name: user.name,
             lastname: user.lastname,
             rolId: user.rolId,
+            department: user.department,
+            city: user.city,
+            phone: user.phone,
           });
           this.selectedUserId = user.id;
         }
@@ -67,6 +77,13 @@ export class UpdateUserComponent {
   }
 
   updateUser() {
+    if (this.updateUserForm.invalid) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'No debe haber campos vacios',
+      });
+      return;
+    }
     this.usersService
       .updateUser(
         this.updateUserForm.value as UserData,

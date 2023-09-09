@@ -29,6 +29,28 @@
 
             <div class="col-12">
                 <span class="p-float-label w-full">
+                    <p-dropdown [options]="departaments" formControlName="department" optionLabel="name" optionValue="name"
+                        placeholder="Selecciona un departamento" styleClass="w-full" inputId="department"></p-dropdown>
+                    <label for="rol">Selecciona un departamento</label>
+                </span>
+            </div>
+
+            <div class="col-12">
+                <span class="p-float-label w-full">
+                    <input pInputText id="city" formControlName="city" class="w-full" />
+                    <label htmlFor="city">Ciudad</label>
+                </span>
+            </div>
+
+            <div class="col-12">
+                <span class="p-float-label w-full ">
+                    <p-inputMask mask="9999-9999" id="phone" formControlName="phone" class="w-full" />
+                    <label htmlFor="phone">Teléfono</label>
+                </span>
+            </div>
+
+            <div class="col-12">
+                <span class="p-float-label w-full">
                     <p-dropdown [options]="roles" formControlName="rolId" optionLabel="role" optionValue="id"
                         placeholder="Selecciona un rol" styleClass="w-full" inputId="rol"></p-dropdown>
                     <label for="rol">Selecciona un rol</label>

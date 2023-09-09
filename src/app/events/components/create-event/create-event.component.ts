@@ -152,30 +152,33 @@ export class CreateEventComponent implements OnInit {
       consumables: this.consumableForm.value.consumables as string[],
     };
 
-    if (this.consumableForm.valid) {
-      this.eventsService.createConsumablesForEvent(payload).subscribe({
-        next: (res) => {
-          this.consumableForm.reset();
-          this.activeIndexTab = 0;
-          this.isDisabledEventTab = false;
-          this.isDisabledConsumableTab = true;
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Consumibles creados',
-          });
-        },
-
-        error: (err) => {
-          this.messageService.add({ severity: 'error', summary: err });
-        },
+    if (this.consumableForm.invalid) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Formulario invalido, verifica que ningun campo quede vacío',
       });
+      this.isLoading = false;
+      return;
     }
-    this.isLoading = false;
 
-    this.messageService.add({
-      severity: 'error',
-      summary: 'Formulario invalido, verifica que ningun campo quede vacío',
+    this.eventsService.createConsumablesForEvent(payload).subscribe({
+      next: (res) => {
+        this.consumableForm.reset();
+        this.activeIndexTab = 0;
+        this.isDisabledEventTab = false;
+        this.isDisabledConsumableTab = true;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Consumibles creados',
+        });
+      },
+
+      error: (err) => {
+        this.messageService.add({ severity: 'error', summary: err });
+      },
     });
+
+    this.isLoading = false;
   }
 
   closeModalCreate() {

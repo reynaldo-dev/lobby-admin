@@ -1,4 +1,7 @@
 <p-sidebar [(visible)]="isVisible" class="flex flex-column p-sidebar-lg" (onHide)="handleToggleMenu()">
+    <div class=" flex justify-content-center align-items-center">
+        <img src="assets/logo.png" alt="logo" class="w-10">
+    </div>
     <div class="p-grid p-dir-col p-fluid mt-2">
         <div class="p-col" *ngFor="let route of routes">
             <a [routerLink]="route.path" routerLinkActive="active-link" style="text-decoration: none;"

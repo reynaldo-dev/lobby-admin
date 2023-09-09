@@ -4,6 +4,9 @@
 
 <div *ngIf="events && eventsAtDate" #data>
   <div class="grid">
+    <div class="mt-4">
+      <h2 class="text-600">Dashboard</h2>
+    </div>
     <!-- <div class="col-6 flex justify-content-center alignt-items-center mt-4">
             <span class="p-input-icon-left w-full ">
                 <i class="pi pi-search"></i>
@@ -107,7 +110,7 @@
           styleClass="col-12 pb-4"
         >
           <ng-template pTemplate="event" let-event let-options="options" class="">
-            <a routerLink="/dashboard/eventos" style="text-decoration: none">
+            <a routerLink="/dashboard/eventos" style="text-decoration: none" class="text-400">
               <app-event-card
                 [communityColor]="event.community.color"
                 [event]="event"
