@@ -15,40 +15,27 @@ import { ConsumablesTicketsService } from './tickets/services/consumables-ticket
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'lobby-admin';
   public lastPath = localStorage.getItem('url') || '/dashboard/inicio';
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private config: PrimeNGConfig,
-    private translateService: TranslateService,
-    private readonly userService: UsersService,
-    private readonly communityService: CommunityService,
-    private readonly eventService: EventsService,
-    private readonly eventsCategoryService: EventsCategoryService,
-    private readonly assistanceTicketsService: AssistanceTicketsService,
-    private readonly consumablesService: ConsumablesTicketsService
-  ) {}
-  // ngOnInit() {
-  //   this.translateService.use('es');
-  //   this.translateService
-  //     .get('primeng')
-  //     .subscribe((res) => this.config.setTranslation(res));
-  // }
+  constructor(private authService: AuthService, private router: Router) {}
 
-  public authStatusChangeEffect = effect(() => {
-    switch (this.authService.authState?.isAuthenticated) {
-      case true:
-        this.router.navigate([this.lastPath]);
-        break;
-      case false:
-        this.router.navigate(['auth/login']);
-        break;
+  ngOnInit() {
+    this.authService.whoAmI().subscribe();
+  }
 
-      default:
-        break;
-    }
-  });
+  // public authStatusChangeEffect = effect(() => {
+  //   switch (this.authService.authState?.isAuthenticated) {
+  //     case true:
+  //       this.router.navigate([this.lastPath]);
+  //       break;
+  //     case false:
+  //       this.authService.logout();
+  //       break;
+
+  //     default:
+  //       break;
+  //   }
+  // });
 }

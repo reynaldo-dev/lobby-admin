@@ -1,0 +1,58 @@
+<p-dialog [(visible)]="isOpen" [style]="{ width: '50vw' }" (onHide)="close()" [modal]="true" styleClass="h-auto"
+    id="createEventModal" header="Crear nuevo canjeable" [responsive]="true">
+
+    <!-- <div *ngIf="isLoading">
+        <app-loader />
+    </div> -->
+    <div class="">
+        <form [formGroup]="updateRedeemableForm" class="grid gap-3">
+
+
+            <div class="col-12">
+                <span class="p-float-label w-full ">
+                    <input pInputText id="name" formControlName="name" class="w-full" />
+                    <label htmlFor="name">Nombre</label>
+                </span>
+            </div>
+
+            <div class="col-12">
+                <span class="p-float-label w-full">
+                    <input pInputText id="description" formControlName="description" class="w-full" />
+                    <label htmlFor="description">Descripción</label>
+                </span>
+            </div>
+
+
+
+            <div class="col-12">
+                <label htmlFor="score" class="text-400">
+                    Puntos requeridos
+                </label>
+                <span class="p-float-label w-full">
+                    <p-inputNumber inputId="locale-us" locale="en-US" id="required_points" inputId="integeronly"
+                        inputId="minmax" [showButtons]="true" inputId="minmax-buttons" [min]="1" [max]="100"
+                        formControlName="required_points" class="w-full" />
+                </span>
+            </div>
+
+            <div class="col-12">
+                <label htmlFor="score" class="text-400">
+                    Stock
+                </label>
+                <span class="p-float-label w-full">
+                    <p-inputNumber inputId="locale-us" locale="en-US" id="stock" inputId="integeronly" inputId="minmax"
+                        [showButtons]="true" inputId="minmax-buttons" [min]="1" [max]="100" formControlName="stock"
+                        class="w-full" />
+                </span>
+            </div>
+
+            <div class="w-full flex justify-content-end">
+                <p-button [loading]="isLoading" (click)="updateRedeemable()" icon="pi pi-check" label="Crear"
+                    styleClass="p-button-rounded"></p-button>
+            </div>
+
+
+        </form>
+    </div>
+</p-dialog>
+<p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
