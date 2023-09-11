@@ -14,6 +14,7 @@ import { roleGuard } from '../auth/guards/role-guard.guard';
 import { ProfileScreenComponent } from '../common/screens/profile-screen/profile-screen.component';
 import { AlliancesComponent } from '../alliance/screen/alliances/alliances.component';
 import { AllianceComponent } from '../alliance/screen/alliance/alliance.component';
+import { RedeemablesScreenComponent } from '../redeemables/screens/redeemables-screen/redeemables-screen.component';
 
 const routes: Routes = [
   {
@@ -94,6 +95,14 @@ const routes: Routes = [
           expectedRole: [AllowedRoles.ADMIN],
         },
         component: AllianceComponent,
+      },
+      {
+        path: 'canjeables',
+        canActivate: [authGuard, roleGuard],
+        data: {
+          expectedRole: [AllowedRoles.ADMIN],
+        },
+        component: RedeemablesScreenComponent,
       },
 
       {

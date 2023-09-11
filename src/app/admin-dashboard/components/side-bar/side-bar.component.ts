@@ -59,6 +59,11 @@ export class SideBarComponent implements OnInit {
           icon: 'pi pi-th-large mr-4',
           path: '/dashboard/alianzas',
         },
+        {
+          name: 'Canjeables',
+          icon: 'pi pi-gift mr-4',
+          path: '/dashboard/canjeables',
+        },
       ];
     }
 

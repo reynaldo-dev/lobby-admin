@@ -16,6 +16,7 @@ import { TicketsModule } from '../tickets/tickets.module';
 import { AppCommonModule } from '../common/common.module';
 import { AllianceModule } from '../alliance/alliance.module';
 import { ComponentsModule } from '../components/components.module';
+import { RedeemablesModule } from '../redeemables/redeemables.module';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ComponentsModule } from '../components/components.module';
     UsersModule,
     TicketsModule,
     ComponentsModule,
+    RedeemablesModule,
   ],
 })
 export class AdminDashboardModule {}

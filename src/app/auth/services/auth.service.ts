@@ -17,7 +17,7 @@ export class AuthService {
   private lastRoute = localStorage.getItem('url') || '/dashboard/inicio';
 
   constructor(private router: Router, private http: HttpClient) {
-    this.whoAmI().subscribe();
+    //this.whoAmI().subscribe();
   }
 
   get isAuthenticated(): boolean {
@@ -75,7 +75,12 @@ export class AuthService {
       tap(() => {
         this.router.navigateByUrl(this.lastRoute);
       }),
-      map(() => true)
+      map(() => true),
+      catchError((err) => {
+        //this.logout();
+        console.log(err);
+        return of(false);
+      })
     );
   }
 
@@ -91,7 +96,6 @@ export class AuthService {
         }),
         tap(() => {
           this.router.navigateByUrl(this.lastRoute);
-          location.reload();
         }),
         map(() => true),
         catchError((err) => {

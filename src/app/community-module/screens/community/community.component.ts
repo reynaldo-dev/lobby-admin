@@ -13,6 +13,7 @@ effect;
   providers: [MessageService],
 })
 export class CommunityComponent {
+  public isLoading = false;
   public nameValue: string | undefined;
   public descriptionValue: string | undefined;
   public visible: boolean = false;
@@ -43,6 +44,7 @@ export class CommunityComponent {
   }
 
   updateCommunity() {
+    this.isLoading = true;
     const payload = {
       name: this.nameValue,
       description: this.descriptionValue,
@@ -71,6 +73,8 @@ export class CommunityComponent {
           });
         },
       });
+
+    this.isLoading = false;
   }
 
   toggleDialog() {

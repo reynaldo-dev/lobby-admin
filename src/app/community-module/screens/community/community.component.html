@@ -1,12 +1,12 @@
 <section class="" *ngIf="community">
 
     <div class="grid mt-2" >
-        <div class="span12 h-10rem border-round-top-md w-full" [style]="{'background-color': community?.color}">
+        <div class="span12 h-10rem border-round-top-md w-full" [style]="{'background-color': community.color}">
         </div>
 
         <div class="col-6 flex flex-column">
-            <span class=" text-3xl">{{community?.name}}</span>
-            <span class="text-md">{{community?.description}}</span>
+            <span class=" text-3xl">{{community.name}}</span>
+            <span class="text-md">{{community.description}}</span>
         </div>
 
         <div class="col-6 flex justify-content-end">
@@ -15,7 +15,7 @@
         </div>
         <div class="col-12 mt-5">
             <p-button styleClass="p-button-rounded" (onClick)="openModalCommunityMembers()" >
-                {{community?.membersCount?.toString()}} Miembros
+                {{community.membersCount.toString()}} Miembros
                 <i class="ml-2 pi pi-window-maximize"></i>
             </p-button>
         </div>
@@ -55,7 +55,7 @@
         <ng-template pTemplate="footer">
             <p-button label="Cancelar" styleClass="p-button-secondary p-button-text"
                 (onClick)="toggleDialog()"></p-button>
-            <p-button label="Guardar" (click)="updateCommunity()"></p-button>
+            <p-button label="Guardar" [loading]="isLoading" (click)="updateCommunity()"></p-button>
         </ng-template>
 
     </p-dialog>
