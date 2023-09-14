@@ -90,7 +90,9 @@
             <ng-template pTemplate="body" let-user>
                 <tr>
                     <td>
-                        {{ user.name }}
+                        <p-button (onClick)="handleGoToUserDetails(user.id)" styleClass="p-button-text">
+                            {{ user.name }}
+                        </p-button>
                     </td>
                     <td>
                         {{ user.lastname }}

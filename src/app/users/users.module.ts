@@ -6,9 +6,15 @@ import { UsersComponent } from './screens/users/users.component';
 import { CreateUserComponent } from './components/create-user/create-user.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
 import { ComponentsModule } from '../components/components.module';
+import { UserComponent } from './screens/user/user.component';
 
 @NgModule({
-  declarations: [UsersComponent, CreateUserComponent, UpdateUserComponent],
+  declarations: [
+    UsersComponent,
+    CreateUserComponent,
+    UpdateUserComponent,
+    UserComponent,
+  ],
   imports: [
     CommonModule,
     PrimeNgModule,
@@ -16,6 +22,11 @@ import { ComponentsModule } from '../components/components.module';
     ReactiveFormsModule,
     ComponentsModule,
   ],
-  exports: [UsersComponent, CreateUserComponent, UpdateUserComponent],
+  exports: [
+    UsersComponent,
+    CreateUserComponent,
+    UpdateUserComponent,
+    UserComponent,
+  ],
 })
 export class UsersModule {}

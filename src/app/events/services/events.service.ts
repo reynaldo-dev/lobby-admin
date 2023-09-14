@@ -7,6 +7,7 @@ import { IEventAssistanceConfirmation } from '../interfaces/event-assistance-con
 import { environment } from 'src/environments/environment';
 import { ICreateConsumable } from '../interfaces/create-consumable.interface';
 import { IEventQRData } from '../interfaces/event-qr.interface';
+import { IEventHistoryByUserResponse } from '../interfaces/event-history-by-user-response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,7 @@ export class EventsService {
   private headers!: HttpHeaders;
 
   private _eventAssistanceConfirmation!: IEventAssistanceConfirmation;
+  private _eventHistoryByUser!: IEventHistoryByUserResponse[] | null;
 
   constructor(private readonly http: HttpClient) {
     this.headers = new HttpHeaders({
@@ -73,6 +75,10 @@ export class EventsService {
 
   get eventQRData(): IEventQRData | null {
     return this.eventQR;
+  }
+
+  get eventHistoryByUser(): IEventHistoryByUserResponse[] | null {
+    return this._eventHistoryByUser;
   }
 
   getEvents() {
@@ -185,6 +191,30 @@ export class EventsService {
           this.eventQR = data;
         }),
         catchError((err) => {
+          return throwError(() => err.error.message);
+        })
+      );
+  }
+
+  getEventHistoryByUserId(
+    userId: string,
+    wasPresent: boolean = true
+  ): Observable<IEventHistoryByUserResponse[]> {
+    return this.http
+      .get<IEventHistoryByUserResponse[]>(
+        `${environment.apiUrl}/events/inactive-events-with-attendance/${userId}?wasPresent=${wasPresent}`,
+        {
+          headers: this.headers,
+        }
+      )
+      .pipe(
+        tap((events) => {
+          if (events.length) {
+            this._eventHistoryByUser = events;
+          }
+        }),
+        catchError((err) => {
+          this._eventHistoryByUser = null;
           return throwError(() => err.error.message);
         })
       );

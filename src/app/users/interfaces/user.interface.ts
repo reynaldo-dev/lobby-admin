@@ -15,6 +15,7 @@ export interface UserData {
   phone?: string;
   department?: string;
   city?: string;
+  picture?: string;
 }
 
 export interface Rol {

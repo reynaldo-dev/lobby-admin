@@ -41,6 +41,8 @@ export class UsersService {
   public isModalUpdateProfileVisible = new BehaviorSubject<boolean>(false);
   public selectedUser = new BehaviorSubject<UserData | null>(null);
 
+  private _userDetails: UserData | null = null;
+
   constructor(
     private readonly http: HttpClient,
     private readonly authService: AuthService
@@ -66,6 +68,10 @@ export class UsersService {
 
   get users$(): Observable<UserData[] | null> {
     return this._users.asObservable();
+  }
+
+  get userDetails(): UserData | null {
+    return this._userDetails;
   }
 
   setSelectedUser(user: UserData): void {
@@ -99,6 +105,15 @@ export class UsersService {
       .get<UserData>(`${this.baseUrl}/${id}`, { headers: this.headers })
       .pipe(
         tap((user: UserData) => this.selectedUser.next(user)),
+        catchError(this.handleError)
+      );
+  }
+
+  getUserDetails(id: string): Observable<UserData> {
+    return this.http
+      .get<UserData>(`${this.baseUrl}/${id}`, { headers: this.headers })
+      .pipe(
+        tap((user: UserData) => (this._userDetails = user)),
         catchError(this.handleError)
       );
   }

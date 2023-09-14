@@ -1,0 +1,251 @@
+<div *ngIf="!userDetails || isLoading">
+  <app-loader />
+</div>
+
+<main class="mt-8" *ngIf="userDetails">
+  <div class="col-12">
+    <div
+      class="col-12 flex justify-content-center align-items-center"
+      *ngIf="userDetails.picture"
+    >
+      <img [src]="userDetails.picture" alt="user" class="rounded-2xl w-10rem" />
+    </div>
+    <div
+      class="col-12 flex flex-column gap-1 justify-content-center align-items-center"
+    >
+      <p class="text-600 text-lg text-center">
+        {{ userDetails.name }} {{ userDetails.lastname }}
+      </p>
+      <p-tag
+        [severity]="userDetails.isActive ? 'success' : 'danger'"
+        [value]="userDetails.isActive ? 'Activo' : 'Inactivo'"
+      >
+      </p-tag>
+    </div>
+  </div>
+  <p-tabView>
+    <p-tabPanel header="Detalles del perfil">
+      <div class="grid">
+        <div class="col-12 flex gap-2 justify-content-between mb-5">
+          <div class="col-5">
+            <p-divider align="left">
+              <div class="inline-flex align-items-center">
+                <i class="pi pi-id-card mr-2"></i>
+                <b>Nombre</b>
+              </div>
+            </p-divider>
+            <div class="col-12 flex flex-column gap-2">
+              <p class="text-600 text-lg">{{ userDetails.name }}</p>
+            </div>
+          </div>
+          <div class="col-5">
+            <p-divider align="left">
+              <div class="inline-flex align-items-center">
+                <i class="pi pi-id-card mr-2"></i>
+                <b>Apellido</b>
+              </div>
+            </p-divider>
+            <div class="col-12 flex flex-column gap-2">
+              <p class="text-600 text-lg">{{ userDetails.lastname }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 flex gap-2 justify-content-between mb-5">
+          <div class="col-5">
+            <p-divider align="left">
+              <div class="inline-flex align-items-center">
+                <i class="pi pi-at mr-2"></i>
+                <b>Email</b>
+              </div>
+            </p-divider>
+            <div class="col-12 flex flex-column gap-2">
+              <p class="text-600 text-lg">{{ userDetails.email }}</p>
+            </div>
+          </div>
+          <div class="col-5">
+            <p-divider align="left">
+              <div class="inline-flex align-items-center">
+                <i class="pi pi-calendar mr-2"></i>
+                <b>Creado el</b>
+              </div>
+            </p-divider>
+            <div class="col-12 flex flex-column gap-2">
+              <p class="text-600 text-lg">
+                {{ getFormattedDate(userDetails.createdAt) }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 flex gap-2 justify-content-between mb-5">
+          <div class="col-5">
+            <p-divider align="left">
+              <div class="inline-flex align-items-center">
+                <i class="pi pi-phone mr-2"></i>
+                <b>Telefono</b>
+              </div>
+            </p-divider>
+            <div class="col-12 flex flex-column gap-2">
+              <p class="text-600 text-lg">{{ userDetails.phone }}</p>
+            </div>
+          </div>
+          <div class="col-5">
+            <p-divider align="left">
+              <div class="inline-flex align-items-center">
+                <i class="pi pi-user mr-2"></i>
+                <b>Rol</b>
+              </div>
+            </p-divider>
+            <div class="col-12 flex flex-column gap-2">
+              <p class="text-600 text-lg">
+                {{ userDetails.rol?.role?.toUpperCase() }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 flex gap-2 justify-content-between mb-5">
+          <div class="col-5">
+            <p-divider align="left">
+              <div class="inline-flex align-items-center">
+                <i class="pi pi-map-marker mr-2"></i>
+                <b>Ciudad</b>
+              </div>
+            </p-divider>
+            <div class="col-12 flex flex-column gap-2">
+              <p class="text-600 text-lg">{{ userDetails.city }}</p>
+            </div>
+          </div>
+          <div class="col-5">
+            <p-divider align="left">
+              <div class="inline-flex align-items-center">
+                <i class="pi pi-map-marker mr-2"></i>
+                <b>Departamento</b>
+              </div>
+            </p-divider>
+            <div class="col-12 flex flex-column gap-2">
+              <p class="text-600 text-lg">
+                {{ userDetails.department }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Historial de eventos">
+      <div class="grid">
+        <div class="col-12">
+          <p-table
+            #dt1
+            [value]="eventHistoryByUser ? eventHistoryByUser : []"
+            [paginator]="true"
+            [rows]="5"
+            [showCurrentPageReport]="true"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} eventos"
+            [rowsPerPageOptions]="[10, 25, 50]"
+            dataKey="id"
+            [globalFilterFields]="['title']"
+          >
+          <ng-template pTemplate="caption">
+            <div class="flex">
+              <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" [placeholder]="'Nombre del evento'" [(ngModel)]="filter"
+                  (input)="dt1.filterGlobal(filter, 'contains')" />
+              </span>
+            </div>
+          </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 25%">Evento</th>
+                <th style="width: 25%">Puntaje del evento</th>
+                <th style="width: 25%">Fecha del evento</th>
+                <th style="width: 25%">Categoría</th>
+                <th style="width: 25%">Asistió?</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-event>
+              <tr>
+                <td>{{ event.title }}</td>
+                <td>{{ event.score }}</td>
+                <td>{{ getFormattedDate(event.dateTime) }}</td>
+                <td>{{ event.eventCategory.name }}</td>
+                <td>
+                  {{ event.AssistanceTicket[0].wasPresent ? "Si" : "No" }}
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Reconocimientos dados">
+      <div class="grid">
+        <div class="col-12">
+          <p-table
+            [value]="givenRecognitions ? givenRecognitions : []"
+            [paginator]="true"
+            [rows]="5"
+            [showCurrentPageReport]="true"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} reconocimientos"
+            [rowsPerPageOptions]="[10, 25, 50]"
+          >
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 25%">¿Quien fue reconocido?</th>
+                <th style="width: 25%">Descripción</th>
+                <th style="width: 25%">Puntos dados</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-recognition>
+              <tr>
+                <td>
+                  {{ recognition.userTarget.name }}
+                  {{ recognition.userTarget.lastname }}
+                </td>
+                <td>{{ recognition.description }}</td>
+                <td>{{ recognition.points }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Reconocimientos recibidos" >
+      <div class="grid">
+        <div class="col-12">
+          <p-table
+            [value]="receivedRecognitions ? receivedRecognitions : []"
+            [paginator]="true"
+            [rows]="5"
+            [showCurrentPageReport]="true"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} reconocimientos"
+            [rowsPerPageOptions]="[10, 25, 50]"
+          >
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 25%">¿Quien reconoció?</th>
+                <th style="width: 25%">Descripción</th>
+                <th style="width: 25%">Puntos dados</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-recognition>
+              <tr>
+                <td>
+                  {{ recognition.userSource.name }}
+                  {{ recognition.userSource.lastname }}
+                </td>
+                <td>{{ recognition.description }}</td>
+                <td>{{ recognition.points }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</main>

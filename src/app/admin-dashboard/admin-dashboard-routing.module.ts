@@ -15,6 +15,7 @@ import { ProfileScreenComponent } from '../common/screens/profile-screen/profile
 import { AlliancesComponent } from '../alliance/screen/alliances/alliances.component';
 import { AllianceComponent } from '../alliance/screen/alliance/alliance.component';
 import { RedeemablesScreenComponent } from '../redeemables/screens/redeemables-screen/redeemables-screen.component';
+import { UserComponent } from '../users/screens/user/user.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,14 @@ const routes: Routes = [
           expectedRole: [AllowedRoles.ADMIN],
         },
         component: UsersComponent,
+      },
+      {
+        path: 'usuarios/:id',
+        canActivate: [authGuard, roleGuard],
+        data: {
+          expectedRole: [AllowedRoles.ADMIN],
+        },
+        component: UserComponent,
       },
       {
         path: 'comunidades',

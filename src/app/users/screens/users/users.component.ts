@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserData } from '../../interfaces/user.interface';
 import { UsersService } from '../../services/users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -16,7 +17,7 @@ export class UsersComponent implements OnInit {
   public loading: boolean = false;
   public filter = '';
 
-  constructor(private usersService: UsersService) {}
+  constructor(private usersService: UsersService, private router: Router) {}
 
   ngOnInit(): void {
     this.usersService.users$.subscribe((users: UserData[] | null) => {
@@ -36,6 +37,10 @@ export class UsersComponent implements OnInit {
 
   openCreateModal(): void {
     this.usersService.toggleCreateModal(true);
+  }
+
+  handleGoToUserDetails(userId: string): void {
+    this.router.navigate([`/dashboard/usuarios/${userId}`]);
   }
 
   openUpdateModal(user: UserData): void {
