@@ -7,12 +7,6 @@
     <div class="mt-4">
       <h2 class="text-600">Dashboard</h2>
     </div>
-    <!-- <div class="col-6 flex justify-content-center alignt-items-center mt-4">
-            <span class="p-input-icon-left w-full ">
-                <i class="pi pi-search"></i>
-                <input type="text" class="w-full border" pInputText [(ngModel)]="searchValue" (keyup.enter)="onKey()" />
-            </span>
-        </div> -->
     <div class="col-12 flex align-items-end flex-column justify-content-center relative">
       <div class="flex justify-content-center align-items-center gap-2">
        <app-profile-sign [name]="user.name" [lastname]="user.lastname" [email]="user.email" [role]="user.role" [padding]="15" [picture]="user.picture" />
@@ -30,53 +24,7 @@
   </div>
 
   <!-- create new community dialog -->
-  <div>
-    <p-dialog
-      header="Crear nueva comunidad"
-      [modal]="true"
-      [(visible)]="visible"
-      [style]="{ width: '50vw' }"
-    >
-      <div class="flex justify-content-between gap-4">
-        <div class="flex flex-column gap-2" style="width: 50%">
-          <label htmlFor="nombre">Nombre</label>
-          <input
-            pInputText
-            id="nombre"
-            aria-describedby="nombre-help"
-            [(ngModel)]="nameValue"
-          />
-        </div>
-
-        <div class="flex flex-column gap-2" style="width: 50%">
-          <label htmlFor="descripcion">Descripción</label>
-          <input
-            pInputText
-            id="descripcion"
-            aria-describedby="descripcion-help"
-            [(ngModel)]="descriptionValue"
-          />
-        </div>
-      </div>
-
-      <div class="flex flex-column gap-2">
-        <label htmlFor="color">Color</label>
-        <input type="color" [(ngModel)]="color" />
-      </div>
-
-      <ng-template pTemplate="footer">
-        <p-button
-          label="Cancelar"
-          styleClass="p-button-secondary p-button-text"
-          (onClick)="toggleDialog()"
-        ></p-button>
-        <p-button label="Guardar" (click)="saveCommunity()"></p-button>
-      </ng-template>
-    </p-dialog>
-    <p-toast
-      [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"
-    ></p-toast>
-  </div>
+  <app-create-community />
 
   <!-- create event dialog -->
   <app-create-event />
