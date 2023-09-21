@@ -6,7 +6,7 @@ import {
   tap,
   throwError,
 } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ICommunities } from 'src/app/admin-dashboard/interfaces/communities.interface';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -16,6 +16,11 @@ import { ICommunityMembers } from '../interfaces/community-members-response.inte
   providedIn: 'root',
 })
 export class CommunityService {
+  public isOpenModalCreateCommunity: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
+  private headers!: HttpHeaders;
+
   private _communities: ICommunities[] | [] = [];
 
   private isCommunityMembersModalVisible!: BehaviorSubject<boolean>;
@@ -26,6 +31,9 @@ export class CommunityService {
 
   constructor(private http: HttpClient) {
     this.isCommunityMembersModalVisible = new BehaviorSubject<boolean>(false);
+    this.headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
   }
 
   get communities() {
@@ -37,6 +45,10 @@ export class CommunityService {
   }
   get communityMembersModalVisible() {
     return this.isCommunityMembersModalVisible.asObservable();
+  }
+
+  get $isOpenModalCreateCommunity() {
+    return this.isOpenModalCreateCommunity.asObservable();
   }
 
   setIsCommunityMembersModalVisibleValue(value: boolean) {
@@ -91,14 +103,18 @@ export class CommunityService {
   }
 
   createCommunity(community: any) {
-    return this.http.post(`${environment.apiUrl}/communities`, community).pipe(
-      tap((res) => {
-        this.getCommunities().subscribe();
-      }),
-      catchError((err) => {
-        return throwError(() => err.error.message);
+    return this.http
+      .post(`${environment.apiUrl}/communities`, community, {
+        headers: this.headers,
       })
-    );
+      .pipe(
+        tap((res) => {
+          this.getCommunities().subscribe();
+        }),
+        catchError((err) => {
+          return throwError(() => err.error.message);
+        })
+      );
   }
 
   updateCommunity(id: string, community: any) {
@@ -112,5 +128,9 @@ export class CommunityService {
           return throwError(() => err.error.message);
         })
       );
+  }
+
+  toggleModalCreateCommunity(isOpen: boolean) {
+    this.isOpenModalCreateCommunity.next(isOpen);
   }
 }
