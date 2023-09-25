@@ -3,7 +3,8 @@
       [modal]="true"
       [(visible)]="isVisible"
       [style]="{ height:'auto'}"
-      styleClass="sm:w-screen md:w-3 relative"
+      styleClass="sm:w-full md:w-9 lg:w-6 relative"
+      (onHide)="toggleModalCreateCommunity(false)"
 
     >
 
@@ -44,13 +45,13 @@
       </div>
     </form>
 
-      <div class="flex justify-content-end" >
+      <div class="flex justify-content-end mt-8" >
         <p-button
           label="Cancelar"
           styleClass="p-button-secondary p-button-text"
           (onClick)="toggleModalCreateCommunity(false)"
         ></p-button>
-        <p-button label="Guardar" (click)="createCommunity()"></p-button>
+        <p-button label="Guardar" [loading]="isLoading" (click)="createCommunity()"></p-button>
       </div>
     </p-dialog>
 

@@ -21,4 +21,8 @@ export class CommunitiesPageComponent implements OnInit {
   onKey() {
     console.log(this.searchValue);
   }
+
+  public createCommunity() {
+    this.communityService.toggleModalCreateCommunity(true);
+  }
 }

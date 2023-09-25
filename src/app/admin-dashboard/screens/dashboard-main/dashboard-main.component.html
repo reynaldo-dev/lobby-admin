@@ -4,21 +4,28 @@
 
 <div *ngIf="events && eventsAtDate" #data>
   <div class="grid">
-    <div class="mt-4">
-      <h2 class="text-600">Dashboard</h2>
+
+    <div class="flex justify-content-end align-items-center col-12 relative">
+      <app-profile-sign
+        [name]="user.name"
+        [lastname]="user.lastname"
+        [email]="user.email"
+        [role]="user.role"
+        [padding]="15"
+        [picture]="user.picture"
+      />
     </div>
-    <div class="col-12 flex align-items-end flex-column justify-content-center relative">
-      <div class="flex justify-content-center align-items-center gap-2">
-       <app-profile-sign [name]="user.name" [lastname]="user.lastname" [email]="user.email" [role]="user.role" [padding]="15" [picture]="user.picture" />
-      </div>
+
+    <div class="mt-6 md:mt-4">
+      <h2 class="text-600">Dashboard</h2>
     </div>
 
     <div class="col-12 flex justify-content-end mt-4">
       <p-splitButton
-        label="Crear nuevo"
+        label="Crear"
         icon="pi pi-plus"
         [model]="this.items"
-        styleClass="p-button-rounded mt-5"
+        styleClass="p-button-rounded p-button-sm p-button-secondary"
       />
     </div>
   </div>
@@ -36,11 +43,11 @@
       [inactiveEvents]="inactiveEventsCount"
     />
 
-    <div *ngIf="userRole === allowedRoles.ADMIN">
+    <div *ngIf="userRole === allowedRoles.ADMIN" class="lg:w-8 w-full">
       <app-communities-carousel />
     </div>
-    <div>
-      <div class="w-8 mb-8">
+    <div class="mt-4 w-full">
+      <div class="lg:w-8 mb-8 w-full">
         <h2 class="mt-4 text-500">Proximos eventos</h2>
 
         <div
@@ -55,10 +62,19 @@
           [items]="eventsAtDate"
           [itemSize]="70"
           scrollHeight="500px"
-          styleClass="col-12 pb-4"
+          styleClass="w-full pb-4"
         >
-          <ng-template pTemplate="event" let-event let-options="options" class="">
-            <a routerLink="/dashboard/eventos" style="text-decoration: none" class="text-400">
+          <ng-template
+            pTemplate="event"
+            let-event
+            let-options="options"
+            class=""
+          >
+            <a
+              [routerLink]="['/dashboard/eventos', event.id]"
+              style="text-decoration: none"
+              class="text-400  w-full"
+            >
               <app-event-card
                 [communityColor]="event.community.color"
                 [event]="event"

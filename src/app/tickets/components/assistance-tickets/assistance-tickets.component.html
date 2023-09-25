@@ -1,164 +1,285 @@
-
-
 <h3 class="text-500 mt-5">Cupones de Asistencia</h3>
-<div>
-   
-</div>
+<div></div>
 
 <div class="mt-4">
-    <p-table #dt1 [value]="tickets" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
-        [rowsPerPageOptions]="[10,20,30]" [loading]="loading" [paginator]="true"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [globalFilterFields]="['user.name', 'user.email', 'event.title']">
-        <ng-template pTemplate="caption">
-            <div class="flex">
-                <span class="p-input-icon-left ml-auto">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" [placeholder]="'Buscar cupones'" [(ngModel)]="filter"
-                        (input)="dt1.filterGlobal(filter, 'contains')" />
-                </span>
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="min-width:15rem">
-                    <div class="flex align-items-center">
-                        Nombre de funcionario
-                        <p-columnFilter type="text" field="user.name" placeholder="Busca por nombre" display="menu"
-                            matchMode="contains" [showMatchModes]="false" [showOperator]="false"
-                            [showAddButton]="false"></p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:15rem">
-                    <div class="flex align-items-center">
-                        Email
-                        <p-columnFilter type="text" field="user.email" placeholder="Busca por email" display="menu"
-                            matchMode="contains" [showMatchModes]="false" [showOperator]="false"
-                            [showAddButton]="false"></p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:15rem">
-                    <div class="flex align-items-center">
-                        Nombre del evento
-                        <p-columnFilter type="text" field="event.title" placeholder="Busca por evento" display="menu"
-                            matchMode="contains" [showMatchModes]="false" [showOperator]="false"
-                            [showAddButton]="false"></p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:10rem">
-                    <div class="flex align-items-center">
-                        Estado del cupón
-                        <p-columnFilter field="isActive" matchMode="equals" display="menu" [showMatchModes]="false"
-                            [showOperator]="false" [showAddButton]="false">
-                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-dropdown optionLabel="name" optionValue="value" [ngModel]="filterTicketState"
-                                    [options]="filterStateOption" (onChange)="filter($event.value)"
-                                    placeholder="Busca por estado">
-                                </p-dropdown>
-                            </ng-template>
-                        </p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:10rem">
-                    <div class="flex align-items-center">
-                        ¿Asistió al evento?
-                        <p-columnFilter field="isActive" matchMode="equals" display="menu" [showMatchModes]="false"
-                            [showOperator]="false" [showAddButton]="false">
-                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-dropdown optionLabel="name" optionValue="value" [ngModel]="filterTicketWasPresent"
-                                    [options]="filterWasPresentOption" (onChange)="filter($event.value)"
-                                    placeholder="Busca por asistencia">
-                                </p-dropdown>
-                            </ng-template>
-                        </p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:10rem">
-                    <div class="flex align-items-center">
-                        Acciones
-                    </div>
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-ticket>
-            <tr>
-                <td>
-                    {{ ticket.user.name }} {{ticket.user.lastname}}
-                </td>
-                <td>
-                    {{ ticket.user.email }}
-                </td>
-                <td>
-                    {{ ticket.event.title }}
-                </td>
-                <td>
-                    <p-tag [severity]="ticket.isActive ? 'success': 'danger'"
-                        [value]="ticket.isActive ? 'Activo' : 'Inactivo'">
-                    </p-tag>
-                </td>
-                <td>
-                    <p-tag [severity]="ticket.wasPresent? 'success': 'danger'"
-                        [value]="ticket.wasPresent ? 'Si' : 'No'">
-                    </p-tag>
-                </td>
-                <td class="flex gap-2">
-                    <button pButton pRipple type="button" icon="pi pi-eye"
-                        class="p-button-rounded  p-button-primary p-mr-3 p-button-sm"
-                        (click)="openDialog(ticket)"></button>
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-            <tr>
-                <td colspan="6" class="text-500 text-xl">No hay tickets de asistencia</td>
-            </tr>
-        </ng-template>
-    </p-table>
+  <p-table
+    #dt1
+    [value]="tickets"
+    dataKey="id"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[5, 10, 15]"
+    [loading]="loading"
+    [paginator]="true"
+    [rows]="5"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [globalFilterFields]="['user.name', 'user.email', 'event.title']"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <span class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            [placeholder]="'Buscar cupones'"
+            [(ngModel)]="filter"
+            (input)="dt1.filterGlobal(filter, 'contains')"
+          />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="min-width: 15rem">
+          <div class="flex align-items-center">
+            Nombre de funcionario
+            <p-columnFilter
+              type="text"
+              field="user.name"
+              placeholder="Busca por nombre"
+              display="menu"
+              matchMode="contains"
+              [showMatchModes]="false"
+              [showOperator]="false"
+              [showAddButton]="false"
+            ></p-columnFilter>
+          </div>
+        </th>
+        <th style="min-width: 15rem">
+          <div class="flex align-items-center">
+            Email
+            <p-columnFilter
+              type="text"
+              field="user.email"
+              placeholder="Busca por email"
+              display="menu"
+              matchMode="contains"
+              [showMatchModes]="false"
+              [showOperator]="false"
+              [showAddButton]="false"
+            ></p-columnFilter>
+          </div>
+        </th>
+        <th style="min-width: 15rem">
+          <div class="flex align-items-center">
+            Nombre del evento
+            <p-columnFilter
+              type="text"
+              field="event.title"
+              placeholder="Busca por evento"
+              display="menu"
+              matchMode="contains"
+              [showMatchModes]="false"
+              [showOperator]="false"
+              [showAddButton]="false"
+            ></p-columnFilter>
+          </div>
+        </th>
+        <th style="min-width: 10rem">
+          <div class="flex align-items-center">
+            Estado del cupón
+            <p-columnFilter
+              field="isActive"
+              matchMode="equals"
+              display="menu"
+              [showMatchModes]="false"
+              [showOperator]="false"
+              [showAddButton]="false"
+            >
+              <ng-template
+                pTemplate="filter"
+                let-value
+                let-filter="filterCallback"
+              >
+                <p-dropdown
+                  optionLabel="name"
+                  optionValue="value"
+                  [ngModel]="filterTicketState"
+                  [options]="filterStateOption"
+                  (onChange)="filter($event.value)"
+                  placeholder="Busca por estado"
+                >
+                </p-dropdown>
+              </ng-template>
+            </p-columnFilter>
+          </div>
+        </th>
+        <th style="min-width: 10rem">
+          <div class="flex align-items-center">
+            ¿Asistió al evento?
+            <p-columnFilter
+              field="isActive"
+              matchMode="equals"
+              display="menu"
+              [showMatchModes]="false"
+              [showOperator]="false"
+              [showAddButton]="false"
+            >
+              <ng-template
+                pTemplate="filter"
+                let-value
+                let-filter="filterCallback"
+              >
+                <p-dropdown
+                  optionLabel="name"
+                  optionValue="value"
+                  [ngModel]="filterTicketWasPresent"
+                  [options]="filterWasPresentOption"
+                  (onChange)="filter($event.value)"
+                  placeholder="Busca por asistencia"
+                >
+                </p-dropdown>
+              </ng-template>
+            </p-columnFilter>
+          </div>
+        </th>
+        <th style="min-width: 10rem">
+          <div class="flex align-items-center">Acciones</div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-ticket>
+      <tr>
+        <td>{{ ticket.user.name }} {{ ticket.user.lastname }}</td>
+        <td>
+          {{ ticket.user.email }}
+        </td>
+        <td>
+          {{ ticket.event.title }}
+        </td>
+        <td>
+          <p-tag
+            [severity]="ticket.isActive ? 'success' : 'danger'"
+            [value]="ticket.isActive ? 'Activo' : 'Inactivo'"
+          >
+          </p-tag>
+        </td>
+        <td>
+          <p-tag
+            severity=""
+            [icon]="ticket.wasPresent ? 'pi pi-check' : 'pi pi-times'"
+            [style]="{
+              color: ticket.wasPresent ? '#4caf50' : '#ff4032',
+              background: 'transparent',
+              fontSize: '20px'
+            }"
+          ></p-tag>
+        </td>
+        <td class="flex gap-2">
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-eye"
+            class="p-button-rounded p-button-primary p-mr-3 p-button-sm"
+            (click)="openDialog(ticket)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6" class="text-500 text-xl">
+          No hay tickets de asistencia
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 
-    <p-dialog [(visible)]="isDialogOpen" [modal]="true" [closable]="true" [style]="{width: '70vw'}" [baseZIndex]="10000"
-        header="Detalles del Ticket">
-        <div *ngIf="selectedTicket" class="grid ">
+  <p-dialog
+    [(visible)]="isDialogOpen"
+    [modal]="true"
+    [closable]="true"
+    [baseZIndex]="10000"
+    header="Detalles del Ticket"
+    class="w-full md:w-6 transition-all transition-duration-1000"
+    (onHide)="closeDialog()"
+  >
+    <p-tabView *ngIf="selectedTicket">
+      <p-tabPanel header="Detalles del usuario">
+        <div class="col-6 mt-2 w-full">
+          <div class="mb-3">
+            <span class="font-bold">Nombre:</span>
+            {{ selectedTicket.user.name }} {{ selectedTicket.user.lastname }}
+          </div>
+          <div class="mb-3">
+            <span class="font-bold">Email:</span>
+            {{ selectedTicket.user.email }}
+          </div>
+          <div class="mb-3">
+            <span class="font-bold">Fecha de Creación:</span>
+            {{ selectedTicket.user.createdAt | date : "dd/MM/yyyy HH:mm" }}
+          </div>
 
-            <div class="col-6">
-                <h4 class="mb-3">Información del Usuario</h4>
-                <div class="mb-3"><span class="font-bold">Nombre:</span> {{ selectedTicket.user.name }}
-                    {{selectedTicket.user.lastname}}</div>
-                <div class="mb-3"><span class="font-bold">Email:</span> {{ selectedTicket.user.email }}</div>
-                <div class="mb-3"><span class="font-bold">Fecha de Creación:</span> {{ selectedTicket.user.createdAt
-                    |
-                    date:'dd/MM/yyyy HH:mm' }}
-                </div>
-            </div>
-
-            <div class="col-6">
-                <h4 class="mb-3">Información del Evento</h4>
-                <div class="mb-3"><span class="font-bold">Título:</span> {{ selectedTicket.event.title }}</div>
-                <div class="mb-3"><span class="font-bold">Descripción:</span> {{ selectedTicket.event.description }}
-                </div>
-                <div class="mb-3"><span class="font-bold">Fecha y Hora:</span> {{ selectedTicket.event.dateTime |
-                    date:'dd/MM/yyyy HH:mm' }}</div>
-                <div class="mb-3"><span class="font-bold">Lugar:</span> {{ selectedTicket.event.place }}</div>
-                <div class="mb-3">
-                    <span class="font-bold">Estado:</span>
-                    <p-tag [severity]="selectedTicket.event.status === 'Activo' ? 'success': 'danger'"
-                        [value]="selectedTicket.event.status">
-                    </p-tag>
-                </div>
-                <div class="mb-3"><span class="font-bold">Asistió al evento:</span>
-                    <p-tag [severity]="selectedTicket.wasPresent ? 'success': 'danger'"
-                        [value]="selectedTicket.wasPresent ? 'Si' : 'No'">
-                    </p-tag>
-                </div>
-                <div>
-                    <span class="font-bold">Puntaje:</span> {{ selectedTicket.event.score ? selectedTicket.event.score
-                    : '0' }}
-                </div>
-            </div>
+          <p-button
+            (onClick)="seeMore(selectedTicket.user.id)"
+            styleClass="p-button-info p-button-text"
+            >Ver mas detalles</p-button
+          >
         </div>
+      </p-tabPanel>
+      <p-tabPanel header="Detalles del evento">
+        <div class="w-full">
+          <div class="mb-3">
+            <span class="font-bold">Título:</span>
+            {{ selectedTicket.event.title }}
+          </div>
+          <div class="mb-3">
+            <span class="font-bold">Descripción:</span>
+            {{ selectedTicket.event.description }}
+          </div>
+          <div class="mb-3">
+            <span class="font-bold">Fecha y Hora:</span>
+            {{ selectedTicket.event.dateTime | date : "dd/MM/yyyy HH:mm" }}
+          </div>
+          <div class="mb-3">
+            <span class="font-bold">Lugar:</span>
+            {{ selectedTicket.event.place }}
+          </div>
+          <div class="mb-3">
+            <span class="font-bold">Estado:</span>
+            <p-tag
+              [style]="{
+                color:
+                  selectedTicket.event.status === 'Activo'
+                    ? '#4caf50'
+                    : '#ff4032',
+                background: 'transparent',
+                fontSize: '14px'
+              }"
+              [value]="selectedTicket.event.status"
+            >
+            </p-tag>
+          </div>
+          <div class="mb-3">
+            <span class="font-bold">Asistió al evento:</span>
+            <p-tag
+              [style]="{
+                color: selectedTicket.wasPresent ? '#4caf50' : '#ff4032',
+                background: 'transparent',
+                fontSize: '14px'
+              }"
+              [value]="selectedTicket.wasPresent ? 'Si' : 'No'"
+            >
+            </p-tag>
+          </div>
+          <div>
+            <span class="font-bold">Puntaje:</span>
+            {{ selectedTicket.event.score ? selectedTicket.event.score : "0" }}
+          </div>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
 
-        <p-footer>
-            <button pButton type="button" label="Cerrar" icon="pi pi-times" (click)="isDialogOpen = false"></button>
-        </p-footer>
-
-    </p-dialog>
+    <p-footer>
+      <button
+        pButton
+        type="button"
+        label="Cerrar"
+        icon="pi pi-times"
+        (click)="isDialogOpen = false"
+      ></button>
+    </p-footer>
+  </p-dialog>
 </div>

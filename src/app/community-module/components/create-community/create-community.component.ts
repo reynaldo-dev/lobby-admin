@@ -31,26 +31,40 @@ export class CreateCommunityComponent implements OnInit {
   }
 
   createCommunity() {
-    this.communityService
-      .createCommunity(this.createCommunityForm.value)
-      .subscribe({
-        next: (res) => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Comunidad creada correctamente',
-          });
-          this.communityService.toggleModalCreateCommunity(false);
-          this.communityService.getCommunities().subscribe();
-        },
-        error: (err) => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: err,
-          });
-        },
-      });
+    this.isLoading = true;
+    if (this.createCommunityForm.valid) {
+      this.communityService
+        .createCommunity(this.createCommunityForm.value)
+        .subscribe({
+          next: (res) => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Comunidad creada correctamente',
+            });
+            this.communityService.toggleModalCreateCommunity(false);
+            this.communityService.getCommunities().subscribe();
+          },
+          error: (err) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: err,
+            });
+          },
+        });
+
+      this.isLoading = false;
+      return;
+    }
+
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Formulario invalido',
+    });
+
+    this.isLoading = false;
   }
 
   public toggleModalCreateCommunity(isOpen: boolean) {

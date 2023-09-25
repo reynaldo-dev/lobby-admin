@@ -1,24 +1,21 @@
-<div class="grid gap-2 mb-2">
-    <div class="col-4 bg-primary border-round-lg flex justify-content-between">
-        <div class="m-2 flex gap-2">
+<div class="grid gap-2 mt-8 md:mt-0 mb-8 cursor-pointer" routerLink="/dashboard/eventos">
+    <div class="col-5 md:col-4 lg:col-2 bg-primary  border-round-lg flex justify-content-between align-items-center">
+        <div class="m-2 flex gap-2 flex-column">
             <span class="font-bold text-xl text-white">{{activeEvents}}</span>
             <p>Eventos Activos</p>
         </div>
-        
-        <a *ngIf="asLink" class="align-self-end text-white" routerLink="/dashboard/eventos">
-            <i class="pi pi-chevron-right "></i>
-        </a>
+        <div class="w-4">
+            <img src="../../../../assets/pendinng-event.svg" alt="Image" class="responsive-img w-full" />
+        </div>
     </div>
 
-    <div class="col-4 bg-primary border-round-lg flex justify-content-between">
-        <div class="m-2 flex gap-2">
-            <span class="font-bold text-xl text-white  ">{{inactiveEvents}}</span>
+    <div class="col-5 md:col-4 lg:col-2  bg-white border-1 border-primary border-round-lg flex justify-content-between align-items-center">
+        <div class="m-2 flex gap-2 flex-column">
+            <span class="font-bold text-xl text-white">{{inactiveEvents}}</span>
             <p>Eventos Finalizados</p>
         </div>
-
-
-        <a *ngIf="asLink" class="align-self-end text-white" routerLink="/dashboard/eventos" >
-            <i class="pi pi-chevron-right "></i>
-        </a>
+        <div class="w-5">
+            <img src="../../../../assets/done-events.svg" alt="Image" class="responsive-img w-full" />
+        </div>
     </div>
 </div>

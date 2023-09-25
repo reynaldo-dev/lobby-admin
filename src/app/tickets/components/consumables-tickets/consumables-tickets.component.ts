@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IConsumableData } from '../../interfaces/consumable.interface';
 import { ConsumablesTicketsService } from '../../services/consumables-tickets.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-consumables-tickets',
@@ -38,7 +39,10 @@ export class ConsumablesTicketsComponent {
     },
   ];
 
-  constructor(private consumablesTicketsService: ConsumablesTicketsService) {}
+  constructor(
+    private consumablesTicketsService: ConsumablesTicketsService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.consumablesTicketsService.consumables$.subscribe(
@@ -66,5 +70,10 @@ export class ConsumablesTicketsComponent {
 
   closeDialog(): void {
     this.consumablesTicketsService.toggleDialogDetails(false);
+  }
+
+  public seeMore(userId: string): void {
+    this.closeDialog();
+    this.router.navigate([`/dashboard/usuarios/${userId}`]);
   }
 }
