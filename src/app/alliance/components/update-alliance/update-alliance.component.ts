@@ -85,7 +85,12 @@ export class UpdateAllianceComponent {
   }
 
   closeModal() {
-    this.allianceService.setIsModalUpdateVisible(false);
+    this.benefitsControls.controls.forEach((control, i) => {
+      if (control.invalid) {
+        this.removeBenefit(i);
+      }
+      this.allianceService.setIsModalUpdateVisible(false);
+    });
   }
 
   removeBenefit(i: number) {

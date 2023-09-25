@@ -4,6 +4,7 @@ import { CommunityService } from '../../services/community.service';
 import { MessageService } from 'primeng/api';
 import { ICommunities } from 'src/app/admin-dashboard/interfaces/communities.interface';
 import { switchMap } from 'rxjs';
+import { FormBuilder, Validators } from '@angular/forms';
 effect;
 
 @Component({
@@ -14,16 +15,20 @@ effect;
 })
 export class CommunityComponent {
   public isLoading = false;
-  public nameValue: string | undefined;
-  public descriptionValue: string | undefined;
   public visible: boolean = false;
-  public color: string = '#ffffff';
   public community!: ICommunities;
+  public updateCommunityForm = this.fb.group({
+    name: ['', Validators.required],
+    description: ['', Validators.required],
+    color: ['', Validators.required],
+    link: ['', Validators.required],
+  });
 
   constructor(
     private route: ActivatedRoute,
     private communityService: CommunityService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private fb: FormBuilder
   ) {}
 
   get communityMembers() {
@@ -34,55 +39,63 @@ export class CommunityComponent {
     const id = this.route.snapshot.paramMap.get('id') as string;
     this.communityService.getCommunityById(id).subscribe((res) => {
       this.community = res;
+      this.updateCommunityForm.patchValue({
+        name: this.community?.name,
+        description: this.community?.description,
+        color: this.community?.color,
+        link: this.community?.link,
+      });
     });
 
     this.communityService.getCommunityMembers(id).subscribe();
-
-    this.nameValue = this.community?.name;
-    this.descriptionValue = this.community?.description;
-    this.color = this.community?.color as string;
   }
 
   updateCommunity() {
     this.isLoading = true;
-    const payload = {
-      name: this.nameValue,
-      description: this.descriptionValue,
-      color: this.color,
-    };
 
-    this.communityService
-      .updateCommunity(this.community?.id as string, payload)
-      .subscribe({
-        next: (res: any) => {
-          this.communityService
-            .getCommunityById(res?.id as string)
-            .subscribe((res) => (this.community = res));
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Éxito',
-            detail: 'Comunidad actualizada correctamente',
-          });
-          this.toggleDialog();
-        },
-        error: (err) => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: err,
-          });
-        },
-      });
+    if (this.updateCommunityForm.valid) {
+      this.communityService
+        .updateCommunity(
+          this.community?.id as string,
+          this.updateCommunityForm.value
+        )
+        .subscribe({
+          next: (res: any) => {
+            this.communityService
+              .getCommunityById(res?.id as string)
+              .subscribe((res) => (this.community = res));
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Éxito',
+              detail: 'Comunidad actualizada correctamente',
+            });
+            this.isLoading = false;
+            this.toggleDialog();
+          },
+          error: (err) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: err,
+            });
+            this.isLoading = false;
+          },
+        });
+
+      return;
+    }
 
     this.isLoading = false;
+
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'No deberían haber campos vacíos',
+    });
   }
 
   toggleDialog() {
     this.visible = !this.visible;
-
-    this.nameValue = this.community?.name;
-    this.descriptionValue = this.community?.description;
-    this.color = this.community?.color as string;
   }
 
   openModalCommunityMembers() {

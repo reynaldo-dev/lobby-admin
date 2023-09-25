@@ -57,11 +57,6 @@
                         </div>
                     </th>
     
-                    <th style="min-width:15rem">
-                        <div class="flex align-items-center">
-                            Link
-                        </div>
-                    </th>
     
                     <th style="min-width:15rem">
                         <div class="flex align-items-center">
@@ -83,47 +78,7 @@
                             </p-columnFilter>
                         </div>
                     </th>
-                    <th style="min-width:10rem">
-                        <div class="flex align-items-center">
-                            Privado
-                            <p-columnFilter field="isPrivate" matchMode="equals" display="menu" [showMatchModes]="false"
-                                [showOperator]="false" [showAddButton]="false">
-                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                    <p-dropdown optionLabel="name" optionValue="value" [ngModel]="filterEventIsPrivate"
-                                        [options]="filterIsPrivateOption" (onChange)="filter($event.value)"
-                                        placeholder="Es privado?">
-                                    </p-dropdown>
-                                </ng-template>
-                            </p-columnFilter>
-                        </div>
-                    </th>
-                    <th style="min-width:10rem">
-                        <div class="flex align-items-center">
-                            Lugar
-                            <p-columnFilter field="place" placeholder="Busca por lugar" matchMode="contains" display="menu"
-                                [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                            </p-columnFilter>
-                        </div>
-                    </th>
-                    <th style="min-width:10rem">
-                        <div class="flex align-items-center">
-                            Fecha/Hora
-                        </div>
-                    </th>
-                    <th style="min-width:10rem">
-                        <div class="flex align-items-center">
-                            Comunidad
-                            <p-columnFilter field="community.name" matchMode="equals" display="menu"
-                                [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                    <p-dropdown optionLabel="name" optionValue="name" [ngModel]="filterEventCommunity"
-                                        [options]="communities" (onChange)="filter($event.value)"
-                                        placeholder="Busca por comunidad">
-                                    </p-dropdown>
-                                </ng-template>
-                            </p-columnFilter>
-                        </div>
-                    </th>
+                    
                     <th style="min-width:10rem">
                         <div class="flex align-items-center">
                             Acciones
@@ -142,10 +97,7 @@
                     <td class="text-500">
                         {{ event.eventCategory.name }}
                     </td>
-                    <td [class]=" event.link ? 'text-primary' : 'text-400' " >
-                        <a *ngIf="event.link" [href]="event.link">{{event.link}}</a>
-                        <p *ngIf="!event.link" >No aplica</p>
-                    </td>
+                    
     
                     <td class="">
                         <div class="custom-td w-fit border-round-lg px-2">
@@ -155,19 +107,6 @@
                     <td>
                         <p-tag [severity]=" event.status === 'Activo' ? 'success': 'danger' " [value]="event.status">
                         </p-tag>
-                    </td>
-                    <td class="text-500">
-                        {{ event.isPrivate }}
-                    </td>
-                    <td [class]=" event.place ? 'text-primary' : 'text-400' " >
-                        <p *ngIf="event.place" >{{ event.place }}</p>
-                        <p *ngIf="!event.place" >No aplica</p>
-                    </td>
-                    <td class="text-500">
-                        {{ getFormattedDate(event.dateTime) }}
-                    </td>
-                    <td class="text-500">
-                        {{ event.community.name || 'No tiene comunidad' }}
                     </td>
                     <td class="flex gap-2">
                         <button pButton pRipple type="button" icon="pi pi-pencil"

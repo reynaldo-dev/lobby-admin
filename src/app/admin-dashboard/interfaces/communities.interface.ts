@@ -7,4 +7,5 @@ export interface ICommunities {
   users: any[];
   Event: any[];
   membersCount: number;
+  link: string;
 }

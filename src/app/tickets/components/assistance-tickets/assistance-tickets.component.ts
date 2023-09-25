@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IAssistanceData } from '../../interfaces/assistance.interface';
 import { AssistanceTicketsService } from '../../services/assistance-tickets.service';
 import { PdfMakerService } from 'src/app/common/services/pdf-maker.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-assistance-tickets',
@@ -41,7 +42,8 @@ export class AssistanceTicketsComponent {
 
   constructor(
     private assistanceTicketsService: AssistanceTicketsService,
-    private pdfMakerService: PdfMakerService
+    private pdfMakerService: PdfMakerService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -65,5 +67,10 @@ export class AssistanceTicketsComponent {
 
   closeDialog(): void {
     this.assistanceTicketsService.toggleDialogDetails(false);
+  }
+
+  public seeMore(userId: string): void {
+    this.closeDialog();
+    this.router.navigate([`/dashboard/usuarios/${userId}`]);
   }
 }

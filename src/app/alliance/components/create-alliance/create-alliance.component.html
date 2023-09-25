@@ -1,4 +1,4 @@
-<p-dialog header="Crear alianza" styleClass="h-full relative" [(visible)]="isModalCreateVisible" [style]="{width: '70vw'}" [modal]="true" (onHide)="closeModal()" [draggable]="false">
+<p-dialog header="Crear alianza" styleClass="h-full relative w-full md:w-5" [(visible)]="isModalCreateVisible" [modal]="true" (onHide)="closeModal()" [draggable]="false">
    <div>
 </div>
 <form [formGroup]="createAllianceForm" class="grid gap-3">
@@ -29,7 +29,7 @@
     <div formArrayName="benefits" class="col-12  h-25rem overflow-y-scroll mb-5 mt-5">
         <div class="flex justify-content-between align-items-center">
             <span class="text-500" *ngIf="benefitsControls.controls.length > 0">Beneficios</span>
-            <p-button label="Agregar beneficio" styleClass="p-button-outlined p-button-sm"
+            <p-button label="Agregar beneficio" styleClass="p-button-sm p-button-text"
                 (onClick)="addBenefit()"></p-button>
         </div>
 
@@ -38,8 +38,9 @@
             <span class="p-float-label w-full">
                 <input pInputText id="benefit" [formControlName]="i" class="w-full" placeholder="Benefit {{i + 1}}" />
             </span>
-            <p-button icon="pi pi-times" (onClick)="removeBenefit(i)"
-                styleClass="p-button-rounded p-button-danger p-button-sm">
+            <p-button (onClick)="removeBenefit(i)"
+                styleClass="p-button-text p-button-danger p-button-sm">
+                Eliminar
             </p-button>
         </div>
     </div>

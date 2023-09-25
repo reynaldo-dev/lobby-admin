@@ -1,5 +1,4 @@
 <section class="" *ngIf="community">
-
     <div class="grid mt-2" >
         <div class="span12 h-10rem border-round-top-md w-full" [style]="{'background-color': community.color}">
         </div>
@@ -31,33 +30,62 @@
         </a>
     </div>
 
-    <!-- create new community dialog -->
+    <!-- update community dialog -->
     <p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
-    <p-dialog header="Crear nueva comunidad" [(visible)]="visible" [style]="{ width: '50vw' }">
+    <p-dialog
+      header="Crear nueva comunidad"
+      [modal]="true"
+      [(visible)]="visible"
+      [style]="{ height:'auto'}"
+      styleClass="sm:w-full md:w-9 lg:w-6 relative"
 
-        <div class="flex justify-content-between gap-4">
-            <div class="flex flex-column gap-2" style="width: 50%">
-                <label htmlFor="nombre">Nombre</label>
-                <input pInputText id="nombre" aria-describedby="nombre-help" [(ngModel)]="nameValue" />
-            </div>
+    >
 
-            <div class="flex flex-column gap-2" style="width: 50%">
-                <label htmlFor="descripcion">Descripción</label>
-                <input pInputText id="descripcion" aria-describedby="descripcion-help" [(ngModel)]="descriptionValue" />
-            </div>
-        </div>
+    <form [formGroup]="updateCommunityForm" class="w-full flex gap-3 flex-column justify-content-center align-items-center" >
+      <div class="flex flex-column gap-2 w-full">
+        <label htmlFor="nombre">Nombre</label>
+        <input
+          pInputText
+          id="name"
+          aria-describedby="nombre-help"
+         formControlName="name"
+        />
+      </div>
 
-        <div class="flex flex-column gap-2">
-            <label htmlFor="color">Color</label>
-            <input type="color" [(ngModel)]="color">
-        </div>
+      <div class="flex flex-column gap-2 w-full">
+        <label htmlFor="descripcion">Descripción</label>
+        <input
+          pInputText
+          id="description"
+          aria-describedby="descripcion-help"
+          formControlName="description"
+        />
+      </div>
 
-        <ng-template pTemplate="footer">
-            <p-button label="Cancelar" styleClass="p-button-secondary p-button-text"
-                (onClick)="toggleDialog()"></p-button>
-            <p-button label="Guardar" [loading]="isLoading" (click)="updateCommunity()"></p-button>
-        </ng-template>
+      <div class="flex flex-column gap-2 w-full">
+        <label htmlFor="descripcion">Link a workplace</label>
+        <input
+          pInputText
+          id="link"
+          aria-describedby="descripcion-help"
+          formControlName="link"
+        />
+      </div>
 
+      <div class="flex flex-column gap-2 w-full justify-content-start">
+        <label htmlFor="color">Color</label>
+        <p-colorPicker class="absolute mt-5"  formControlName="color"></p-colorPicker>
+      </div>
+    </form>
+
+      <div class="flex justify-content-end mt-8" >
+        <p-button
+          label="Cancelar"
+          styleClass="p-button-secondary p-button-text"
+          (onClick)="toggleDialog()"
+        ></p-button>
+        <p-button label="Guardar" [loading]="isLoading" (click)="updateCommunity()"></p-button>
+      </div>
     </p-dialog>
 </section>
 

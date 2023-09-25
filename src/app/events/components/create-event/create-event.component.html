@@ -1,5 +1,5 @@
 
-<p-dialog  [(visible)]="isModalCreateVisible" [style]="{ width: '50vw' }" (onHide)="closeModalCreate()" [modal]="true" styleClass="h-screen" id="createEventModal" >
+<p-dialog [(visible)]="isModalCreateVisible" (onHide)="closeModalCreate()" [modal]="true" styleClass="h-auto w-full md:w-9 lg:w-6 sm:mx-2" contentStyle="h-auto" id="createEventModal" >
 
     <div *ngIf="isLoading" >
         <app-loader />
@@ -12,11 +12,11 @@
 
             <div class="">
                 <form [formGroup]="createEventForm" class="grid gap-3" >
-        
+    
                     <div class="col-12">
                         <span class="p-float-label w-full">
                             <p-dropdown (onChange)="changeCreateEventForm($event )" [options]="eventCategories" formControlName="eventCategoryId" optionLabel="name" optionValue="id" placeholder="Selecciona una categoría para este evento" styleClass="w-full"  inputId="eventCategory"></p-dropdown>
-                            <label for="eventCategory">Selecciona una categoríapara este evento</label>
+                            <label for="eventCategory">Selecciona una categoría</label>
                         </span>
                     </div>
         
@@ -36,7 +36,7 @@
                     </div>
         
                     <div class=" col-6 flex mb-3" >
-                        <p-checkbox [binary]="true" label="El evento será privado?" formControlName="isPrivate"></p-checkbox>
+                        <p-checkbox [binary]="true" label="Será privado?" formControlName="isPrivate"></p-checkbox>
                     </div>
         
                     <div *ngIf="!isVirtual" class="col-12">
@@ -52,10 +52,13 @@
                             <input pInputText id="link" formControlName="link" class="w-full" />
                             <label for="link">Link</label>
                         </span>
-                </div>
+                    </div>
         
-                    <div class="col-6 flex gap-3 justiy-content-center align-items-center relative" >
-                            <p-calendar  [showSeconds]="false"  formControlName="dateTime" [showTime]="true" styleClass="" placeholder="Fecha y Hora" [panelStyle]="{'margin-top': '200px'}" ></p-calendar>
+                    <div class="col-12" >
+                        <span class="p-float-label w-full">
+                            <p-calendar  [showSeconds]="false" id="dateTime"  formControlName="dateTime" [showTime]="true"  inputStyleClass="w-full"  [panelStyle]="{'margin-top': '200px'}" ></p-calendar>
+                            <label for="dateTime">Fecha y Hora</label>
+                        </span>
                     </div>
         
         
@@ -84,14 +87,13 @@
                                 [min]="1" 
                                 [max]="100" 
                                 formControlName="score" 
-                                class="w-full" 
+                                styleClass="w-full" 
                             />
                         </span>
                     </div>
         
-                    <div class="w-full flex justify-content-end">
-        
-                        <p-button [loading]="isLoading" (click)="createEvent()" icon="pi pi-check"  label="Crear" styleClass="p-button-rounded"></p-button>
+                    <div class="w-full flex justify-content-end ">
+                        <p-button [loading]="isLoading" (click)="createEvent()" icon="pi pi-check"  label="Crear" styleClass="p-button-rounded p-button-sm"></p-button>
                     </div>
                     
                     

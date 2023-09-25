@@ -10,4 +10,9 @@
        <app-community-card [community]="community" />
     </div>
 
+    <button pButton type="button" icon="pi pi-plus"
+    class="p-button-rounded  p-button-primary md:p-5 sm:p-1  p-button-lg fixed bottom-0 right-0 mr-5 mb-5"
+    (click)="createCommunity()"></button>
+
+    <app-create-community />
 </section>

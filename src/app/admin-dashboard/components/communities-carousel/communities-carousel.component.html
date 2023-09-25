@@ -1,6 +1,6 @@
-<div class="w-8">
-    <h2 class="my-4 text-500 text-md">Comunidades</h2>
-    <p-carousel [value]="communities" [numVisible]="numVisible" [numScroll]="numScroll">
+<div class="w-full">
+    <h2 class="mb-4 text-500 text-md">Comunidades</h2>
+    <p-carousel [value]="communities" [numVisible]="numVisible" [numScroll]="numScroll" [showIndicators]="false">
         <ng-template let-community pTemplate="item">
            <app-community-card [community]="community" />
         </ng-template>

@@ -29,10 +29,12 @@ import { TabViewModule } from 'primeng/tabview';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ColorPickerModule } from 'primeng/colorpicker';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
   declarations: [],
   imports: [
+    ImageModule,
     ColorPickerModule,
     InputMaskModule,
     ProgressSpinnerModule,
@@ -65,6 +67,7 @@ import { ColorPickerModule } from 'primeng/colorpicker';
     TabViewModule,
   ],
   exports: [
+    ImageModule,
     ColorPickerModule,
     InputMaskModule,
     ButtonModule,

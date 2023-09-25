@@ -5,14 +5,14 @@
 
 
 
-<div *ngIf="users" >
+<div *ngIf="users" class="" >
     <h3 class="text-500 mt-5">Usuarios</h3>
     
     <div class="mt-7">
         <p-table #dt1 [value]="users" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
             [rowsPerPageOptions]="[10,20,30]" [loading]="loading" [paginator]="true"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [globalFilterFields]="['name', 'email', 'lastname', 'rol.role']">
+            [globalFilterFields]="['name', 'email', 'lastname', 'rol.role']" [tableStyle]="{'min-width': '50rem'}">
             <ng-template pTemplate="caption">
                 <div class="flex">
                     <span class="p-input-icon-left ml-auto">
@@ -48,30 +48,6 @@
                                 [showAddButton]="false"></p-columnFilter>
                         </div>
                     </th>
-                    <th style="min-width:15rem">
-                        <div class="flex align-items-center">
-                            Departamento
-                            <p-columnFilter type="text" field="email" placeholder="Busca un email" display="menu"
-                                matchMode="contains" [showMatchModes]="false" [showOperator]="false"
-                                [showAddButton]="false"></p-columnFilter>
-                        </div>
-                    </th>
-                    <th style="min-width:15rem">
-                        <div class="flex align-items-center">
-                            Ciudad
-                            <p-columnFilter type="text" field="email" placeholder="Busca un email" display="menu"
-                                matchMode="contains" [showMatchModes]="false" [showOperator]="false"
-                                [showAddButton]="false"></p-columnFilter>
-                        </div>
-                    </th>
-                    <th style="min-width:15rem">
-                        <div class="flex align-items-center">
-                            Telefono
-                            <p-columnFilter type="text" field="email" placeholder="Busca un email" display="menu"
-                                matchMode="contains" [showMatchModes]="false" [showOperator]="false"
-                                [showAddButton]="false"></p-columnFilter>
-                        </div>
-                    </th>
                     <th style="min-width:10rem">
                         <div class="flex align-items-center">
                             Rol
@@ -101,15 +77,6 @@
                         {{ user.email }}
                     </td>
                     <td>
-                        {{ user.department }}
-                    </td>
-                    <td>
-                        {{ user.city }}
-                    </td>
-                    <td>
-                        {{ user.phone }}
-                    </td>
-                    <td>
                         {{ user.rol.role }}
                     </td>
                     <td class="flex gap-2">
@@ -129,7 +96,7 @@
         <app-update-user />
         <app-create-user />
         <button pButton type="button" icon="pi pi-plus"
-            class="p-button-rounded  p-button-primary md:p-5 sm:p-1  p-button-lg absolute bottom-0 right-0 mr-5 mb-5"
+            class="p-button-rounded  p-button-primary md:p-5 sm:p-1  p-button-lg fixed bottom-0 right-0 mr-5 mb-5"
             (click)="openCreateModal()"></button>
     </div>
 </div>

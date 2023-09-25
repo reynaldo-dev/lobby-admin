@@ -2,7 +2,7 @@
 
 <div class="mt-4">
     <p-table #dt1 [value]="consumables" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
-        [rowsPerPageOptions]="[10,20,30]" [loading]="loading" [paginator]="true"
+        [rowsPerPageOptions]="[5, 10, 15]" [loading]="loading" [paginator]="true" [rows]="5"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [globalFilterFields]="['consumable.name', 'user.name', 'event.title']">
         <ng-template pTemplate="caption">
@@ -92,9 +92,8 @@
                     </p-tag>
                 </td>
                 <td>
-                    <p-tag [severity]="ticket.isConsumed ? 'success': 'danger'"
-                        [value]="ticket.isConsumed? 'Si' : 'No'">
-                    </p-tag>
+                    <p-tag severity="" [icon]="ticket.wasPresent ? 'pi pi-check' : 'pi pi-times'"  [style]="{color:ticket.isConsumed? '#4caf50' : '#ff4032', background:'transparent', fontSize:'20px'}" ></p-tag>
+
                 </td>
                 <td class="flex gap-2">
                     <button pButton pRipple type="button" icon="pi pi-eye"
@@ -110,39 +109,45 @@
         </ng-template>
     </p-table>
 
-    <p-dialog [(visible)]="isDialogOpen" [modal]="true" [closable]="true" [style]="{width: '70vw'}" [baseZIndex]="10000"
-        header="Detalles del Consumible">
-        <div *ngIf="selectedConsumable" class="grid ">
-
-            <div class="col-6">
-                <h4 class="mb-3">Información del Consumible</h4>
-                <div class="mb-3"><span class="font-bold">Nombre:</span> {{ selectedConsumable.consumable.name }}</div>
-            </div>
-
-            <div class="col-6">
-                <h4 class="mb-3">Información del Usuario</h4>
-                <div class="mb-3"><span class="font-bold">Nombre:</span> {{ selectedConsumable.user.name }} {{
-                    selectedConsumable.user.lastname }}</div>
-                <div class="mb-3"><span class="font-bold">Email:</span> {{ selectedConsumable.user.email }}</div>
-            </div>
-
-            <div class="col-6">
-                <h4 class="mb-3">Información del Evento</h4>
-                <div class="mb-3"><span class="font-bold">Título:</span> {{ selectedConsumable.event.title }}</div>
-                <div class="mb-3"><span class="font-bold">Descripción:</span> {{ selectedConsumable.event.description }}
+    <p-dialog [(visible)]="isDialogOpen" [modal]="true" [closable]="true" class="w-full md:w-6 transition-all transition-duration-1000" [baseZIndex]="10000" (onHide)="closeDialog()"
+        header="Detalles del Ticket">
+        <p-tabView *ngIf="selectedConsumable">
+            <p-tabPanel header="Detalles del consumible">
+                <div class="w-full">
+                    <div class="mb-3"><span class="font-bold">Nombre:</span> {{ selectedConsumable.consumable.name }}</div>
                 </div>
-                <div class="mb-3"><span class="font-bold">Fecha y Hora:</span> {{ selectedConsumable.event.dateTime |
-                    date:'dd/MM/yyyy HH:mm' }}</div>
-                <div *ngIf="selectedConsumable.event.place" class="mb-3"><span class="font-bold">Lugar:</span> {{ selectedConsumable.event.place }}</div>
-                <div *ngIf="selectedConsumable.event.link" class="mb-3"><span class="font-bold">Enlace:</span> {{ selectedConsumable.event.link }}</div>
-
-                <div class="mb-3"><span class="font-bold">Estado:</span>
-                    <p-tag [severity]="isActiveToString(selectedConsumable.isActive) === 'Activo' ? 'success': 'danger'"
-                        [value]="isActiveToString(selectedConsumable.isActive)">
-                    </p-tag>
+            </p-tabPanel>
+            <p-tabPanel header="Detalles del evento">
+                <div class="w-full">
+                    <div class="mb-3"><span class="font-bold">Título:</span> {{ selectedConsumable.event.title }}</div>
+                    <div class="mb-3"><span class="font-bold">Descripción:</span> {{ selectedConsumable.event.description }}
+                    </div>
+                    <div class="mb-3"><span class="font-bold">Fecha y Hora:</span> {{ selectedConsumable.event.dateTime |
+                        date:'dd/MM/yyyy HH:mm' }}</div>
+                    <div class="mb-3"><span class="font-bold">Lugar:</span> {{ selectedConsumable.event.place }}</div>
+                    <div class="mb-3">
+                        <span class="font-bold">Estado:</span>
+                        <p-tag [style]="{color:selectedConsumable.event.status === 'Activo' ? '#4caf50' : '#ff4032', background:'transparent', fontSize:'14px'}"
+                            [value]="selectedConsumable.event.status">
+                        </p-tag>
+                    </div>
+                    <div class="mb-3"><span class="font-bold">¿Fue consumido?:</span>
+                        <p-tag [style]="{color:selectedConsumable.isConsumed ? '#4caf50' : '#ff4032', background:'transparent', fontSize:'14px'}"
+                            [value]="selectedConsumable.isConsumed? 'Si' : 'No'">
+                        </p-tag>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </p-tabPanel>
+
+            <p-tabPanel header="Detalles del usuario">
+                <div class="w-full mt-2">
+                    <div class="mb-3"><span class="font-bold">Nombre:</span> {{ selectedConsumable.user.name }}
+                        {{selectedConsumable.user.lastname}}</div>
+                    <div class="mb-3"><span class="font-bold">Email:</span> {{ selectedConsumable.user.email }}</div>
+                    <p-button (onClick)="seeMore(selectedConsumable.userId)" styleClass="p-button-info p-button-text">Ver mas detalles</p-button>
+                </div>
+            </p-tabPanel>
+        </p-tabView>
 
         <p-footer>
             <button pButton type="button" label="Cerrar" icon="pi pi-times" (click)="isDialogOpen = false"></button>

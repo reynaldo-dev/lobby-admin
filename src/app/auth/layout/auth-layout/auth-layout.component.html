@@ -1,12 +1,11 @@
 <div class="grid " style="height: 100vh; width: 100%;">
-    <div class="col-8 flex align-items-center justify-content-center">
-        <div class="w-6">
+    <div class="md:col-8 col-12 flex align-items-center justify-content-center">
+        <div class="md:w-10 lg:w-8 w-full mx-2">
             <router-outlet></router-outlet>
         </div>
-
     </div>
     <div
-        class="absolute right-0 top-0 bottom-0 bg-primary blue-100 w-3 flex justify-content-center align-items-center sm:none">
-        <img src="../../../../assets/logo.png" alt="">
+        class="md:absolute md:right-0 md:top-0 md:bottom-0 md:bg-primary md:w-3 md:flex md:justify-content-center align-items-center hidden">
+        <img src="../../../../assets/logo.png" alt="" class="w-10">
     </div>
 </div>
