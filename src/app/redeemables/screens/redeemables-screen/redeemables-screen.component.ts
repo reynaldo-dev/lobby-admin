@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RedeemableService } from '../../services/redeemable.service';
-import { IRedeemablesResponse } from '../../interfaces/redeemables-response.interface';
+import { IGetRedeemablesResponse } from '../../interfaces/redeemables-response.interface';
+import { TokenService } from 'src/app/tokens/token.service';
 
 @Component({
   templateUrl: './redeemables-screen.component.html',
@@ -8,10 +9,18 @@ import { IRedeemablesResponse } from '../../interfaces/redeemables-response.inte
 })
 export class RedeemablesScreenComponent implements OnInit {
   public filter = '';
-  constructor(private redeemableService: RedeemableService) {}
+  public filterTokenType = '';
+  constructor(
+    private redeemableService: RedeemableService,
+    private tokenService: TokenService
+  ) {}
 
-  get redeemables(): IRedeemablesResponse[] | null {
+  get redeemables(): IGetRedeemablesResponse[] | null {
     return this.redeemableService.redeemables;
+  }
+
+  get tokens() {
+    return this.tokenService.tokens;
   }
   ngOnInit(): void {
     this.redeemableService.getRedeemables().subscribe();

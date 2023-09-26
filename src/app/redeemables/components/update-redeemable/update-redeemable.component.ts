@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { RedeemableService } from '../../services/redeemable.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { IUpdateRedeemablePayload } from '../../interfaces/update-redeemable-payload.interface';
+import { TokenService } from 'src/app/tokens/token.service';
 
 @Component({
   selector: 'app-update-redeemable',
@@ -17,14 +18,16 @@ export class UpdateRedeemableComponent {
   public updateRedeemableForm = this.fb.group({
     name: ['', Validators.required],
     description: ['', Validators.required],
-    required_points: [1, Validators.required],
+    required_token_amount: [1, Validators.required],
+    required_token_id: ['', Validators.required],
     stock: [1, Validators.required],
   });
 
   constructor(
     private redeemableService: RedeemableService,
     private fb: FormBuilder,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private tokenService: TokenService
   ) {
     this.redeemableService.$isOpenUpdateRedeemableModal.subscribe((value) => {
       this.isOpen = value;
@@ -37,6 +40,10 @@ export class UpdateRedeemableComponent {
         });
       }
     });
+  }
+
+  get tokens() {
+    return this.tokenService.tokens;
   }
   updateRedeemable() {
     this.isLoading = true;

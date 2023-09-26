@@ -25,23 +25,29 @@
 
 
             <div class="col-12">
-                <label htmlFor="score" class="text-400">
-                    Puntos requeridos
-                </label>
                 <span class="p-float-label w-full">
-                    <p-inputNumber inputId="locale-us" locale="en-US" id="required_points" inputId="integeronly"
-                        inputId="minmax" [showButtons]="true" inputId="minmax-buttons" [min]="1" [max]="100"
-                        formControlName="required_points" class="w-full" />
+                    <p-dropdown [options]="tokens ? tokens : []" formControlName="required_token_id" optionLabel="name" optionValue="id" placeholder="Tipo de token requerido" styleClass="w-full"  inputId="required_token_id"></p-dropdown>
+                    <label for="community">Tipo de token requerido</label>
                 </span>
             </div>
-
+    
+            <div class="col-12">
+                <label htmlFor="score" class="text-400">
+                    Cantidad de tokens requeridos
+                </label>
+                <span class="p-float-label w-full">
+                    <p-inputNumber inputId="locale-us" locale="en-US" id="required_token_amount" inputId="integeronly" inputId="minmax"
+                        [showButtons]="true" inputId="minmax-buttons" [min]="1" formControlName="required_token_amount"
+                        class="w-full" />
+                </span>
+            </div>
             <div class="col-12">
                 <label htmlFor="score" class="text-400">
                     Stock
                 </label>
                 <span class="p-float-label w-full">
                     <p-inputNumber inputId="locale-us" locale="en-US" id="stock" inputId="integeronly" inputId="minmax"
-                        [showButtons]="true" inputId="minmax-buttons" [min]="1" [max]="100" formControlName="stock"
+                        [showButtons]="true" inputId="minmax-buttons" [min]="1" formControlName="stock"
                         class="w-full" />
                 </span>
             </div>

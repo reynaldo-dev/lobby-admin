@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { IRedeemablesResponse } from '../interfaces/redeemables-response.interface';
+import { IGetRedeemablesResponse } from '../interfaces/redeemables-response.interface';
 import { ICreateRedeemablePayload } from '../interfaces/create-redeemable-payload.interface';
 import { IUpdateRedeemablePayload } from '../interfaces/update-redeemable-payload.interface';
 
@@ -11,13 +11,13 @@ import { IUpdateRedeemablePayload } from '../interfaces/update-redeemable-payloa
 })
 export class RedeemableService {
   private _apiUrl = environment.apiUrl;
-  private _redeemables: IRedeemablesResponse[] | null = null;
+  private _redeemables: IGetRedeemablesResponse[] | null = null;
   private _headers: HttpHeaders;
 
   public selectedRedeemableId: BehaviorSubject<string | null> =
     new BehaviorSubject<string | null>(null);
 
-  public selectedRedeemable: IRedeemablesResponse | null = null;
+  public selectedRedeemable: IGetRedeemablesResponse | null = null;
 
   public openCreateRedeemableModal: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
@@ -31,7 +31,7 @@ export class RedeemableService {
     });
   }
 
-  get redeemables(): IRedeemablesResponse[] | null {
+  get redeemables(): IGetRedeemablesResponse[] | null {
     return this._redeemables;
   }
 
@@ -56,9 +56,9 @@ export class RedeemableService {
     this.openUpdateRedeemableModal.next(value);
   }
 
-  getRedeemables(): Observable<IRedeemablesResponse[]> {
+  getRedeemables(): Observable<IGetRedeemablesResponse[]> {
     return this.http
-      .get<IRedeemablesResponse[]>(`${this._apiUrl}/redeemable`, {
+      .get<IGetRedeemablesResponse[]>(`${this._apiUrl}/redeemable`, {
         headers: this._headers,
       })
       .pipe(
@@ -83,11 +83,14 @@ export class RedeemableService {
       );
   }
 
-  getRedeemable(redeemableId: string): Observable<IRedeemablesResponse> {
+  getRedeemable(redeemableId: string): Observable<IGetRedeemablesResponse> {
     return this.http
-      .get<IRedeemablesResponse>(`${this._apiUrl}/redeemable/${redeemableId}`, {
-        headers: this._headers,
-      })
+      .get<IGetRedeemablesResponse>(
+        `${this._apiUrl}/redeemable/${redeemableId}`,
+        {
+          headers: this._headers,
+        }
+      )
       .pipe(
         tap((redeemable) => {
           this.selectedRedeemable = redeemable;

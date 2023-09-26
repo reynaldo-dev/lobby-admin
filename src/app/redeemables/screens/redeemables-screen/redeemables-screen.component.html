@@ -35,15 +35,22 @@
 
                     <th style="min-width:15rem">
                         <div class="flex align-items-center">
-                            Descrición
+                            Token requerido
+                            <p-columnFilter field="token.name" matchMode="equals" display="menu"
+                                [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <p-dropdown optionLabel="name" optionValue="name" [ngModel]="filterTokenType"
+                                        [options]="tokens ? tokens : []" (onChange)="filter($event.value)"
+                                        placeholder="Busca por categoría de token">
+                                    </p-dropdown>
+                                </ng-template>
+                            </p-columnFilter>
                         </div>
                     </th>
 
                     <th style="min-width:15rem">
                         <div class="flex align-items-center">
-                            Puntos requeridos
-                            <p-columnFilter type="text" field="required_points" placeholder="Busca por cantidad de puntos" display="menu" matchMode="contains"
-                                [showMatchModes]="false" [showOperator]="false" [showAddButton]="false"></p-columnFilter>
+                            Cantidad requerida
                         </div>
                     </th>
 
@@ -69,14 +76,13 @@
 
 
                     <td class="text-500">
-                        
-                            {{ redeemable.description}}
-                        
+                        <p-chip styleClass="">
+                            {{ redeemable.token.name}}
+                        </p-chip>
                     </td>
-
                     <td class="text-500">
                         <p-chip styleClass="">
-                            {{ redeemable.required_points}}
+                            {{ redeemable.required_token_amount}}
                         </p-chip>
                     </td>
 
