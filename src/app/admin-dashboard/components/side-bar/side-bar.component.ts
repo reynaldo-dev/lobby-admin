@@ -44,6 +44,11 @@ export class SideBarComponent implements OnInit {
           path: '/dashboard/eventos',
         },
         {
+          name: 'Retos',
+          icon: 'pi pi-check-circle mr-4',
+          path: '/dashboard/retos',
+        },
+        {
           name: 'Comunidades',
           icon: 'pi pi-users mr-4',
           path: '/dashboard/comunidades',

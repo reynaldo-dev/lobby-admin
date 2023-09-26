@@ -1,156 +1,290 @@
 <h3 class="text-500 mt-5">Cupones de Consumibles</h3>
 
-<div class="mt-4">
-    <p-table #dt1 [value]="consumables" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
-        [rowsPerPageOptions]="[5, 10, 15]" [loading]="loading" [paginator]="true" [rows]="5"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [globalFilterFields]="['consumable.name', 'user.name', 'event.title']">
-        <ng-template pTemplate="caption">
-            <div class="flex">
-                <span class="p-input-icon-left ml-auto">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" [placeholder]="'Buscar cupones'" [(ngModel)]="filter"
-                        (input)="dt1.filterGlobal(filter, 'contains')" />
-                </span>
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="min-width:15rem">
-                    <div class="flex align-items-center">
-                        Nombre del Consumible
-                        <p-columnFilter type="text" field="consumable.name" placeholder="Busca por nombre"
-                            display="menu" matchMode="contains" [showMatchModes]="false" [showOperator]="false"
-                            [showAddButton]="false"></p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:15rem">
-                    <div class="flex align-items-center">
-                        Nombre del Usuario
-                        <p-columnFilter type="text" field="user.name" placeholder="Busca por usuario" display="menu"
-                            matchMode="contains" [showMatchModes]="false" [showOperator]="false"
-                            [showAddButton]="false"></p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:15rem">
-                    <div class="flex align-items-center">
-                        Nombre del Evento
-                        <p-columnFilter type="text" field="event.title" placeholder="Busca por evento" display="menu"
-                            matchMode="contains" [showMatchModes]="false" [showOperator]="false"
-                            [showAddButton]="false"></p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:10rem">
-                    <div class="flex align-items-center">
-                        Estado
-                        <p-columnFilter field="isActive" matchMode="equals" display="menu" [showMatchModes]="false"
-                            [showOperator]="false" [showAddButton]="false">
-                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-dropdown optionLabel="name" optionValue="value" [ngModel]="filterEventState"
-                                    [options]="filterStateOption" (onChange)="filter($event.value)"
-                                    placeholder="Busca por estado">
-                                </p-dropdown>
-                            </ng-template>
-                        </p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:10rem">
-                    <div class="flex align-items-center">
-                        ¿Fue consumido?
-                        <p-columnFilter field="isConsumed" matchMode="equals" display="menu" [showMatchModes]="false"
-                            [showOperator]="false" [showAddButton]="false">
-                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-dropdown optionLabel="name" optionValue="value" [ngModel]="filterWasConsumed"
-                                    [options]="filterWasConsumedOption" (onChange)="filter($event.value)"
-                                    placeholder="Busca por consumido">
-                                </p-dropdown>
-                            </ng-template>
-                        </p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:10rem">
-                    <div class="flex align-items-center">
-                        Acciones
-                    </div>
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-ticket>
-            <tr>
-                <td>
-                    {{ ticket.consumable.name }}
-                </td>
-                <td>
-                    {{ ticket.user.name }} {{ ticket.user.lastname }}
-                </td>
-                <td>
-                    {{ ticket.event.title }}
-                </td>
-                <td>
-                    <p-tag [severity]="isActiveToString(ticket.isActive) === 'Activo' ? 'success': 'danger'"
-                        [value]="isActiveToString(ticket.isActive)">
-                    </p-tag>
-                </td>
-                <td>
-                    <p-tag severity="" [icon]="ticket.wasPresent ? 'pi pi-check' : 'pi pi-times'"  [style]="{color:ticket.isConsumed? '#4caf50' : '#ff4032', background:'transparent', fontSize:'20px'}" ></p-tag>
+<div class="mt-4 p-4 border-round-lg bg-white">
+  <p-table
+    #dt1
+    [value]="consumables"
+    dataKey="id"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[5, 10, 15]"
+    [loading]="loading"
+    [paginator]="true"
+    [rows]="5"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [globalFilterFields]="['consumable.name', 'user.name', 'event.title']"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <span class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            [placeholder]="'Buscar cupones'"
+            [(ngModel)]="filter"
+            (input)="dt1.filterGlobal(filter, 'contains')"
+          />
+        </span>
+      </div>
+    </ng-template>
 
-                </td>
-                <td class="flex gap-2">
-                    <button pButton pRipple type="button" icon="pi pi-eye"
-                        class="p-button-rounded p-button-primary p-mr-3 p-button-sm"
-                        (click)="openDialog(ticket)"></button>
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-            <tr>
-                <td colspan="4" class="text-500 text-xl">Tickets de consumibles no encontrados.</td>
-            </tr>
-        </ng-template>
-    </p-table>
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="border-none" style="min-width: 15rem">
+          <div class="flex align-items-center">
+            Nombre del Consumible
+            <p-columnFilter
+              type="text"
+              field="consumable.name"
+              placeholder="Busca por nombre"
+              display="menu"
+              matchMode="contains"
+              [showMatchModes]="false"
+              [showOperator]="false"
+              [showAddButton]="false"
+            ></p-columnFilter>
+          </div>
+        </th>
+        <th class="border-none" style="min-width: 15rem">
+          <div class="flex align-items-center">
+            Nombre del Usuario
+            <p-columnFilter
+              type="text"
+              field="user.name"
+              placeholder="Busca por usuario"
+              display="menu"
+              matchMode="contains"
+              [showMatchModes]="false"
+              [showOperator]="false"
+              [showAddButton]="false"
+            ></p-columnFilter>
+          </div>
+        </th>
+        <th class="border-none" style="min-width: 15rem">
+          <div class="flex align-items-center">
+            Nombre del Evento
+            <p-columnFilter
+              type="text"
+              field="event.title"
+              placeholder="Busca por evento"
+              display="menu"
+              matchMode="contains"
+              [showMatchModes]="false"
+              [showOperator]="false"
+              [showAddButton]="false"
+            ></p-columnFilter>
+          </div>
+        </th>
+        <th class="border-none" style="min-width: 10rem">
+          <div class="flex align-items-center">
+            Estado
+            <p-columnFilter
+              field="isActive"
+              matchMode="equals"
+              display="menu"
+              [showMatchModes]="false"
+              [showOperator]="false"
+              [showAddButton]="false"
+            >
+              <ng-template
+                pTemplate="filter"
+                let-value
+                let-filter="filterCallback"
+              >
+                <p-dropdown
+                  optionLabel="name"
+                  optionValue="value"
+                  [ngModel]="filterEventState"
+                  [options]="filterStateOption"
+                  (onChange)="filter($event.value)"
+                  placeholder="Busca por estado"
+                >
+                </p-dropdown>
+              </ng-template>
+            </p-columnFilter>
+          </div>
+        </th>
+        <th class="border-none" style="min-width: 10rem">
+          <div class="flex align-items-center">
+            ¿Fue consumido?
+            <p-columnFilter
+              field="isConsumed"
+              matchMode="equals"
+              display="menu"
+              [showMatchModes]="false"
+              [showOperator]="false"
+              [showAddButton]="false"
+            >
+              <ng-template
+                pTemplate="filter"
+                let-value
+                let-filter="filterCallback"
+              >
+                <p-dropdown
+                  optionLabel="name"
+                  optionValue="value"
+                  [ngModel]="filterWasConsumed"
+                  [options]="filterWasConsumedOption"
+                  (onChange)="filter($event.value)"
+                  placeholder="Busca por consumido"
+                >
+                </p-dropdown>
+              </ng-template>
+            </p-columnFilter>
+          </div>
+        </th>
+        <th class="border-none" style="min-width: 10rem">
+          <div class="flex align-items-center">Acciones</div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-ticket>
+      <tr>
+        <td class="border-none">
+          {{ ticket.consumable.name }}
+        </td>
+        <td class="border-none">{{ ticket.user.name }} {{ ticket.user.lastname }}</td>
+        <td class="border-none">
+          {{ ticket.event.title }}
+        </td>
+        <td class="border-none">
+          <p-tag
+            [severity]="
+              isActiveToString(ticket.isActive) === 'Activo'
+                ? 'success'
+                : 'danger'
+            "
+            [value]="isActiveToString(ticket.isActive)"
+          >
+          </p-tag>
+        </td>
+        <td class="border-none">
+          <p-tag
+            severity=""
+            [icon]="ticket.wasPresent ? 'pi pi-check' : 'pi pi-times'"
+            [style]="{
+              color: ticket.isConsumed ? '#4caf50' : '#ff4032',
+              background: 'transparent',
+              fontSize: '20px'
+            }"
+          ></p-tag>
+        </td>
+        <td class="flex gap-2 border-none">
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-eye"
+            class="p-button-rounded p-button-primary p-mr-3 p-button-sm"
+            (click)="openDialog(ticket)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="4" class="text-500 text-xl">
+          Tickets de consumibles no encontrados.
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 
-    <p-dialog [(visible)]="isDialogOpen" [modal]="true" [closable]="true" class="w-full md:w-6 transition-all transition-duration-1000" [baseZIndex]="10000" (onHide)="closeDialog()"
-        header="Detalles del Ticket">
-        <p-tabView *ngIf="selectedConsumable">
-            <p-tabPanel header="Detalles del consumible">
-                <div class="w-full">
-                    <div class="mb-3"><span class="font-bold">Nombre:</span> {{ selectedConsumable.consumable.name }}</div>
-                </div>
-            </p-tabPanel>
-            <p-tabPanel header="Detalles del evento">
-                <div class="w-full">
-                    <div class="mb-3"><span class="font-bold">Título:</span> {{ selectedConsumable.event.title }}</div>
-                    <div class="mb-3"><span class="font-bold">Descripción:</span> {{ selectedConsumable.event.description }}
-                    </div>
-                    <div class="mb-3"><span class="font-bold">Fecha y Hora:</span> {{ selectedConsumable.event.dateTime |
-                        date:'dd/MM/yyyy HH:mm' }}</div>
-                    <div class="mb-3"><span class="font-bold">Lugar:</span> {{ selectedConsumable.event.place }}</div>
-                    <div class="mb-3">
-                        <span class="font-bold">Estado:</span>
-                        <p-tag [style]="{color:selectedConsumable.event.status === 'Activo' ? '#4caf50' : '#ff4032', background:'transparent', fontSize:'14px'}"
-                            [value]="selectedConsumable.event.status">
-                        </p-tag>
-                    </div>
-                    <div class="mb-3"><span class="font-bold">¿Fue consumido?:</span>
-                        <p-tag [style]="{color:selectedConsumable.isConsumed ? '#4caf50' : '#ff4032', background:'transparent', fontSize:'14px'}"
-                            [value]="selectedConsumable.isConsumed? 'Si' : 'No'">
-                        </p-tag>
-                    </div>
-                </div>
-            </p-tabPanel>
+  <p-dialog
+    [(visible)]="isDialogOpen"
+    [modal]="true"
+    [closable]="true"
+    class="w-full md:w-6 transition-all transition-duration-1000"
+    [baseZIndex]="10000"
+    (onHide)="closeDialog()"
+    header="Detalles del Ticket"
+  >
+    <p-tabView *ngIf="selectedConsumable">
+      <p-tabPanel header="Detalles del consumible">
+        <div class="w-full">
+          <div class="mb-3">
+            <span class="font-bold">Nombre:</span>
+            {{ selectedConsumable.consumable.name }}
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="Detalles del evento">
+        <div class="w-full">
+          <div class="mb-3">
+            <span class="font-bold">Título:</span>
+            {{ selectedConsumable.event.title }}
+          </div>
+          <div class="mb-3">
+            <span class="font-bold">Descripción:</span>
+            {{ selectedConsumable.event.description }}
+          </div>
+          <div class="mb-3">
+            <span class="font-bold">Fecha y Hora:</span>
+            {{ selectedConsumable.event.dateTime | date : "dd/MM/yyyy HH:mm" }}
+          </div>
+          <div class="mb-3">
+            <span class="font-bold">Lugar:</span>
+            {{ selectedConsumable.event.place }}
+          </div>
+          <div class="mb-3">
+            <span class="font-bold">Estado:</span>
+            <p-tag
+              [style]="{
+                color:
+                  selectedConsumable.event.status === 'Activo'
+                    ? '#4caf50'
+                    : '#ff4032',
+                background: 'transparent',
+                fontSize: '14px'
+              }"
+              [value]="selectedConsumable.event.status"
+            >
+            </p-tag>
+          </div>
+          <div class="mb-3">
+            <span class="font-bold">¿Fue consumido?:</span>
+            <p-tag
+              [style]="{
+                color: selectedConsumable.isConsumed ? '#4caf50' : '#ff4032',
+                background: 'transparent',
+                fontSize: '14px'
+              }"
+              [value]="selectedConsumable.isConsumed ? 'Si' : 'No'"
+            >
+            </p-tag>
+          </div>
+        </div>
+      </p-tabPanel>
 
-            <p-tabPanel header="Detalles del usuario">
-                <div class="w-full mt-2">
-                    <div class="mb-3"><span class="font-bold">Nombre:</span> {{ selectedConsumable.user.name }}
-                        {{selectedConsumable.user.lastname}}</div>
-                    <div class="mb-3"><span class="font-bold">Email:</span> {{ selectedConsumable.user.email }}</div>
-                    <p-button (onClick)="seeMore(selectedConsumable.userId)" styleClass="p-button-info p-button-text">Ver mas detalles</p-button>
-                </div>
-            </p-tabPanel>
-        </p-tabView>
+      <p-tabPanel header="Detalles del usuario">
+        <div class="w-full mt-2">
+          <div class="mb-3">
+            <span class="font-bold">Nombre:</span>
+            {{ selectedConsumable.user.name }}
+            {{ selectedConsumable.user.lastname }}
+          </div>
+          <div class="mb-3">
+            <span class="font-bold">Email:</span>
+            {{ selectedConsumable.user.email }}
+          </div>
+          <p-button
+            (onClick)="seeMore(selectedConsumable.userId)"
+            styleClass="p-button-info p-button-text"
+            >Ver mas detalles</p-button
+          >
+        </div>
+      </p-tabPanel>
+    </p-tabView>
 
-        <p-footer>
-            <button pButton type="button" label="Cerrar" icon="pi pi-times" (click)="isDialogOpen = false"></button>
-        </p-footer>
-    </p-dialog>
+    <p-footer>
+      <button
+        pButton
+        type="button"
+        label="Cerrar"
+        icon="pi pi-times"
+        (click)="isDialogOpen = false"
+      ></button>
+    </p-footer>
+  </p-dialog>
 </div>

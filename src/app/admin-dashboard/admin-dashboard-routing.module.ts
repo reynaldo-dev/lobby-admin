@@ -16,6 +16,7 @@ import { AlliancesComponent } from '../alliance/screen/alliances/alliances.compo
 import { AllianceComponent } from '../alliance/screen/alliance/alliance.component';
 import { RedeemablesScreenComponent } from '../redeemables/screens/redeemables-screen/redeemables-screen.component';
 import { UserComponent } from '../users/screens/user/user.component';
+import { ChallengesScreenComponent } from '../challenges/screens/challenges-screen/challenges-screen.component';
 
 const routes: Routes = [
   {
@@ -78,6 +79,14 @@ const routes: Routes = [
           expectedRole: [AllowedRoles.ADMIN, AllowedRoles.SPONSOR],
         },
         component: EventComponent,
+      },
+      {
+        path: 'retos',
+        canActivate: [authGuard, roleGuard],
+        data: {
+          expectedRole: [AllowedRoles.SPONSOR, AllowedRoles.ADMIN],
+        },
+        component: ChallengesScreenComponent,
       },
       {
         path: 'cupones',

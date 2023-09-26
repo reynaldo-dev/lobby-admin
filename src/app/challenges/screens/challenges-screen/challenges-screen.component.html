@@ -1,0 +1,60 @@
+<div *ngIf="!challenges">
+  <app-loader />
+</div>
+
+<main class="bg-transparent|">
+  <h2 class="text-500 mt-5">Retos</h2>
+
+  <div class="mt-4" *ngIf="challenges">
+    <p-table
+      #dt1
+      [value]="challenges"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [paginator]="true"
+      [rows]="5"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [rowsPerPageOptions]="[10, 15, 20]"
+      exportFilename="users"
+      [exportFunction]="dt1.exportCSV"
+    >
+      <ng-template pTemplate="header">
+        <tr class="border-none">
+          <th class="border-none">Título</th>
+          <th class="border-none">Fecha inicial</th>
+          <th class="border-none">Fecha final</th>
+          <th class="border-none">Cupones</th>
+          <th class="border-none">Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-challenge>
+        <tr class="border-none  bg-white">
+          <td class="border-none  bg-white">{{ challenge.title }}</td>
+          <td class="border-none  bg-white">{{ challenge.initialDate | date : "dd/MM/yyyy" }}</td>
+          <td class="border-none  bg-white">{{ challenge.endDate | date : "dd/MM/yyyy" }}</td>
+          <td class="border-none  bg-white">{{ challenge.coupons }}</td>
+          <td class="flex gap-2 border-none">
+            <button
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-primary p-mr-3 p-button-sm"
+              (click)="updateChallenge(challenge)"
+            ></button>
+           
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+  </div>
+
+  <button
+    pButton
+    type="button"
+    icon="pi pi-plus"
+    class="p-button-rounded p-button-primary md:p-5 sm:p-1 p-button-lg absolute bottom-0 right-0 mr-5 mb-5 shadow-8"
+    (click)="createChallenge()"
+  ></button>
+</main>

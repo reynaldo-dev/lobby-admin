@@ -8,7 +8,7 @@
         <h1 class="text-500">Canjeables</h1>
     </div>
 
-    <div class="mt-5">
+    <div class="mt-5 bg-white border-round-lg p-4">
         <p-table #dt1 [value]="redeemables" dataKey="id" [rows]="3" [showCurrentPageReport]="true"
             [rowsPerPageOptions]="[3,10,20]" [paginator]="true"
             currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros"
@@ -24,7 +24,7 @@
             </ng-template>
             <ng-template pTemplate="header">
                 <tr>
-                    <th style="min-width:15rem">
+                    <th class="border-none" style="min-width:15rem">
                         <div class="flex align-items-center">
                             Nombre
                             <p-columnFilter type="text" field="name" placeholder="Busca un nombre" display="menu" matchMode="contains"
@@ -33,7 +33,7 @@
                     </th>
 
 
-                    <th style="min-width:15rem">
+                    <th class="border-none" style="min-width:15rem">
                         <div class="flex align-items-center">
                             Token requerido
                             <p-columnFilter field="token.name" matchMode="equals" display="menu"
@@ -48,19 +48,19 @@
                         </div>
                     </th>
 
-                    <th style="min-width:15rem">
+                    <th class="border-none" style="min-width:15rem">
                         <div class="flex align-items-center">
                             Cantidad requerida
                         </div>
                     </th>
 
-                    <th style="min-width:15rem">
+                    <th class="border-none" style="min-width:15rem">
                         <div class="flex align-items-center">
                             Stock
                         </div>
                     </th>
 
-                    <th style="min-width:10rem">
+                    <th class="border-none" style="min-width:10rem">
                         <div class="flex align-items-center">
                             Acciones
                         </div>
@@ -70,28 +70,28 @@
             <ng-template pTemplate="body" let-redeemable>
 
                 <tr class="cursor-pointer">
-                    <td class="text-500">
+                    <td class="text-500 border-none">
                         {{ redeemable.name }}
                     </td>
 
 
-                    <td class="text-500">
+                    <td class="text-500 border-none">
                         <p-chip styleClass="">
                             {{ redeemable.token.name}}
                         </p-chip>
                     </td>
-                    <td class="text-500">
+                    <td class="text-500 border-none">
                         <p-chip styleClass="">
                             {{ redeemable.required_token_amount}}
                         </p-chip>
                     </td>
 
-                    <td class="text-500">
+                    <td class="text-500 border-none">
                         {{ redeemable.stock }}
                     </td>
 
 
-                    <td class="flex gap-2">
+                    <td class="flex gap-2 border-none">
                         <button pButton pRipple type="button" icon="pi pi-pencil"
                             class="p-button-rounded  p-button-primary p-mr-3 p-button-sm"
                             (click)="updateRedeemable(redeemable.id)"></button>
@@ -109,7 +109,7 @@
     </div>
 
     <button pButton type="button" icon="pi pi-plus"
-        class="p-button-rounded  p-button-primary md:p-5 sm:p-1  p-button-lg absolute bottom-0 right-0 mr-5 mb-5"
+        class="p-button-rounded  p-button-primary md:p-5 sm:p-1  p-button-lg absolute bottom-0 right-0 mr-5 mb-5 shadow-8"
         (click)="createRedeemable()">
     </button>
    <app-create-redeemable />
