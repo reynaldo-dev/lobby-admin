@@ -15,11 +15,13 @@
         <app-events-stats [asLink]="false" *ngIf="activeEventsCount && inactiveEventsCount" [activeEvents]="activeEventsCount" [inactiveEvents]="inactiveEventsCount"  />
     </div>
     
-    <div class="mt-7 bg-primary">
+    <div class="mt-7" [style]="{ 'background-color': 'transparent'}" >
         <p-table #dt1 [value]="events" dataKey="id" [rows]="3" [showCurrentPageReport]="true"
             [rowsPerPageOptions]="[3,10,20]" [loading]="loading" [paginator]="true"
             currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros"
-            [globalFilterFields]="['title', 'community.name', 'place']">
+            [globalFilterFields]="['title', 'community.name', 'place']"
+            [style]="{ 'background-color': 'transparent'}">
+        
             <ng-template pTemplate="caption">
                 <div class="flex">
                     <span class="p-input-icon-left ml-auto">

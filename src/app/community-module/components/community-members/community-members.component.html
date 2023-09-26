@@ -42,8 +42,10 @@
     </ng-template>
     <ng-template pTemplate="body" let-user>
         <tr>
-            <td>
-                {{ user.name }}
+            <td class="cursor-pointer"  >
+                <p-button (onClick)="seeUser(user.id)" styleClass="p-button-link">
+                    {{ user.name }}
+                </p-button>
             </td>
             <td>
                 {{ user.lastname }}

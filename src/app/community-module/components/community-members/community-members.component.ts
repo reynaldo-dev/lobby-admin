@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommunityService } from '../../services/community.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-community-members',
@@ -10,7 +11,10 @@ export class CommunityMembersComponent {
   public isModalCommunityMembersVisible: boolean = false;
   public filter = '';
 
-  constructor(private communityService: CommunityService) {
+  constructor(
+    private communityService: CommunityService,
+    private router: Router
+  ) {
     this.communityService.communityMembersModalVisible.subscribe((value) => {
       this.isModalCommunityMembersVisible = value;
     });
@@ -22,5 +26,10 @@ export class CommunityMembersComponent {
 
   closeModal() {
     this.communityService.setIsCommunityMembersModalVisibleValue(false);
+  }
+
+  public seeUser(id: string) {
+    this.closeModal();
+    this.router.navigate(['/dashboard/usuarios', id]);
   }
 }
