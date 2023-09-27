@@ -40,7 +40,7 @@
               type="button"
               icon="pi pi-pencil"
               class="p-button-rounded p-button-primary p-mr-3 p-button-sm"
-              (click)="updateChallenge(challenge)"
+              (click)="updateChallenge(challenge.id)"
             ></button>
            
           </td>
@@ -57,4 +57,8 @@
     class="p-button-rounded p-button-primary md:p-5 sm:p-1 p-button-lg absolute bottom-0 right-0 mr-5 mb-5 shadow-8"
     (click)="createChallenge()"
   ></button>
+
+  <app-create-challenge/>
+  <app-update-challenge/>
 </main>
+
