@@ -5,6 +5,7 @@ import { EventsService } from '../../services/events.service';
 import { EventStatus } from '../../event-status/event-status.enum';
 import { PdfMakerService } from 'src/app/common/services/pdf-maker.service';
 import { SafeUrl } from '@angular/platform-browser';
+import { XlsxMakerService } from 'src/app/common/services/xlsx-maker.service';
 
 @Component({
   selector: 'app-event',
@@ -24,7 +25,8 @@ export class EventComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private eventService: EventsService,
-    private pdfMakerService: PdfMakerService
+    private pdfMakerService: PdfMakerService,
+    private xlsxMakerService: XlsxMakerService
   ) {}
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -54,5 +56,9 @@ export class EventComponent implements OnInit {
 
   generateReport() {
     this.pdfMakerService.generatePdf(this.eventId);
+  }
+
+  generateXlsx() {
+    this.xlsxMakerService.getReportData(this.eventId).subscribe();
   }
 }
