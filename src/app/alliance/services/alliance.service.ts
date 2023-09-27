@@ -10,8 +10,8 @@ import { ICreateAlliance } from '../interfaces/create-alliance.interface';
 })
 export class AllianceService {
   private _alliances: IAlliance[] | null = null;
-  private _selectedAlliance: BehaviorSubject<IAlliance> =
-    new BehaviorSubject<IAlliance>({} as IAlliance);
+  private _selectedAlliance: BehaviorSubject<IAlliance | null> =
+    new BehaviorSubject<IAlliance | null>(null);
   private _apiUrl = `${environment.apiUrl}/alliance`;
   private headers!: HttpHeaders;
 
@@ -29,7 +29,7 @@ export class AllianceService {
     return this._alliances;
   }
 
-  get selectedAlliance$(): Observable<IAlliance> {
+  get selectedAlliance$(): Observable<IAlliance | null> {
     return this._selectedAlliance.asObservable();
   }
 
@@ -49,7 +49,7 @@ export class AllianceService {
     this._isModalUpdateVisible.next(value);
   }
 
-  setSelectAlliance(alliance: IAlliance): void {
+  setSelectAlliance(alliance: IAlliance | null): void {
     this._selectedAlliance.next(alliance);
   }
 
@@ -82,6 +82,7 @@ export class AllianceService {
       })
       .pipe(
         tap((alliance) => {
+          this.setSelectAlliance(null);
           this.getAlliances().subscribe();
         }),
         catchError((err) => {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AllianceService } from '../../services/alliance.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
@@ -12,7 +12,13 @@ import { MessageService } from 'primeng/api';
 export class UpdateAllianceComponent {
   public isModalUpdateVisible: boolean = false;
   public isLoading: boolean = false;
-  public updateAllianceForm: FormGroup;
+  public updateAllianceForm: FormGroup = this.fb.group({
+    name: ['', Validators.required],
+    description: ['', Validators.required],
+    benefits: this.fb.array([]),
+    initialDate: ['', Validators.required],
+    endDate: ['', Validators.required],
+  });
   public allicanceId!: string;
 
   get benefitsControls() {
@@ -29,20 +35,21 @@ export class UpdateAllianceComponent {
     });
 
     this.allianceService.selectedAlliance$.subscribe((alliance) => {
-      this.allicanceId = alliance.id;
-      this.updateAllianceForm.patchValue({
-        ...alliance,
-        initialDate: new Date(alliance.initialDate),
-        endDate: new Date(alliance.endDate),
-      });
-    });
-
-    this.updateAllianceForm = this.fb.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      benefits: this.fb.array([this.fb.control('', Validators.required)]),
-      initialDate: ['', Validators.required],
-      endDate: ['', Validators.required],
+      if (alliance) {
+        this.allicanceId = alliance.id;
+        this.updateAllianceForm.patchValue({
+          name: alliance.name,
+          description: alliance.description,
+          initialDate: new Date(alliance.initialDate),
+          endDate: new Date(alliance.endDate),
+        });
+        this.benefitsControls.controls = [];
+        alliance.benefits.forEach((benefit) => {
+          this.benefitsControls.push(
+            this.fb.control(benefit, Validators.required)
+          );
+        });
+      }
     });
   }
 

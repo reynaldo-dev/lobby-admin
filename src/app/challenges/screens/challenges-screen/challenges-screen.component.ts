@@ -23,7 +23,11 @@ export class ChallengesScreenComponent implements OnInit {
     return this.challengesService.challenges;
   }
 
-  public updateChallenge(challenge: IChallenge) {}
+  public updateChallenge(challengeId: string) {
+    this.challengesService.setIsModalUpdateVisible(true, challengeId);
+  }
 
-  public createChallenge() {}
+  public createChallenge() {
+    this.challengesService.setIsModalCreateVisible(true);
+  }
 }
