@@ -14,7 +14,7 @@
             <h1>{{event.title}}</h1>
             <p-tag [severity]="event.status == eventStatuses.ACTIVE ? 'success' : 'danger'" [value]=" event.status === eventStatuses.ACTIVE ? 'Activo' : 'Inactivo' "></p-tag>
         </div>
-        <p-button (onClick)="generateReport()" label="Generar reporte" icon="pi pi-chart-bar" styleClass="p-button-rounded"></p-button>
+        <p-button (onClick)="generateXlsx()" label="Generar reporte" icon="pi pi-file-excel" styleClass="p-button-rounded p-button-success"></p-button>
     </div>
 
     <div class="col-12 mt-8">

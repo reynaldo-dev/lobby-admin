@@ -1,12 +1,10 @@
-import {
-  HttpClient,
-  HttpClientModule,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Observable, tap } from 'rxjs';
+import { getFormattedDate } from 'src/app/helpers/departments/get-formatted-date/getFormattedDate';
+import { environment } from 'src/environments/environment';
 import {
   IAssistanceTicket,
   IConsumable,
@@ -14,8 +12,6 @@ import {
   IEvent,
   IEventReportResponse,
 } from '../interfaces/report-response.interface';
-import { environment } from 'src/environments/environment';
-import { getFormattedDate } from 'src/app/helpers/departments/get-formatted-date/getFormattedDate';
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
