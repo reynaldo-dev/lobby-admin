@@ -94,6 +94,12 @@
           </th>
 
           <th style="min-width: 15rem" class="bg-white border-none">
+            <div class="flex align-items-center">
+              Formato
+            </div>
+          </th>
+
+          <th style="min-width: 15rem" class="bg-white border-none">
             <div class="flex align-items-center">Puntaje</div>
           </th>
 
@@ -146,6 +152,11 @@
           <td class="text-500 border-none">
             {{ event.eventCategory.name }}
           </td>
+
+          <td class="text-500 border-none">
+            {{ event.eventFormat.name }}
+          </td>
+        
 
           <td class="border-none">
             <div class="custom-td w-fit border-round-lg px-2">

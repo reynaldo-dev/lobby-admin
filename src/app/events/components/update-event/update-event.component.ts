@@ -5,6 +5,7 @@ import { CommunityService } from 'src/app/community-module/services/community.se
 import { IEvent } from '../../interfaces/event.interface';
 import { EventsService } from '../../services/events.service';
 import { EventsCategoryService } from 'src/app/events-category/services/events-category.service';
+import { EventFormatService } from 'src/app/event-format/event-format.service';
 
 @Component({
   selector: 'app-update-event',
@@ -23,6 +24,7 @@ export class UpdateEventComponent implements OnInit {
     link: [''],
     // dateTime: ['', Validators.required],
     communityId: ['', Validators.required],
+    eventCategoryId: ['', Validators.required],
     score: [1, Validators.required],
   });
   public selectedEventId: string | undefined;
@@ -32,7 +34,8 @@ export class UpdateEventComponent implements OnInit {
     private fb: FormBuilder,
     private communityService: CommunityService,
     private messageService: MessageService,
-    private eventsCategoryService: EventsCategoryService
+    private eventsCategoryService: EventsCategoryService,
+    private eventFormatService: EventFormatService
   ) {
     this.eventsService.isUpdateModalVisible.subscribe((modalStatus) => {
       this.isModalUpdateOpen = modalStatus;
@@ -59,6 +62,7 @@ export class UpdateEventComponent implements OnInit {
         link: event?.link,
         communityId: event?.communityId,
         score: event?.score,
+        eventCategoryId: event?.eventCategoryId,
       });
     });
   }
@@ -71,6 +75,10 @@ export class UpdateEventComponent implements OnInit {
 
   get eventCategories() {
     return this.eventsCategoryService.eventCategories;
+  }
+
+  get eventFormats() {
+    return this.eventFormatService.eventFormats;
   }
 
   closeModalUpdate() {

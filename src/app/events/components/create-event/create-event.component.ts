@@ -11,6 +11,7 @@ import { CommunityService } from 'src/app/community-module/services/community.se
 import { EventsCategoryService } from 'src/app/events-category/services/events-category.service';
 import { ICreateConsumable } from '../../interfaces/create-consumable.interface';
 import { EventsService } from '../../services/events.service';
+import { EventFormatService } from 'src/app/event-format/event-format.service';
 
 @Component({
   selector: 'app-create-event',
@@ -33,6 +34,7 @@ export class CreateEventComponent implements OnInit {
     dateTime: ['', Validators.required],
     communityId: ['', Validators.required],
     eventCategoryId: ['', Validators.required],
+    eventFormatId: ['', Validators.required],
     score: [1, Validators.required],
     place: [''],
     link: [''],
@@ -48,7 +50,8 @@ export class CreateEventComponent implements OnInit {
     private fb: FormBuilder,
     private messageService: MessageService,
     private communityService: CommunityService,
-    private eventsCategoryService: EventsCategoryService
+    private eventsCategoryService: EventsCategoryService,
+    private eventFormatService: EventFormatService
   ) {
     this.eventsService.modalCreateStatus.subscribe((modalStatus) => {
       this.isModalCreateVisible = modalStatus;
@@ -56,6 +59,7 @@ export class CreateEventComponent implements OnInit {
   }
   ngOnInit(): void {
     this.eventsCategoryService.getEventCategories().subscribe();
+    this.eventFormatService.getEventFormats().subscribe();
   }
 
   get communities() {
@@ -66,17 +70,19 @@ export class CreateEventComponent implements OnInit {
     return this.eventsCategoryService.eventCategories;
   }
 
+  get eventFormats() {
+    return this.eventFormatService.eventFormats;
+  }
+
   get consumablesControls() {
     return this.consumableForm.get('consumables') as FormArray;
   }
 
   public changeCreateEventForm = (event: DropdownChangeEvent) => {
     const { value } = event;
-    const category = this.eventCategories.find(
-      (category) => category.id === value
-    );
+    const format = this.eventFormats?.find((format) => format.id === value);
 
-    if (category.name === 'Presencial') {
+    if (format?.name === 'Presencial') {
       this.createEventForm.get('link')?.reset();
       this.createEventForm.get('link')?.clearValidators();
       this.createEventForm.get('link')?.updateValueAndValidity();
@@ -86,7 +92,7 @@ export class CreateEventComponent implements OnInit {
       return;
     }
 
-    if (category.name === 'Virtual') {
+    if (format?.name === 'Virtual') {
       this.createEventForm.get('place')?.reset();
       this.createEventForm.get('place')?.clearValidators();
       this.createEventForm.get('place')?.updateValueAndValidity();

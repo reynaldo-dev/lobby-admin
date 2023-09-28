@@ -13,9 +13,11 @@ export interface IEvent {
   dateTime: string;
   link?: string;
   eventCategoryId: string;
+  eventFormatId: string;
   community: Community;
   Consumable: any[];
   eventCategory: EventCategory;
+  eventFormat: EventFormat;
 }
 
 export interface Community {
@@ -27,6 +29,12 @@ export interface Community {
 }
 
 export interface EventCategory {
+  id: string;
+  name: string;
+  createdAt: string;
+}
+
+export interface EventFormat {
   id: string;
   name: string;
   createdAt: string;
