@@ -54,11 +54,13 @@ export class AllianceService {
   }
 
   getAlliances() {
-    return this.http.get<IAlliance[]>(this._apiUrl).pipe(
-      tap((alliances) => {
-        this._alliances = alliances;
-      })
-    );
+    return this.http
+      .get<IAlliance[]>(this._apiUrl, { headers: this.headers })
+      .pipe(
+        tap((alliances) => {
+          this._alliances = alliances;
+        })
+      );
   }
 
   createAlliance(alliance: ICreateAlliance) {

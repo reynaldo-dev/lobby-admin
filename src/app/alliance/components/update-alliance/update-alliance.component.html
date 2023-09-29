@@ -8,6 +8,13 @@
              <label htmlFor="name">Nombre</label>
          </span>
      </div>
+
+     <div class="col-12">
+        <span class="p-float-label w-full">
+            <p-dropdown  [options]="allianceCategories ? allianceCategories : []" formControlName="allianceCategoryId" optionLabel="name" optionValue="id" placeholder="Categoría" styleClass="w-full"  inputId="eventCategoryId"></p-dropdown>
+            <label for="eventCategoryId">Selecciona una categoría</label>
+        </span>
+    </div>
  
      <div class="col-12">
          <span class="p-float-label w-full">

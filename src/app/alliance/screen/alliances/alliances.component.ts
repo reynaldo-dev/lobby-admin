@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AllianceService } from '../../services/alliance.service';
 import { IAlliance } from '../../interfaces/alliance.interface';
+import { AllianceCategoryService } from 'src/app/alliance-category/services/alliance-category.service';
+import { IAllianceCategory } from 'src/app/alliance-category/interfaces/alliance-category.interface';
 
 @Component({
   selector: 'app-alliances',
@@ -9,9 +11,14 @@ import { IAlliance } from '../../interfaces/alliance.interface';
 })
 export class AlliancesComponent implements OnInit {
   public filter = '';
+  public category: string = '';
 
-  constructor(private allianceService: AllianceService) {}
+  constructor(
+    private allianceService: AllianceService,
+    private allianceCategoryService: AllianceCategoryService
+  ) {}
   ngOnInit(): void {
+    this.allianceCategoryService.getAllianceCategories().subscribe();
     this.allianceService.getAlliances().subscribe();
   }
 
@@ -19,6 +26,10 @@ export class AlliancesComponent implements OnInit {
     return this.allianceService.alliances
       ? this.allianceService.alliances
       : null;
+  }
+
+  get allianceCategories(): IAllianceCategory[] | null {
+    return this.allianceCategoryService.allianceCategories;
   }
 
   createAlliance(): void {

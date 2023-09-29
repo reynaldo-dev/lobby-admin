@@ -17,7 +17,8 @@
       [rowsPerPageOptions]="[3, 10, 20]"
       [paginator]="true"
       currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros"
-      [globalFilterFields]="['name']"
+      [globalFilterFields]="['name', 'allianceCategory.name']"
+
     >
       <ng-template pTemplate="caption">
         <div class="flex">
@@ -38,6 +39,35 @@
           <th class="border-none" style="min-width: 15rem">
             <div class="flex align-items-center">Nombre</div>
           </th>
+          <th style="min-width: 15rem" class="border-none">
+            <div class="flex align-items-center">
+              Categoría
+              <p-columnFilter
+                field="allianceCategory.name"
+                matchMode="equals"
+                display="menu"
+                [showMatchModes]="false"
+                [showOperator]="false"
+                [showAddButton]="false"
+              >
+                <ng-template
+                  pTemplate="filter"
+                  let-value
+                  let-filter="filterCallback"
+                >
+                  <p-dropdown
+                    optionLabel="name"
+                    optionValue="name"
+                    [ngModel]="category"
+                    [options]="allianceCategories ? allianceCategories : []"
+                    (onChange)="filter($event.value)"
+                    placeholder="Busca por categoría"
+                  >
+                  </p-dropdown>
+                </ng-template>
+              </p-columnFilter>
+            </div>
+          </th>
 
           <th class="border-none" style="min-width: 15rem">
             <div class="flex align-items-center">Fecha inicio</div>
@@ -56,6 +86,9 @@
         <tr class="cursor-pointer">
           <td class="text-500 border-none">
             {{ alliance.name }}
+          </td>
+          <td class="text-500 border-none">
+            {{ alliance.allianceCategory.name }}
           </td>
 
           <td class="text-500 border-none">
