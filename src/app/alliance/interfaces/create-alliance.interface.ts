@@ -4,4 +4,5 @@ export interface ICreateAlliance {
   benefits: string[];
   initialDate: string;
   endDate: string;
+  allianceCategoryId: string;
 }

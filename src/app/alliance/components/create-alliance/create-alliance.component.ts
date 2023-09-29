@@ -3,6 +3,7 @@ import { AllianceService } from '../../services/alliance.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ICreateAlliance } from '../../interfaces/create-alliance.interface';
+import { AllianceCategoryService } from 'src/app/alliance-category/services/alliance-category.service';
 
 @Component({
   selector: 'app-create-alliance',
@@ -19,7 +20,8 @@ export class CreateAllianceComponent {
   constructor(
     private allianceService: AllianceService,
     private fb: FormBuilder,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private allianceCategoryService: AllianceCategoryService
   ) {
     this.createAllianceForm = this.fb.group({
       name: ['', Validators.required],
@@ -27,6 +29,7 @@ export class CreateAllianceComponent {
       benefits: this.fb.array([this.fb.control('', Validators.required)]),
       initialDate: ['', Validators.required],
       endDate: ['', Validators.required],
+      allianceCategoryId: ['', Validators.required],
     });
 
     this.allianceService.isModalCreateVisible$.subscribe((value) => {
@@ -38,6 +41,10 @@ export class CreateAllianceComponent {
     return this.createAllianceForm.get('benefits') as FormArray;
   }
 
+  get allianceCategories() {
+    return this.allianceCategoryService.allianceCategories;
+  }
+
   createAlliance() {
     this.isLoading = true;
     const createAlliancePayload: ICreateAlliance = {
@@ -46,6 +53,8 @@ export class CreateAllianceComponent {
       benefits: this.createAllianceForm.get('benefits')?.value,
       initialDate: this.createAllianceForm.get('initialDate')?.value,
       endDate: this.createAllianceForm.get('endDate')?.value,
+      allianceCategoryId:
+        this.createAllianceForm.get('allianceCategoryId')?.value,
     };
 
     if (this.createAllianceForm.valid) {

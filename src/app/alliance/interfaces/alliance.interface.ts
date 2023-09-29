@@ -6,4 +6,10 @@ export interface IAlliance {
   initialDate: string;
   endDate: string;
   createdAt: string;
+  allianceCategoryId: string;
+  allianceCategory: IAllianceCategory;
+}
+
+interface IAllianceCategory {
+  name: string;
 }

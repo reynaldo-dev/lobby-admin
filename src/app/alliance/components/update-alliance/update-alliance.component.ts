@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AllianceService } from '../../services/alliance.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { AllianceCategoryService } from 'src/app/alliance-category/services/alliance-category.service';
 
 @Component({
   selector: 'app-update-alliance',
@@ -18,6 +19,7 @@ export class UpdateAllianceComponent {
     benefits: this.fb.array([]),
     initialDate: ['', Validators.required],
     endDate: ['', Validators.required],
+    allianceCategoryId: ['', Validators.required],
   });
   public allicanceId!: string;
 
@@ -28,7 +30,8 @@ export class UpdateAllianceComponent {
   constructor(
     private allianceService: AllianceService,
     private fb: FormBuilder,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private allianceCategoryService: AllianceCategoryService
   ) {
     this.allianceService.isModalUpdateVisible$.subscribe((value) => {
       this.isModalUpdateVisible = value;
@@ -42,6 +45,7 @@ export class UpdateAllianceComponent {
           description: alliance.description,
           initialDate: new Date(alliance.initialDate),
           endDate: new Date(alliance.endDate),
+          allianceCategoryId: alliance.allianceCategoryId,
         });
         this.benefitsControls.controls = [];
         alliance.benefits.forEach((benefit) => {
@@ -51,6 +55,10 @@ export class UpdateAllianceComponent {
         });
       }
     });
+  }
+
+  get allianceCategories() {
+    return this.allianceCategoryService.allianceCategories;
   }
 
   updateAlliance() {
