@@ -9,7 +9,7 @@ export interface IEvent {
   createdAt: string;
   place?: string;
   communityId: string;
-  score: number;
+  credits: number;
   dateTime: string;
   link?: string;
   eventCategoryId: string;

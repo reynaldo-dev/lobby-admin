@@ -4,7 +4,7 @@ export interface IChallenge {
   description: string;
   initialDate: string;
   endDate: string;
-  points: number;
+  credits: number;
   coupons: number;
   availableCoupons: number;
 }

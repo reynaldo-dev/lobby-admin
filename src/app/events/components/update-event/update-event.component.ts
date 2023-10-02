@@ -25,7 +25,7 @@ export class UpdateEventComponent implements OnInit {
     // dateTime: ['', Validators.required],
     communityId: ['', Validators.required],
     eventCategoryId: ['', Validators.required],
-    score: [1, Validators.required],
+    credits: [1, Validators.required],
   });
   public selectedEventId: string | undefined;
 
@@ -61,7 +61,7 @@ export class UpdateEventComponent implements OnInit {
         place: event?.place,
         link: event?.link,
         communityId: event?.communityId,
-        score: event?.score,
+        credits: event?.credits,
         eventCategoryId: event?.eventCategoryId,
       });
     });

@@ -4,7 +4,7 @@ export interface IGetChallengeByIDResponse {
   description: string;
   initialDate: string;
   endDate: string;
-  points: number;
+  credits: number;
   indications: string[];
   createdAt: string;
   coupons: number;

@@ -35,7 +35,7 @@ export class CreateEventComponent implements OnInit {
     communityId: ['', Validators.required],
     eventCategoryId: ['', Validators.required],
     eventFormatId: ['', Validators.required],
-    score: [1, Validators.required],
+    credits: [1, Validators.required],
     place: [''],
     link: [''],
   });

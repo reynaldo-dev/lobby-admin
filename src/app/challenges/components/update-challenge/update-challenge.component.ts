@@ -14,7 +14,7 @@ export class UpdateChallengeComponent {
     title: ['', Validators.required],
     description: ['', Validators.required],
     endDate: ['', Validators.required],
-    points: [1, Validators.required],
+    credits: [1, Validators.required],
     indications: this.fb.array([]),
     coupons: [1, Validators.required],
   });
@@ -37,7 +37,7 @@ export class UpdateChallengeComponent {
           title: value.title,
           description: value.description,
           endDate: new Date(value.endDate),
-          points: value.points,
+          credits: value.credits,
           coupons: value.coupons,
         });
         this.indicationsControls.controls = [];

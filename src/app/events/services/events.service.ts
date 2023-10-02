@@ -259,6 +259,7 @@ export class EventsService {
       })
       .pipe(
         tap((event) => {
+          this.modalUpdateStatus.next(false);
           this.getEvents().subscribe();
         }),
         catchError((err) => {

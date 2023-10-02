@@ -98,7 +98,7 @@ export class PdfMakerService {
           ['Título', event.title],
           ['Descripción', event.description],
           ['Fecha y Hora', getFormattedDate(event.dateTime)],
-          ['Puntuación', event.score],
+          ['Puntuación', event.credits],
         ],
       },
       layout: 'borders',

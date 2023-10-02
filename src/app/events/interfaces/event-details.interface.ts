@@ -8,7 +8,7 @@ export interface IEventDetails {
   place: string;
   communityId: string;
   link: null;
-  score: number;
+  credits: number;
   dateTime: string;
   createdBy: string;
   eventCategoryId: string;

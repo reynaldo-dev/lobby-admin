@@ -50,5 +50,5 @@ export interface IEvent {
   title: string;
   description: string;
   dateTime: string;
-  score: number;
+  credits: number;
 }

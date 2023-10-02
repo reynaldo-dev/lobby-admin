@@ -27,7 +27,6 @@ export class XlsxMakerService {
       })
       .pipe(
         tap((data) => {
-          console.log(data);
           this._data = data;
         }),
         tap(() => {
@@ -43,16 +42,14 @@ export class XlsxMakerService {
       {
         Titulo: this._data.event.title,
         Fecha: getFormattedDate(this._data.event.dateTime),
-        Puntuacion: this._data.event.score,
+        Creditos: this._data.event.credits,
       },
     ];
 
-    const consumables = [
-      {
-        ID: this._data.consumables[0].id,
-        Nombre: this._data.consumables[0].name,
-      },
-    ];
+    const consumables = this._data.consumables.map((consumable) => ({
+      ID: consumable.id,
+      Nombre: consumable.name,
+    }));
 
     const assistanceTickets = this._data.assistanceTickets.map((ticket) => ({
       ID: ticket.id,

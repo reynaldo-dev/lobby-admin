@@ -27,7 +27,7 @@ export class CreateChallengeComponent {
       description: ['', Validators.required],
       initialDate: ['', Validators.required],
       endDate: ['', Validators.required],
-      points: [1, Validators.required],
+      credits: [1, Validators.required],
       indications: this.fb.array([this.fb.control('', Validators.required)]),
       coupons: [1, Validators.required],
     });
