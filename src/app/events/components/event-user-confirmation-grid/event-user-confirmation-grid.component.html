@@ -3,8 +3,7 @@
 <div class="grid gap-2 mt-8">
     <div *ngFor="let user of usersEventAssistanceConfirmation" class="col-12 border-round-2xl flex justify-content-evenly bg-blue-50">
         <div class=" col-4 flex justify-content-center">
-            <h4 class="text-500">{{user.name}}</h4>
-            <h4 class="text-500">{{user.lastname}}</h4>
+            <h4 class="text-500">{{user.name}} {{user.lastname}}</h4>
         </div>
 
         <div class="col-4 flex gap-2 align-items-center justify-content-center">

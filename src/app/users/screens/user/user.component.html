@@ -197,7 +197,7 @@
               <tr>
                 <th style="width: 25%">¿Quien fue reconocido?</th>
                 <th style="width: 25%">Descripción</th>
-                <th style="width: 25%">Puntos dados</th>
+                <th style="width: 25%">Creditos dados</th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-recognition>
@@ -207,7 +207,7 @@
                   {{ recognition.userTarget.lastname }}
                 </td>
                 <td>{{ recognition.description }}</td>
-                <td>{{ recognition.points }}</td>
+                <td>{{ recognition.credits }}</td>
               </tr>
             </ng-template>
           </p-table>
@@ -230,7 +230,7 @@
               <tr>
                 <th style="width: 25%">¿Quien reconoció?</th>
                 <th style="width: 25%">Descripción</th>
-                <th style="width: 25%">Puntos dados</th>
+                <th style="width: 25%">Creditos recibidos</th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-recognition>
@@ -240,7 +240,7 @@
                   {{ recognition.userSource.lastname }}
                 </td>
                 <td>{{ recognition.description }}</td>
-                <td>{{ recognition.points }}</td>
+                <td>{{ recognition.credits }}</td>
               </tr>
             </ng-template>
           </p-table>
