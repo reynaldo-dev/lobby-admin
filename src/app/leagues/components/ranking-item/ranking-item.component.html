@@ -1,0 +1,24 @@
+<div
+  class="w-full flex align-items-center p-2 justify-content-between mt-3 border-round-xl"
+  [ngClass]="
+  {
+    'ranking-top1': getCurrentIndex(item) === 0,
+    'ranking-top2': getCurrentIndex(item) === 1,
+    'ranking-top3': getCurrentIndex(item) === 2,
+    'surface-200': getCurrentIndex(item) > 2
+
+  }
+  "
+  *ngFor="let item of ranking"
+>
+  <img
+    [src]="item.picture ? item.picture : 'assets/user-male.svg'"
+    alt=""
+    class="w-2   border-circle"
+  />
+  <span [ngClass]="{ 'text-500': getCurrentIndex(item) > 2 }">{{ item.name }} {{ item.lastname }}</span>
+  <div class="flex gap-1 justify-content-center align-items-center">
+    <i class="pi pi-star-fill" [ngClass]="{ 'text-yellow-300': getCurrentIndex(item) > 2 }" ></i>
+    <span class="" [ngClass]="{ 'text-yellow-300': getCurrentIndex(item) > 2 }" >{{ item.recognitionsReceivedCount }}</span>
+  </div>
+</div>

@@ -2,9 +2,8 @@
   <app-loader />
 </div>
 
-<div *ngIf="events && eventsAtDate" #data>
+<div *ngIf="events && eventsAtDate" #data class="">
   <div class="grid">
-
     <div class="flex justify-content-end align-items-center col-12 relative">
       <app-profile-sign
         [name]="user.name"
@@ -16,16 +15,12 @@
       />
     </div>
 
-    <div class="mt-6 md:mt-4">
-      <h2 class="text-600">Dashboard</h2>
-    </div>
-
-    <div class="col-12 flex justify-content-end mt-4">
+    <div class="col-12 flex justify-content-end mt-4 mb-3">
       <p-splitButton
         label="Crear"
         icon="pi pi-plus"
         [model]="this.items"
-        styleClass="p-button-rounded p-button-sm p-button-secondary"
+        styleClass="p-button-rounded p-button-sm p-button-secondary mt-3 mb-3"
       />
     </div>
   </div>
@@ -36,59 +31,70 @@
   <!-- create event dialog -->
   <app-create-event />
 
-  <div class="col-12">
+  <div class="grid justify-content-between">
+    <div class="col-8">
+      <app-events-stats
+        [asLink]="true"
+        [activeEvents]="activeEventsCount"
+        [inactiveEvents]="inactiveEventsCount"
+      />
 
-    <app-events-stats
-      [asLink]="true"
-      [activeEvents]="activeEventsCount"
-      [inactiveEvents]="inactiveEventsCount"
-    />
-
-    <h2 class=" text-500 text-md">Comunidades</h2>
-
-    <div *ngIf="userRole === allowedRoles.ADMIN" class="lg:w-8 w-full bg-white px-1 py-4 border-round-lg mb-4 mt-4">
-      <app-communities-carousel />
-    </div>
-
-
-    <h2 class="mt-6 text-500">Proximos eventos</h2>
-    <div class="mt-2 bg-white lg:w-8  bg-white px-2 pb-1 border-round-lg">
-      <div class="mb-1w-full">
-        <div
-          *ngIf="!eventsAtDate || eventsAtDate.length === 0"
-          class="col-12 flex justify-content-center align-items-center flex-column"
-        >
-          <span class="text-500">No hay eventos para mostrar</span>
-          <i class="text-5xl text-500 pi pi-info-circle"></i>
-        </div>
-
-        <p-scroller
-          [items]="eventsAtDate"
-          [itemSize]="70"
-          scrollHeight="500px"
-          styleClass="w-full pb-4"
-        >
-          <ng-template
-            pTemplate="event"
-            let-event
-            let-options="options"
-            class=""
-          >
-            <a
-              [routerLink]="['/dashboard/eventos', event.id]"
-              style="text-decoration: none"
-              class="text-400  w-full"
-            >
-              <app-event-card
-                [communityColor]="event.community.color"
-                [event]="event"
-              />
-            </a>
-          </ng-template>
-        </p-scroller>
+      <h2 class="text-500 text-md">Comunidades</h2>
+      <div
+        *ngIf="userRole === allowedRoles.ADMIN"
+        class="w-full bg-white px-1 py-4 border-round-lg mb-4 mt-4"
+      >
+        <app-communities-carousel />
       </div>
+
+      <h2 class="mt-6 text-500">Proximos eventos</h2>
+      <div class="mt-2 bg-white w-full bg-white px-2 pb-1 border-round-lg">
+        <div class="mb-1w-full">
+          <div
+            *ngIf="!eventsAtDate || eventsAtDate.length === 0"
+            class="col-12 flex justify-content-center align-items-center flex-column"
+          >
+            <span class="text-500">No hay eventos para mostrar</span>
+            <i class="text-5xl text-500 pi pi-info-circle"></i>
+          </div>
+
+          <p-scroller
+            [items]="eventsAtDate"
+            [itemSize]="70"
+            scrollHeight="500px"
+            styleClass="w-full pb-4"
+          >
+            <ng-template
+              pTemplate="event"
+              let-event
+              let-options="options"
+              class=""
+            >
+              <a
+                [routerLink]="['/dashboard/eventos', event.id]"
+                style="text-decoration: none"
+                class="text-400 w-full"
+              >
+                <app-event-card
+                  [communityColor]="event.community.color"
+                  [event]="event"
+                />
+              </a>
+            </ng-template>
+          </p-scroller>
+        </div>
+      </div>
+
     </div>
 
-    
+    <div class="bg-white col-3 border-round-lg p-2">
+      <h1 class="text-500 ml-2 mb-3">Ranking</h1>
+
+      <div class="">
+       <app-ranking-item/>
+      </div>
+
+    </div>
+
   </div>
 </div>

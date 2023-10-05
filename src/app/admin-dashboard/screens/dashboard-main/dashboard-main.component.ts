@@ -5,6 +5,8 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { CommunityService } from 'src/app/community-module/services/community.service';
 import { IEvent } from 'src/app/events/interfaces/event.interface';
 import { EventsService } from 'src/app/events/services/events.service';
+import { IGetRankingResponse } from 'src/app/leagues/interfaces/get-ranking-response.interface';
+import { RankingService } from 'src/app/leagues/services/ranking.service';
 
 @Component({
   selector: 'app-dashboard-main',
@@ -21,7 +23,8 @@ export class DashboardMainComponent implements OnInit {
   constructor(
     private communityService: CommunityService,
     private authService: AuthService,
-    private eventsService: EventsService
+    private eventsService: EventsService,
+    private rankingService: RankingService
   ) {
     this.eventsService.modalCreateStatus.subscribe();
   }
@@ -50,11 +53,16 @@ export class DashboardMainComponent implements OnInit {
     return this.authService.authState.user.role;
   }
 
+  get ranking(): IGetRankingResponse[] | null {
+    return this.rankingService.ranking;
+  }
+
   ngOnInit(): void {
     this.eventsService.getInActiveEventsCount().subscribe();
     this.eventsService.getActiveEventsCount().subscribe();
     this.eventsService.getEvents().subscribe();
     this.eventsService.getEventsAtDate(new Date().toISOString()).subscribe();
+    this.rankingService.getCurrentGlobalRanking().subscribe();
 
     if (this.authService.authState.user.role === AllowedRoles.SPONSOR) {
       this.items = [

@@ -18,6 +18,7 @@ import { AllianceModule } from '../alliance/alliance.module';
 import { ComponentsModule } from '../components/components.module';
 import { RedeemablesModule } from '../redeemables/redeemables.module';
 import { ChallengesModule } from '../challenges/challenges.module';
+import { LeaguesModule } from '../leagues/leagues.module';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { ChallengesModule } from '../challenges/challenges.module';
     ComponentsModule,
     RedeemablesModule,
     ChallengesModule,
+    LeaguesModule,
   ],
 })
 export class AdminDashboardModule {}

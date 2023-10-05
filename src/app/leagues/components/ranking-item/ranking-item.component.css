@@ -1,0 +1,25 @@
+
+.ranking-top1 {
+  background: linear-gradient(to right, #ebcb16, #fcac18);
+  color: #fff;
+   
+  }
+  
+  /* Estilo adicional si es necesario */
+  .ranking-item:hover {
+    
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+    transition: box-shadow 0.3s ease;
+  }
+
+  .ranking-top2 {
+    background: linear-gradient(to right, #aab5be, #969faa); /* Colores azules */
+    color: #fff; /* Color de texto blanco para mayor contraste */
+    
+  }
+
+  .ranking-top3 {
+    background: linear-gradient(to right, #e76209, #dd4b26); /* Colores naranjas */
+    color: #fff;
+    
+  }

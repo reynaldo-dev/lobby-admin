@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Observable, tap } from 'rxjs';
-import { getFormattedDate } from 'src/app/helpers/departments/get-formatted-date/getFormattedDate';
 import { environment } from 'src/environments/environment';
 import {
   IAssistanceTicket,
@@ -12,6 +11,7 @@ import {
   IEvent,
   IEventReportResponse,
 } from '../interfaces/report-response.interface';
+import { getFormattedDate } from 'src/app/helpers/get-formatted-date/getFormattedDate';
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 

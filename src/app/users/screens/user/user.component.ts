@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { UserData } from '../../interfaces/user.interface';
 import { ActivatedRoute } from '@angular/router';
-import { getFormattedDate } from 'src/app/helpers/departments/get-formatted-date/getFormattedDate';
 import { RecognitionsService } from 'src/app/recognitions/recognitions.service';
 import { EventsService } from 'src/app/events/services/events.service';
 import { IEventHistoryByUserResponse } from 'src/app/events/interfaces/event-history-by-user-response.interface';
 import { IGivenRecognitionsResponse } from 'src/app/recognitions/interfaces/given-recognitions.interface';
 import { IReceivedRecognitionsResponse } from 'src/app/recognitions/interfaces/received-recognitions.interface';
+import { getFormattedDate } from 'src/app/helpers/get-formatted-date/getFormattedDate';
 
 @Component({
   selector: 'app-user',

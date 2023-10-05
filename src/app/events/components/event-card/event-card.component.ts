@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { getFormattedDate } from 'src/app/helpers/departments/get-formatted-date/getFormattedDate';
+import { getFormattedDate } from 'src/app/helpers/get-formatted-date/getFormattedDate';
 
 @Component({
   selector: 'app-event-card',

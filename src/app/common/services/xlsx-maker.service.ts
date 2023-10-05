@@ -4,7 +4,7 @@ import * as XLSX from 'xlsx';
 import { IEventReportResponse } from '../interfaces/report-response.interface';
 import { environment } from 'src/environments/environment';
 import { Observable, tap } from 'rxjs';
-import { getFormattedDate } from 'src/app/helpers/departments/get-formatted-date/getFormattedDate';
+import { getFormattedDate } from 'src/app/helpers/get-formatted-date/getFormattedDate';
 
 @Injectable({
   providedIn: 'root',
