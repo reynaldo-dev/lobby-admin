@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ChallengesService } from '../../services/challenges.service';
+import { EventsCategoryService } from 'src/app/events-category/services/events-category.service';
 
 @Component({
   selector: 'app-update-challenge',
@@ -16,6 +17,7 @@ export class UpdateChallengeComponent {
     endDate: ['', Validators.required],
     credits: [1, Validators.required],
     indications: this.fb.array([]),
+    eventCategoryId: ['', Validators.required],
     coupons: [1, Validators.required],
   });
   public isVisible = false;
@@ -24,7 +26,8 @@ export class UpdateChallengeComponent {
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
-    private challengeService: ChallengesService
+    private challengeService: ChallengesService,
+    private eventCategoryService: EventsCategoryService
   ) {
     this.challengeService.isModalUpdateVisible$.subscribe((value) => {
       this.isVisible = value;
@@ -39,6 +42,7 @@ export class UpdateChallengeComponent {
           endDate: new Date(value.endDate),
           credits: value.credits,
           coupons: value.coupons,
+          eventCategoryId: value.eventCategoryId,
         });
         this.indicationsControls.controls = [];
         value.indications.forEach((indication) => {
@@ -52,6 +56,10 @@ export class UpdateChallengeComponent {
 
   get indicationsControls() {
     return this.updateChallengeForm.get('indications') as FormArray;
+  }
+
+  get eventCategories() {
+    return this.eventCategoryService.eventCategories;
   }
 
   removeIndication(i: number) {
@@ -79,21 +87,21 @@ export class UpdateChallengeComponent {
       .updateChallenge(this.challengeId!, this.updateChallengeForm.value)
       .subscribe({
         next: () => {
+          this.isLoading = false;
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
             detail: 'Reto actualizado exitosamente',
           });
-          this.isLoading = false;
           this.closeModal();
         },
         error: (err) => {
+          this.isLoading = false;
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
             detail: err,
           });
-          this.isLoading = false;
         },
       });
   }

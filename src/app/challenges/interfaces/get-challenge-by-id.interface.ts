@@ -8,4 +8,5 @@ export interface IGetChallengeByIDResponse {
   indications: string[];
   createdAt: string;
   coupons: number;
+  eventCategoryId: string;
 }
