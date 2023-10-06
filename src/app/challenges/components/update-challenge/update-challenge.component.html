@@ -74,7 +74,7 @@
   
 
  
-     <div formArrayName="indications" class="col-12  h-25rem overflow-y-scroll mb-5 mt-5">
+     <div formArrayName="indications" class="col-12  h-auto mb-5 mt-5">
          <div class="flex justify-content-between align-items-center">
              <span class="text-500" *ngIf="indicationsControls.controls.length > 0">Indicaciones</span>
              <p-button label="Agregar indicacion" styleClass="p-button-sm p-button-text"
@@ -92,8 +92,10 @@
              </p-button>
          </div>
      </div>
- 
-         <p-button [loading]="isLoading" (click)="updateChallenge()" icon="pi pi-check"  label="Actualizar" styleClass="p-button-rounded absolute bottom-0 right-0 m-2"></p-button>
+     <div class="flex justify-content-end w-full mt-5">
+        <button pButton [loading]="isLoading" (click)="updateChallenge()"  label="Actualizar" class="p-button-raised p-button-rounded" icon="pi pi-save"></button>
+    </div>
+        
     
  </form>
  </p-dialog>

@@ -8,3 +8,7 @@
 .p-scroller-content{
   padding: 10px;
 }
+
+.ranking-container{
+  max-height: 35rem;
+}

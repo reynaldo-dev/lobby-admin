@@ -1,5 +1,5 @@
-<p-dialog header="Header" [(visible)]="isModalCreateVisible" [style]="{ width: '50vw' }" (onHide)="closeModalCreate()"
-    [modal]="true" styleClass="h-screen">
+<p-dialog header="Header" [(visible)]="isModalCreateVisible" (onHide)="closeModalCreate()"
+    [modal]="true"  styleClass=" w-full md:w-5 lg:w-5">
     <ng-template pTemplate="header">
         <span class="text-xl font-bold">Crear un nuevo usuario</span>
     </ng-template>
@@ -66,7 +66,10 @@
             </div>
 
 
-            <p-button (click)="createUser()" icon="pi pi-check" label="Crear" styleClass="p-button-text"></p-button>
+            <div class="flex justify-content-end w-full mt-5">
+                <button pButton (click)="createUser()" label="Crear" class="p-button-raised p-button-rounded" icon="pi pi-save"></button>
+            </div>
+
 
         </form>
     </div>

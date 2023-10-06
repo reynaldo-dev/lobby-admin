@@ -48,8 +48,8 @@
       </div>
 
       <h2 class="mt-6 text-500">Proximos eventos</h2>
-      <div class="mt-2 bg-white w-full bg-white px-2 pb-1 border-round-lg">
-        <div class="mb-1w-full">
+      <div class="mt-2 w-full bg-white px-2 border-round-lg">
+        <div class="w-full">
           <div
             *ngIf="!eventsAtDate || eventsAtDate.length === 0"
             class="col-12 flex justify-content-center align-items-center flex-column"
@@ -61,8 +61,8 @@
           <p-scroller
             [items]="eventsAtDate"
             [itemSize]="70"
-            scrollHeight="500px"
-            styleClass="w-full pb-4"
+            scrollHeight="250px"
+            styleClass="w-full"
           >
             <ng-template
               pTemplate="event"
@@ -73,7 +73,7 @@
               <a
                 [routerLink]="['/dashboard/eventos', event.id]"
                 style="text-decoration: none"
-                class="text-400 w-full"
+                class="text-400 w-full mb-4"
               >
                 <app-event-card
                   [communityColor]="event.community.color"
@@ -87,10 +87,14 @@
 
     </div>
 
-    <div class="bg-white col-3 border-round-lg p-2">
-      <h1 class="text-500 ml-2 mb-3">Ranking</h1>
-
-      <div class="">
+    <div class=" col-3 border-round-lg p-2 bg-white flex flex-column align-items-center">
+      <img
+      src="assets/ranking-cover.svg"
+      alt=""
+      class="w-6"
+    />
+      <h3 class="text-500 ml-2 mb-3">Ranking</h3>
+      <div class="ranking-container overflow-y-scroll">
        <app-ranking-item/>
       </div>
 

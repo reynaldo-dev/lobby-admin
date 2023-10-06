@@ -1,5 +1,5 @@
-<p-dialog header="Header" [(visible)]="isModalUpdateOpen" [style]="{ width: '50vw' }" (onHide)="closeModalUpdate()"
-    [modal]="true" styleClass="h-screen">
+<p-dialog header="Header" [(visible)]="isModalUpdateOpen" class="" (onHide)="closeModalUpdate()"
+    [modal]="true" styleClass=" w-full md:w-5 lg:w-5">
     <ng-template pTemplate="header">
         <span class="text-xl font-bold">Actualizar usuario</span>
     </ng-template>
@@ -57,8 +57,9 @@
                 </span>
             </div>
 
-            <p-button (click)="updateUser()" icon="pi pi-check" label="Actualizar"
-                styleClass="p-button-text"></p-button>
+            <div class="flex justify-content-end w-full align-self-end">
+                <button pButton  (click)="updateUser()" label="Actualizar" class="p-button-raised p-button-rounded" icon="pi pi-save"></button>
+            </div>
 
         </form>
     </div>

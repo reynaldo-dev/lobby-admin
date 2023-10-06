@@ -1,4 +1,4 @@
-<p-dialog header="Crear alianza" styleClass="h-full relative w-full md:w-5" [(visible)]="isModalCreateVisible" [modal]="true" (onHide)="closeModal()" [draggable]="false">
+<p-dialog header="Crear alianza" styleClass="relative w-full md:w-5" [(visible)]="isModalCreateVisible" [modal]="true" (onHide)="closeModal()" [draggable]="false">
    <div>
 </div>
 <form [formGroup]="createAllianceForm" class="grid gap-3">
@@ -33,7 +33,7 @@
             panelStyleClass="mt-8"></p-calendar>
     </div>
 
-    <div formArrayName="benefits" class="col-12  h-25rem overflow-y-scroll mb-5 mt-5">
+    <div formArrayName="benefits" class="col-12  h-auto mb-5 mt-5">
         <div class="flex justify-content-between align-items-center">
             <span class="text-500" *ngIf="benefitsControls.controls.length > 0">Beneficios</span>
             <p-button label="Agregar beneficio" styleClass="p-button-sm p-button-text"
@@ -52,7 +52,9 @@
         </div>
     </div>
 
-        <p-button [loading]="isLoading" (click)="createAlliance()" icon="pi pi-check"  label="Crear" styleClass="p-button-rounded absolute bottom-0 right-0 m-2"></p-button>
+    <div class="flex justify-content-end w-full mt-5">
+        <button pButton [loading]="isLoading" (click)="createAlliance()" label="Crear" class="p-button-raised p-button-rounded" icon="pi pi-save"></button>
+    </div>
    
 </form>
 </p-dialog>
