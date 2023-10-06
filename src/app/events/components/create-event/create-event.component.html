@@ -1,5 +1,5 @@
 
-<p-dialog [(visible)]="isModalCreateVisible" (onHide)="closeModalCreate()" [modal]="true" styleClass="h-auto w-full md:w-9 lg:w-6 sm:mx-2" contentStyle="h-auto" id="createEventModal" >
+<p-dialog [(visible)]="isModalCreateVisible" (onHide)="closeModalCreate()" [modal]="true" styleClass="w-full md:w-9 lg:w-6 sm:mx-2" id="createEventModal" >
 
     <div *ngIf="isLoading" >
         <app-loader />
@@ -7,7 +7,7 @@
     <p-tabView [activeIndex]="activeIndexTab">
         <p-tabPanel [disabled]="isDisabledEventTab">
             <ng-template pTemplate="header">
-                <span class="text-xl font-bold">Evento</span>
+                <span class="text-md">Evento</span>
             </ng-template>
 
             <div class="">
@@ -99,8 +99,9 @@
                         </span>
                     </div>
         
-                    <div class="w-full flex justify-content-end ">
-                        <p-button [loading]="isLoading" (click)="createEvent()" icon="pi pi-check"  label="Crear" styleClass="p-button-rounded p-button-sm"></p-button>
+
+                    <div class="flex justify-content-end w-full mt-5">
+                        <button pButton (click)="createEvent()" label="Crear" class="p-button-raised p-button-rounded" icon="pi pi-save"></button>
                     </div>
                     
                     
@@ -109,7 +110,7 @@
         </p-tabPanel>
         <p-tabPanel *ngIf="!createEventForm.get('link')?.value" [disabled]="isDisabledConsumableTab">
             <ng-template pTemplate="header">
-                <span class="text-xl font-bold">Consumible</span>
+                <span class="text-md">Consumible</span>
             </ng-template>
         
             <form [formGroup]="consumableForm" class="grid gap-3">
@@ -131,9 +132,10 @@
                         </p-button>
                     </div>
                 </div>|
-            
-                <p-button [loading]="isLoading" (click)="createConsumables()" icon="pi pi-check" label="Crear"
-                    styleClass="p-button-rounded absolute bottom-0 right-0 m-2"></p-button>
+
+                    <div class="flex justify-content-end w-full mt-5">
+                        <button pButton (click)="createConsumables()" label="Crear" class="p-button-raised p-button-rounded" icon="pi pi-save"></button>
+                    </div>
             
             </form>
         
