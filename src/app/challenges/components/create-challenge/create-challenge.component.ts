@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ChallengesService } from '../../services/challenges.service';
+import { EventsCategoryService } from 'src/app/events-category/services/events-category.service';
 
 @Component({
   selector: 'app-create-challenge',
@@ -17,7 +18,8 @@ export class CreateChallengeComponent {
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
-    private challengeService: ChallengesService
+    private challengeService: ChallengesService,
+    private eventCategoryService: EventsCategoryService
   ) {
     this.challengeService.isModalCreateVisible$.subscribe((value) => {
       this.isVisible = value;
@@ -29,8 +31,13 @@ export class CreateChallengeComponent {
       endDate: ['', Validators.required],
       credits: [1, Validators.required],
       indications: this.fb.array([this.fb.control('', Validators.required)]),
+      eventCategoryId: ['', Validators.required],
       coupons: [1, Validators.required],
     });
+  }
+
+  get eventCategories() {
+    return this.eventCategoryService.eventCategories;
   }
 
   get indicationsControls() {
