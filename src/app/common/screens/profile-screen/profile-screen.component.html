@@ -1,39 +1,51 @@
 <main>
-    <div class="grid mt-8">
-        
-        <div class="col-12">
-            <h1 class="text-500">Perfil</h1>
-        </div>
-  
-  
-        <div class=" mt-8 col-12">
-            <div class="col-12 flex flex-column align-items-center gap-4">
-                <div>
-                    <img [src]="profile.picture" class=" rounded-full" alt="profile">
-                </div>
-                <div class="flex gap-2">
-                    <h1 class="text-600">{{profile.name}}</h1>
-                    <h1 class="text-600">{{profile.lastname}}</h1>
-                </div>
-                
-                <div class="flex gap-2 align-items-center">
-                    <i class=" pi pi-envelope text-500"></i>
-                    <h4 class="text-500">{{profile.email}}</h4>
-                </div>
-                <div *ngIf="profile.department && profile.city" class="flex gap-2 align-items-center">
-                    <i class=" pi pi-map-marker text-500"></i>
-                    <h4 class="text-500">{{profile.department}}, {{profile.city}}</h4>
-                </div>
-                <div *ngIf="profile.phone" class="flex gap-2 align-items-center">
-                    <i class=" pi pi-phone text-500"></i>
-                    <h4 class="text-500">{{profile.phone}}</h4>
-                </div>
-                <div [class]=" profile.isActive ? 'w-fit' :  'w-fit' ">
-                   <span [class]=" profile.isActive ? 'text-green-500' : 'text-red-500'">{{profile.isActive ? 'Activo' : 'Inactivo'}}</span>
-                </div>
-                <p-button label="Editar Perfil" (onClick)="updateProfile()" styleClass="p-button-outlined p-button-rounded"></p-button>
-            </div>
-        </div>
+  <div class="grid mt-8">
+    <div class="col-12">
+      <h1 class="text-500">Perfil</h1>
     </div>
-    <app-update-profile />
+
+    <div class="mt-8 col-12 bg-white pb-4">
+      <div class="col-12 flex flex-column align-items-center gap-4">
+        <div class="flex justify-content-center">
+          <img
+            [src]="profile.picture ? profile.picture : 'assets/user-male.svg'"
+            class="rounded-full w-4"
+            alt="profile"
+          />
+        </div>
+        <div class="flex gap-2">
+          <h1 class="text-600">{{ profile.name }}</h1>
+          <h1 class="text-600">{{ profile.lastname }}</h1>
+        </div>
+
+        <div class="flex gap-2 align-items-center">
+          <i class="pi pi-envelope text-500"></i>
+          <h4 class="text-500">{{ profile.email }}</h4>
+        </div>
+        <div
+          *ngIf="profile.department && profile.city"
+          class="flex gap-2 align-items-center"
+        >
+          <i class="pi pi-map-marker text-500"></i>
+          <h4 class="text-500">{{ profile.department }}, {{ profile.city }}</h4>
+        </div>
+        <div *ngIf="profile.phone" class="flex gap-2 align-items-center">
+          <i class="pi pi-phone text-500"></i>
+          <h4 class="text-500">{{ profile.phone }}</h4>
+        </div>
+        <div [class]="profile.isActive ? 'w-fit' : 'w-fit'">
+          <span
+            [class]="profile.isActive ? 'text-green-500' : 'text-red-500'"
+            >{{ profile.isActive ? "Activo" : "Inactivo" }}</span
+          >
+        </div>
+        <p-button
+          label="Editar Perfil"
+          (onClick)="updateProfile()"
+          styleClass="p-button-outlined p-button-rounded"
+        ></p-button>
+      </div>
+    </div>
+  </div>
+  <app-update-profile />
 </main>

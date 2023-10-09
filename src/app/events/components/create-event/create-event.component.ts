@@ -31,6 +31,7 @@ export class CreateEventComponent implements OnInit {
     title: ['', Validators.required],
     description: ['', Validators.required],
     isPrivate: [''],
+    withConsumables: [false],
     dateTime: ['', Validators.required],
     communityId: ['', Validators.required],
     eventCategoryId: ['', Validators.required],
@@ -60,6 +61,10 @@ export class CreateEventComponent implements OnInit {
   ngOnInit(): void {
     this.eventsCategoryService.getEventCategories().subscribe();
     this.eventFormatService.getEventFormats().subscribe();
+  }
+
+  get withCosumables() {
+    return this.createEventForm.get('withConsumables')?.value;
   }
 
   get communities() {
@@ -110,8 +115,9 @@ export class CreateEventComponent implements OnInit {
         ? 'Si'
         : 'No';
     this.createEventForm.patchValue({ isPrivate });
+    const { withConsumables, ...rest } = this.createEventForm.value;
     if (this.createEventForm.valid) {
-      this.eventsService.createEvent(this.createEventForm.value).subscribe({
+      this.eventsService.createEvent(rest).subscribe({
         next: (res: any) => {
           if (this.createEventForm.get('link')?.value) {
             this.isDisabledEventTab = false;
@@ -184,6 +190,40 @@ export class CreateEventComponent implements OnInit {
       },
     });
 
+    this.isLoading = false;
+  }
+
+  createEventWithoutConsumables() {
+    this.isLoading = true;
+    const isPrivate =
+      this.createEventForm.get('isPrivate')?.value?.toString() === 'true'
+        ? 'Si'
+        : 'No';
+    this.createEventForm.patchValue({ isPrivate });
+    const { withConsumables, ...rest } = this.createEventForm.value;
+    if (this.createEventForm.valid) {
+      this.eventsService.createEvent(rest).subscribe({
+        next: (res: any) => {
+          this.createEventForm.reset();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Evento creado',
+          });
+          this.isLoading = false;
+        },
+
+        error: (err) => {
+          this.messageService.add({ severity: 'error', summary: err });
+        },
+      });
+      this.isLoading = false;
+      return;
+    }
+
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Formulario invalido, verifica que ningun campo quede vacío',
+    });
     this.isLoading = false;
   }
 
