@@ -7,6 +7,8 @@ import { IEvent } from 'src/app/events/interfaces/event.interface';
 import { EventsService } from 'src/app/events/services/events.service';
 import { IGetRankingResponse } from 'src/app/leagues/interfaces/get-ranking-response.interface';
 import { RankingService } from 'src/app/leagues/services/ranking.service';
+import { ITradeHistory } from 'src/app/redeemables/interfaces/trade-history.interface';
+import { RedeemsHistoryService } from 'src/app/redeemables/services/redeems-history.service';
 
 @Component({
   selector: 'app-dashboard-main',
@@ -24,7 +26,8 @@ export class DashboardMainComponent implements OnInit {
     private communityService: CommunityService,
     private authService: AuthService,
     private eventsService: EventsService,
-    private rankingService: RankingService
+    private rankingService: RankingService,
+    private redeemsHistoryService: RedeemsHistoryService
   ) {
     this.eventsService.modalCreateStatus.subscribe();
   }
@@ -57,12 +60,17 @@ export class DashboardMainComponent implements OnInit {
     return this.rankingService.ranking;
   }
 
+  get totalRedeems(): number {
+    return this.redeemsHistoryService.totalRedeems;
+  }
+
   ngOnInit(): void {
     this.eventsService.getInActiveEventsCount().subscribe();
     this.eventsService.getActiveEventsCount().subscribe();
     this.eventsService.getEvents().subscribe();
     this.eventsService.getEventsAtDate(new Date().toISOString()).subscribe();
     this.rankingService.getCurrentGlobalRanking().subscribe();
+    this.redeemsHistoryService.getRedeemsHistory().subscribe();
 
     if (this.authService.authState.user.role === AllowedRoles.SPONSOR) {
       this.items = [

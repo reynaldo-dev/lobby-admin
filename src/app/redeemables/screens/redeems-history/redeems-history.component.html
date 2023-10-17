@@ -1,0 +1,123 @@
+<div *ngIf="!redeemsHistory">
+  <app-loader />
+</div>
+
+<div *ngIf="redeemsHistory" class="mt-4">
+  <div class="flex justify-content-between align-items-center">
+    <h3 class="text-500 mt-5">Historial de canjes</h3>
+    <p-button
+      [loading]="loading"
+      (onClick)="generateXlsx()"
+      label="Generar reporte"
+      icon="pi pi-file-excel"
+      styleClass="p-button-rounded p-button-success"
+    ></p-button>
+  </div>
+
+  <div class="mt-7">
+    <p-table
+      #dt1
+      [value]="redeemsHistory"
+      dataKey="id"
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[10, 20, 30]"
+      [loading]="loading"
+      [paginator]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [globalFilterFields]="['user.name', 'user.lastname', 'redeemedItem.ame']"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      tableStyleClass="border-none"
+    >
+      <ng-template pTemplate="caption">
+        <div class="flex">
+          <span class="p-input-icon-left ml-auto">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              [placeholder]="'Buscar'"
+              [(ngModel)]="filter"
+              (input)="dt1.filterGlobal(filter, 'contains')"
+            />
+          </span>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr class="border-none">
+          <th style="min-width: 15rem" class="border-none">
+            <div class="flex align-items-center">
+              Nombre
+              <p-columnFilter
+                type="text"
+                field="user.name"
+                placeholder="Busca un nombre"
+                display="menu"
+                matchMode="contains"
+                [showMatchModes]="false"
+                [showOperator]="false"
+                [showAddButton]="false"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th style="min-width: 15rem" class="border-none">
+            <div class="flex align-items-center">
+              Apellido
+              <p-columnFilter
+                type="text"
+                field="user.lastname"
+                placeholder="Busca un apellido"
+                display="menu"
+                matchMode="contains"
+                [showMatchModes]="false"
+                [showOperator]="false"
+                [showAddButton]="false"
+              ></p-columnFilter>
+            </div>
+          </th>
+
+          <th style="min-width: 10rem" class="border-none">
+            <div class="flex align-items-center">
+              Item
+              <p-columnFilter
+                field="redeemedItem.name"
+                placeholder="Busca por articulo"
+                matchMode="contains"
+                display="menu"
+                [showMatchModes]="false"
+                [showOperator]="false"
+                [showAddButton]="false"
+              >
+              </p-columnFilter>
+            </div>
+          </th>
+          <th style="min-width: 10rem" class="border-none">
+            <div class="flex align-items-center">Fecha de canje</div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-redeemsHistory>
+        <tr class="border-none">
+          <td class="border-none">
+            {{ redeemsHistory.user.name }}
+          </td>
+          <td class="border-none">
+            {{ redeemsHistory.user.lastname }}
+          </td>
+          <td class="border-none">
+            {{ redeemsHistory.redeemedItem.name }}
+          </td>
+          <td class="border-none">
+            {{ redeemsHistory.createdAt | date : "dd/MM/yyyy" }}
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="4">Historial no encontrados.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
