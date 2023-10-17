@@ -7,9 +7,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsModule } from '../components/components.module';
 import { CreateRedeemableComponent } from './components/create-redeemable/create-redeemable.component';
 import { UpdateRedeemableComponent } from './components/update-redeemable/update-redeemable.component';
+import { RedeemsHistoryComponent } from './screens/redeems-history/redeems-history.component';
 
 @NgModule({
-  declarations: [RedeemablesScreenComponent, CreateRedeemableComponent, UpdateRedeemableComponent],
+  declarations: [
+    RedeemablesScreenComponent,
+    CreateRedeemableComponent,
+    UpdateRedeemableComponent,
+    RedeemsHistoryComponent,
+  ],
   imports: [
     CommonModule,
     PrimeNgModule,
@@ -18,6 +24,10 @@ import { UpdateRedeemableComponent } from './components/update-redeemable/update
     ComponentsModule,
     ReactiveFormsModule,
   ],
-  exports: [RedeemablesScreenComponent],
+  exports: [
+    RedeemablesScreenComponent,
+    CreateRedeemableComponent,
+    UpdateRedeemableComponent,
+  ],
 })
 export class RedeemablesModule {}

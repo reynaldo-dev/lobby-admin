@@ -17,6 +17,7 @@ import { AllianceComponent } from '../alliance/screen/alliance/alliance.componen
 import { RedeemablesScreenComponent } from '../redeemables/screens/redeemables-screen/redeemables-screen.component';
 import { UserComponent } from '../users/screens/user/user.component';
 import { ChallengesScreenComponent } from '../challenges/screens/challenges-screen/challenges-screen.component';
+import { RedeemsHistoryComponent } from '../redeemables/screens/redeems-history/redeems-history.component';
 
 const routes: Routes = [
   {
@@ -130,6 +131,14 @@ const routes: Routes = [
           expectedRole: [AllowedRoles.ADMIN, AllowedRoles.SPONSOR],
         },
         component: ProfileScreenComponent,
+      },
+      {
+        path: 'canjes',
+        canActivate: [authGuard, roleGuard],
+        data: {
+          expectedRole: [AllowedRoles.ADMIN],
+        },
+        component: RedeemsHistoryComponent,
       },
     ],
   },

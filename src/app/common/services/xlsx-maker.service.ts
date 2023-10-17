@@ -5,6 +5,7 @@ import { IEventReportResponse } from '../interfaces/report-response.interface';
 import { environment } from 'src/environments/environment';
 import { Observable, tap } from 'rxjs';
 import { getFormattedDate } from 'src/app/helpers/get-formatted-date/getFormattedDate';
+import { ITradeHistory } from 'src/app/redeemables/interfaces/trade-history.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,9 @@ import { getFormattedDate } from 'src/app/helpers/get-formatted-date/getFormatte
 export class XlsxMakerService {
   private headers!: HttpHeaders;
   private _data!: IEventReportResponse;
-  private apiURL = `${environment.apiUrl}/events`;
+  private apiURL = `${environment.apiUrl}`;
+
+  private _redeemsData!: ITradeHistory[];
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders({
@@ -22,15 +25,49 @@ export class XlsxMakerService {
 
   getReportData(eventId: string): Observable<IEventReportResponse> {
     return this.http
-      .get<IEventReportResponse>(`${this.apiURL}/event-report/${eventId}`, {
-        headers: this.headers,
-      })
+      .get<IEventReportResponse>(
+        `${this.apiURL}/event/event-report/${eventId}`,
+        {
+          headers: this.headers,
+        }
+      )
       .pipe(
         tap((data) => {
           this._data = data;
         }),
         tap(() => {
           this.exportToExcel(`Reporte - ${this._data.event.title}`);
+        })
+      );
+  }
+
+  public generateRedeemsReport(filename: string) {
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+
+    const redeems = this._redeemsData.map((redeem) => ({
+      ID: redeem.id,
+      Usuario: redeem.user.name + ' ' + redeem.user.lastname,
+      Fecha: getFormattedDate(redeem.createdAt),
+      'Producto Canjeado': redeem.redeemedItem.name,
+    }));
+
+    const wsRedeems: XLSX.WorkSheet = XLSX.utils.json_to_sheet(redeems);
+    wsRedeems['!cols'] = [{ wch: 50 }, { wch: 50 }, { wch: 20 }, { wch: 50 }];
+    XLSX.utils.book_append_sheet(wb, wsRedeems, 'Canjes');
+    XLSX.writeFile(wb, `${filename}.xlsx`);
+  }
+
+  public getRedeemsHistoryReportData() {
+    return this.http
+      .get<ITradeHistory[]>(`${this.apiURL}/trade-history`, {
+        headers: this.headers,
+      })
+      .pipe(
+        tap((redeemsHistory) => {
+          this._redeemsData = redeemsHistory;
+          this.generateRedeemsReport(
+            `Canjes hasta el ${new Date().toLocaleDateString()}`
+          );
         })
       );
   }
