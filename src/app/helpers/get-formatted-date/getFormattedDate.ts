@@ -1,11 +1,14 @@
-export function getFormattedDate(date: string): string {
-  return new Date(date).toLocaleDateString('es-ES', {
-    weekday: 'short',
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    timeZone: 'UTC',
-    hour: 'numeric',
-    minute: 'numeric',
-  });
+import * as moment from 'moment';
+import 'moment/locale/es';
+
+export function getFormattedDate(dateTime: string): string {
+  moment.locale('es');
+
+  let momentObj = moment(dateTime);
+
+  let formattedDate: string = momentObj.format(
+    'D [de] MMMM [del] YYYY, h:mm a'
+  );
+
+  return formattedDate;
 }
