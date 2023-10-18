@@ -52,7 +52,7 @@ export class XlsxMakerService {
     }));
 
     const wsRedeems: XLSX.WorkSheet = XLSX.utils.json_to_sheet(redeems);
-    wsRedeems['!cols'] = [{ wch: 50 }, { wch: 50 }, { wch: 20 }, { wch: 50 }];
+    wsRedeems['!cols'] = [{ wch: 50 }, { wch: 50 }, { wch: 40 }, { wch: 50 }];
     XLSX.utils.book_append_sheet(wb, wsRedeems, 'Canjes');
     XLSX.writeFile(wb, `${filename}.xlsx`);
   }
