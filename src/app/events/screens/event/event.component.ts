@@ -6,6 +6,7 @@ import { EventStatus } from '../../event-status/event-status.enum';
 import { PdfMakerService } from 'src/app/common/services/pdf-maker.service';
 import { SafeUrl } from '@angular/platform-browser';
 import { XlsxMakerService } from 'src/app/common/services/xlsx-maker.service';
+import { getFormattedDate } from 'src/app/helpers/get-formatted-date/getFormattedDate';
 
 @Component({
   selector: 'app-event',
@@ -60,5 +61,9 @@ export class EventComponent implements OnInit {
 
   generateXlsx() {
     this.xlsxMakerService.getReportData(this.eventId).subscribe();
+  }
+
+  public getFormatedDate(date: string): string {
+    return getFormattedDate(date);
   }
 }

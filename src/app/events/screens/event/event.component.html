@@ -74,7 +74,9 @@
                 </div>
               </p-divider>
               <div class="col-12 flex flex-column gap-2">
-                <p>{{ event.createdAt | date : "dd 'de' MMMM 'del' YYYY" }}</p>
+                <p>
+                  {{ getFormatedDate(event.createdAt) }}
+                </p>
               </div>
             </div>
           </div>
@@ -89,7 +91,9 @@
                 </div>
               </p-divider>
               <div class="col-12 flex flex-column gap-2">
-                <p>{{ event.dateTime | date : "dd 'de' MMMM 'del' YYYY" }}</p>
+                <p>
+                  {{ getFormatedDate(event.dateTime) }}
+                </p>
               </div>
             </div>
 
