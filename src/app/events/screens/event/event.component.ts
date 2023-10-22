@@ -44,7 +44,7 @@ export class EventComponent implements OnInit {
   }
 
   get eventQRData(): string {
-    return JSON.stringify(this.eventService.eventQRData);
+    return JSON.stringify({ qrCodeData: this.eventService.eventQRData });
   }
 
   get eventAssistanceConfirmation() {
