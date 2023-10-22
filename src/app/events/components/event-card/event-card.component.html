@@ -1,41 +1,26 @@
+<div
+  class="border-round-3xl relative border-1 p-3 mt-4 bg-white border-200"
+  [routerLink]="['/dashboard/eventos', event.id]"
+>
+  <div
+    class="absolute top-0 left-0 bottom-0 border-round-left-3xl w-3rem"
+    [style]="{ 'background-color': communityColor }"
+  ></div>
+  <div class="flex flex-row justify-content-between gap-2 ml-6">
+    <div class="flex flex-column">
+      <p class="text-center" [style]="{ color: communityColor }">
+        {{ event.title }}
+      </p>
 
-<div class="border-round-3xl  relative border-1 p-3 mt-4 bg-white border-200" [routerLink]="['/dashboard/eventos', event.id]"  >
-    <div class="absolute top-0 left-0 bottom-0 border-round-left-3xl w-3rem" [style]="{'background-color': communityColor}">
+      <p styleClass="mt-2 ">
+        {{ getFormattedDate(event.dateTime) }}
+      </p>
     </div>
-    <div class="flex flex-row justify-content-between  gap-2 ml-6">
-        <div class="flex flex-column" >
-            <p class="text-center" [style]=" { 'color': communityColor} " >
-                {{event?.title}}
-            </p>
-         
-                <p  styleClass="mt-2 " >
-                    {{ getFormattedDate(event?.dateTime) }}
-                </p>
-          
-        </div>
-        <!-- <div class="flex gap-1 justify-content-center align-items-center text-500 max-w-2rem" >
-            <i [class]="event.place ? 'pi pi-map-marker' : 'pi pi-link'" style="font-size: 1rem"></i>
-            <span *ngIf="event.place" >
-                {{event?.place}}
-            </span>
 
-            <span *ngIf="event.link">
-                {{event?.link}}
-            </span>
-        </div> -->
-        <div class="flex gap-1 justify-content-center align-items-center" >
-            <p-tag [severity]="event?.status == 'Activo' ? 'success' : 'danger' ">
-                {{event?.status}}
-            </p-tag>
-        </div>
-
-
-        <!-- <div class="flex gap-1 justify-content-center align-items-center" >
-            <span class="text-500">
-                {{event?.score}}
-            </span>
-            <i class="pi pi-star-fill"  [style]="{'font-size': '1rem', 'color' : communityColor}"></i>
-        </div> -->
+    <div class="flex gap-1 justify-content-center align-items-center">
+      <p-tag [severity]="event.status == 'Activo' ? 'success' : 'danger'">
+        {{ event.status }}
+      </p-tag>
     </div>
+  </div>
 </div>
-

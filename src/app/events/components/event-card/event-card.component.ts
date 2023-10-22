@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { getFormattedDate } from 'src/app/helpers/get-formatted-date/getFormattedDate';
+import { IEventCardPayload } from '../../interfaces/event-card-payload';
 
 @Component({
   selector: 'app-event-card',
@@ -7,7 +8,7 @@ import { getFormattedDate } from 'src/app/helpers/get-formatted-date/getFormatte
   styleUrls: ['./event-card.component.css'],
 })
 export class EventCardComponent {
-  @Input() event: any;
+  @Input() event: IEventCardPayload = {} as IEventCardPayload;
   @Input() communityColor: string = '';
 
   getFormattedDate(date: string): string {

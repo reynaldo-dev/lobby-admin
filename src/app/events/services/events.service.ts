@@ -118,7 +118,6 @@ export class EventsService {
           this._eventsAtDate = events;
         }),
         catchError((err) => {
-          console.log('err', err);
           return throwError(() => err.error.message);
         })
       );
