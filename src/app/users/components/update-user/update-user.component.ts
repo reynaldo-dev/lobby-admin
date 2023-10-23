@@ -25,6 +25,7 @@ export class UpdateUserComponent {
     department: ['', Validators.required],
     city: ['', Validators.required],
     phone: ['', Validators.required],
+    workplace: ['', Validators.required],
   });
 
   public roles: IRole[] = [];
@@ -55,6 +56,7 @@ export class UpdateUserComponent {
             department: user.department,
             city: user.city,
             phone: user.phone,
+            workplace: user.workplace,
           });
           this.selectedUserId = user.id;
         }

@@ -29,6 +29,14 @@
           <i class="pi pi-map-marker text-500"></i>
           <h4 class="text-500">{{ profile.department }}, {{ profile.city }}</h4>
         </div>
+
+        <div
+          *ngIf="profile.department && profile.city"
+          class="flex gap-2 align-items-center"
+        >
+          <i class="pi pi-briefcase text-500"></i>
+          <h4 class="text-500">{{ profile.workplace }}</h4>
+        </div>
         <div *ngIf="profile.phone" class="flex gap-2 align-items-center">
           <i class="pi pi-phone text-500"></i>
           <h4 class="text-500">{{ profile.phone }}</h4>

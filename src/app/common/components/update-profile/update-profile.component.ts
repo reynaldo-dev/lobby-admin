@@ -19,6 +19,7 @@ export class UpdateProfileComponent implements OnInit {
     phone: ['', Validators.required],
     department: ['', Validators.required],
     city: ['', Validators.required],
+    workplace: ['', Validators.required],
   });
   public departmentsOptions = departments;
   constructor(
@@ -37,6 +38,7 @@ export class UpdateProfileComponent implements OnInit {
           phone: profile.phone,
           department: profile.department,
           city: profile.city,
+          workplace: profile.workplace,
         });
       },
     });
@@ -60,7 +62,6 @@ export class UpdateProfileComponent implements OnInit {
   }
 
   updateProfile() {
-    console.log(this.updateProfileForm.value);
     if (this.updateProfileForm.invalid) {
       this.messageService.add({
         severity: 'error',
@@ -70,7 +71,7 @@ export class UpdateProfileComponent implements OnInit {
       return;
     }
 
-    const { name, lastname, phone, department, city } =
+    const { name, lastname, phone, department, city, workplace } =
       this.updateProfileForm.value;
 
     this.userService
@@ -81,6 +82,7 @@ export class UpdateProfileComponent implements OnInit {
           phone,
           department,
           city,
+          workplace,
         },
         this.user.id
       )

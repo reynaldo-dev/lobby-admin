@@ -25,6 +25,7 @@ export class CreateUserComponent {
     city: ['', Validators.required],
     phone: ['', Validators.required],
     rolId: ['', Validators.required],
+    workplace: ['', Validators.required],
   });
 
   public roles: IRole[] = [];

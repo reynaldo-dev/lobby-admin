@@ -13,6 +13,7 @@ export interface IProfileResponse {
   rolId: string;
   rol: Rol;
   picture: string | null;
+  workplace: string;
 }
 
 export interface Rol {
