@@ -5,13 +5,15 @@
 <div *ngIf="redeemsHistory" class="mt-4">
   <div class="flex justify-content-between align-items-center">
     <h3 class="text-500 mt-5">Historial de canjes</h3>
-    <p-button
-      [loading]="loading"
-      (onClick)="generateXlsx()"
-      label="Generar reporte"
-      icon="pi pi-file-excel"
-      styleClass="p-button-rounded p-button-success"
-    ></p-button>
+    <div>
+      <p-button
+        [loading]="loading"
+        (onClick)="generateXlsx()"
+        label="Generar reporte"
+        icon="pi pi-file-excel"
+        styleClass="p-button-rounded p-button-success"
+      ></p-button>
+    </div>
   </div>
 
   <div class="mt-7">
@@ -76,6 +78,24 @@
               ></p-columnFilter>
             </div>
           </th>
+          <th style="min-width: 15rem" class="border-none">
+            <div class="flex align-items-center">
+              Email
+              <p-columnFilter
+                type="text"
+                field="user.email"
+                placeholder="Busca un apellido"
+                display="menu"
+                matchMode="contains"
+                [showMatchModes]="false"
+                [showOperator]="false"
+                [showAddButton]="false"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th style="min-width: 15rem" class="border-none">
+            <div class="flex align-items-center">Centro de trabajo</div>
+          </th>
 
           <th style="min-width: 10rem" class="border-none">
             <div class="flex align-items-center">
@@ -104,6 +124,12 @@
           </td>
           <td class="border-none">
             {{ redeemsHistory.user.lastname }}
+          </td>
+          <td class="border-none">
+            {{ redeemsHistory.user.email }}
+          </td>
+          <td class="border-none">
+            {{ redeemsHistory.user.workplace }}
           </td>
           <td class="border-none">
             {{ redeemsHistory.redeemedItem.name }}

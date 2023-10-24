@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { Observable, tap } from 'rxjs';
 import { getFormattedDate } from 'src/app/helpers/get-formatted-date/getFormattedDate';
 import { ITradeHistory } from 'src/app/redeemables/interfaces/trade-history.interface';
+import { ITicketChallengeState } from 'src/app/challenges/interfaces/ticket-challenge-state.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,7 @@ export class XlsxMakerService {
   private apiURL = `${environment.apiUrl}`;
 
   private _redeemsData!: ITradeHistory[];
+  private _challengeTicketsStateData!: ITicketChallengeState[];
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders({
@@ -47,14 +49,67 @@ export class XlsxMakerService {
     const redeems = this._redeemsData.map((redeem) => ({
       ID: redeem.id,
       Usuario: redeem.user.name + ' ' + redeem.user.lastname,
+      Workplace: redeem.user.workplace,
+      Teléfono: redeem.user.phone,
+      Email: redeem.user.email,
       Fecha: getFormattedDate(redeem.createdAt),
       'Producto Canjeado': redeem.redeemedItem.name,
     }));
 
     const wsRedeems: XLSX.WorkSheet = XLSX.utils.json_to_sheet(redeems);
-    wsRedeems['!cols'] = [{ wch: 50 }, { wch: 50 }, { wch: 40 }, { wch: 50 }];
+    wsRedeems['!cols'] = [
+      { wch: 40 },
+      { wch: 40 },
+      { wch: 30 },
+      { wch: 10 },
+      { wch: 30 },
+
+      { wch: 40 },
+      { wch: 30 },
+    ];
     XLSX.utils.book_append_sheet(wb, wsRedeems, 'Canjes');
     XLSX.writeFile(wb, `${filename}.xlsx`);
+  }
+
+  public generateChallengeTicketsStateReport(filename: string) {
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    const ticketsState = this._challengeTicketsStateData.map((ticket) => ({
+      ticketId: ticket.id,
+      user: ticket.claimedByUser.name + ' ' + ticket.claimedByUser.lastname,
+      claimedBy: ticket.claimedByUser.id,
+      challenge: ticket.challenge.title,
+      done: ticket.done,
+    }));
+
+    const wsTicketsState: XLSX.WorkSheet =
+      XLSX.utils.json_to_sheet(ticketsState);
+    wsTicketsState['!cols'] = [
+      { wch: 40 },
+      { wch: 40 },
+      { wch: 40 },
+      { wch: 10 },
+    ];
+
+    XLSX.utils.book_append_sheet(wb, wsTicketsState, 'Estado de los retos');
+    XLSX.writeFile(wb, `${filename}.xlsx`);
+  }
+
+  public getChallengeTicketsStateData() {
+    return this.http
+      .get<ITicketChallengeState[]>(
+        `${this.apiURL}/challenges/tickets/tickets-state`,
+        {
+          headers: this.headers,
+        }
+      )
+      .pipe(
+        tap((challengeTicketsState) => {
+          this._challengeTicketsStateData = challengeTicketsState;
+          this.generateChallengeTicketsStateReport(
+            `Estados de los retos hasta el ${new Date().toLocaleDateString()}`
+          );
+        })
+      );
   }
 
   public getRedeemsHistoryReportData() {

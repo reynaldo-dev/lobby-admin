@@ -12,6 +12,7 @@ import { XlsxMakerService } from 'src/app/common/services/xlsx-maker.service';
 export class RedeemsHistoryComponent implements OnInit {
   public loading = false;
   public filter = '';
+  public file = '';
   constructor(
     private _redeemsHistoryService: RedeemsHistoryService,
     private xlsxMakerService: XlsxMakerService

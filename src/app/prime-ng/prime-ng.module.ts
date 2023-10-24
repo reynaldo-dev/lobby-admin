@@ -30,6 +30,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { ImageModule } from 'primeng/image';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
   declarations: [],
@@ -65,6 +66,7 @@ import { ImageModule } from 'primeng/image';
     InputNumberModule,
     ScrollerModule,
     TabViewModule,
+    FileUploadModule,
   ],
   exports: [
     ImageModule,
@@ -96,6 +98,7 @@ import { ImageModule } from 'primeng/image';
     InputNumberModule,
     ScrollerModule,
     TabViewModule,
+    FileUploadModule,
   ],
 })
 export class PrimeNgModule {}

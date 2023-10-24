@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ChallengesService } from '../../services/challenges.service';
 import { IChallenge } from '../../interfaces/challenge.interface';
 import { EventsCategoryService } from 'src/app/events-category/services/events-category.service';
+import { XlsxMakerService } from 'src/app/common/services/xlsx-maker.service';
 
 @Component({
   selector: 'app-challenges-screen',
@@ -13,7 +14,8 @@ export class ChallengesScreenComponent implements OnInit {
   public challengesForReport!: IChallenge[];
   constructor(
     private challengesService: ChallengesService,
-    private eventCategoryService: EventsCategoryService
+    private eventCategoryService: EventsCategoryService,
+    private xlsx: XlsxMakerService
   ) {}
   ngOnInit(): void {
     this.challengesService.getChallenges().subscribe({
@@ -34,5 +36,13 @@ export class ChallengesScreenComponent implements OnInit {
 
   public createChallenge() {
     this.challengesService.setIsModalCreateVisible(true);
+  }
+
+  public openMarkAsDoneModal() {
+    this.challengesService.setIsModalMarkAsDoneVisible(true);
+  }
+
+  public generateChallengeTicketsStateReport() {
+    this.xlsx.getChallengeTicketsStateData().subscribe();
   }
 }

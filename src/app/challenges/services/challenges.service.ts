@@ -21,6 +21,7 @@ export class ChallengesService {
 
   public isModalCreateVisible = new BehaviorSubject<boolean>(false);
   public isModalUpdateVisible = new BehaviorSubject<boolean>(false);
+  public isModalMarkAsDoneVisible = new BehaviorSubject<boolean>(false);
 
   constructor(private httpClient: HttpClient) {
     this._headers = new HttpHeaders({
@@ -38,6 +39,10 @@ export class ChallengesService {
 
   get isModalUpdateVisible$(): Observable<boolean> {
     return this.isModalUpdateVisible.asObservable();
+  }
+
+  get isModalMarkAsDoneVisible$(): Observable<boolean> {
+    return this.isModalMarkAsDoneVisible.asObservable();
   }
 
   get selectedChallenge$(): Observable<IGetChallengeByIDResponse | null> {
@@ -67,6 +72,10 @@ export class ChallengesService {
   setIsModalUpdateVisible(value: boolean, challengeId: string = '') {
     this.isModalUpdateVisible.next(value);
     this.getChallenge(challengeId).subscribe();
+  }
+
+  setIsModalMarkAsDoneVisible(value: boolean) {
+    this.isModalMarkAsDoneVisible.next(value);
   }
 
   setSeletedChallenge(value: IGetChallengeByIDResponse | null) {
@@ -111,6 +120,25 @@ export class ChallengesService {
           this.setSeletedChallenge(null);
           this.setIsModalUpdateVisible(false);
         }),
+        catchError((err) => {
+          return throwError(() => err.error.message);
+        })
+      );
+  }
+
+  public markChallengesAsDone(data: any) {
+    data = data.map((item: any) => {
+      return {
+        ticketId: item.ticketId,
+        done: item.done,
+      };
+    });
+
+    return this.httpClient
+      .patch(`${this._apiUrl}/challenges/mark/mark-as-done-masive/`, data, {
+        headers: this._headers,
+      })
+      .pipe(
         catchError((err) => {
           return throwError(() => err.error.message);
         })

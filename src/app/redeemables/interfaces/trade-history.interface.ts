@@ -18,6 +18,9 @@ export interface User {
   id: string;
   name: UserName;
   lastname: Lastname;
+  workplace: string;
+  phone: string;
+  email: string;
 }
 
 export enum Lastname {
