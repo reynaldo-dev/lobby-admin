@@ -1,0 +1,41 @@
+<p-dialog
+  [(visible)]="isVisible"
+  [modal]="true"
+  styleClass="relative w-full md:w-5"
+  [draggable]="false"
+  [resizable]="false"
+  header="Marcar como completados"
+>
+  <div *ngIf="isLoading">
+    <app-loader></app-loader>
+  </div>
+
+  <div class="flex flex-column">
+    <div
+      #fileUploadContainer
+      class="w-full flex justify-content-center align-items-center gap-3"
+    >
+      <p-fileUpload
+        #fileUpload
+        id="p-fileUpload"
+        mode="basic"
+        icon="pi pi-file-excel"
+        chooseIcon="pi pi-file-excel"
+        chooseLabel="Seleccionar archivo"
+        name="file"
+        accept=".xlsx"
+        styleClass="p-button-sm p-button-success p-button-rounded"
+        (onSelect)="readFile($event)"
+      ></p-fileUpload>
+
+      <p-button
+        label="Cancelar"
+        icon=""
+        styleClass="p-button-sm p-button-outlined p-button-rounded p-button-success"
+        (onClick)="closeModal()"
+      ></p-button>
+    </div>
+  </div>
+
+  <p-toast></p-toast>
+</p-dialog>

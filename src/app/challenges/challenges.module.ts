@@ -6,12 +6,14 @@ import { CreateChallengeComponent } from './components/create-challenge/create-c
 import { UpdateChallengeComponent } from './components/update-challenge/update-challenge.component';
 import { ComponentsModule } from '../components/components.module';
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
+import { MarkAsDoneComponent } from './components/mark-as-done/mark-as-done.component';
 
 @NgModule({
   declarations: [
     ChallengesScreenComponent,
     CreateChallengeComponent,
     UpdateChallengeComponent,
+    MarkAsDoneComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, ComponentsModule, PrimeNgModule],
   exports: [ChallengesScreenComponent],
