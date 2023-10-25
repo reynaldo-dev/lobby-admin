@@ -45,4 +45,8 @@ export class ChallengesScreenComponent implements OnInit {
   public generateChallengeTicketsStateReport() {
     this.xlsx.getChallengeTicketsStateData().subscribe();
   }
+
+  public generateGeneralReport() {
+    this.xlsx.getChallengeTicketsGeneralReportData().subscribe();
+  }
 }
