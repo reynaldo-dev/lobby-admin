@@ -17,7 +17,6 @@ export class XlsxMakerService {
   private apiURL = `${environment.apiUrl}`;
 
   private _redeemsData!: ITradeHistory[];
-  private _challengeTicketsStateData!: ITicketChallengeState[];
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders({
@@ -71,9 +70,12 @@ export class XlsxMakerService {
     XLSX.writeFile(wb, `${filename}.xlsx`);
   }
 
-  public generateChallengeTicketsStateReport(filename: string) {
+  public generateChallengeTicketsStateReport(
+    filename: string,
+    data: ITicketChallengeState[] = []
+  ) {
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    const ticketsState = this._challengeTicketsStateData.map((ticket) => ({
+    const ticketsState = data.map((ticket) => ({
       ticketId: ticket.id,
       user: ticket.claimedByUser.name + ' ' + ticket.claimedByUser.lastname,
       claimedBy: ticket.claimedByUser.id,
@@ -104,9 +106,27 @@ export class XlsxMakerService {
       )
       .pipe(
         tap((challengeTicketsState) => {
-          this._challengeTicketsStateData = challengeTicketsState;
           this.generateChallengeTicketsStateReport(
-            `Estados de los retos hasta el ${new Date().toLocaleDateString()}`
+            `Estado de los retos hasta el ${new Date().toLocaleDateString()}`,
+            challengeTicketsState
+          );
+        })
+      );
+  }
+
+  public getChallengeTicketsGeneralReportData() {
+    return this.http
+      .get<ITicketChallengeState[]>(
+        `${this.apiURL}/challenges/tickets/tickets-report`,
+        {
+          headers: this.headers,
+        }
+      )
+      .pipe(
+        tap((challengesReport) => {
+          this.generateChallengeTicketsStateReport(
+            `Reporte general de los retos hasta el ${new Date().toLocaleDateString()}`,
+            challengesReport
           );
         })
       );
