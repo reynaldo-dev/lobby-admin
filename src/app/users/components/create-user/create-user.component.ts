@@ -15,6 +15,7 @@ import { departments } from 'src/app/helpers/departments/departments.data';
 })
 export class CreateUserComponent {
   public isModalCreateVisible = false;
+  public isLoading = false;
 
   public createUserForm = this.fb.group({
     email: ['', Validators.required],
@@ -50,6 +51,7 @@ export class CreateUserComponent {
   }
 
   createUser() {
+    this.isLoading = true;
     this.usersService
       .createUser(this.createUserForm.value as UserData)
       .subscribe({
@@ -66,6 +68,7 @@ export class CreateUserComponent {
           this.messageService.add({ severity: 'error', summary: err });
         },
       });
+    this.isLoading = false;
   }
 
   closeModalCreate() {

@@ -93,6 +93,7 @@ export class UpdateChallengeComponent {
             summary: 'Success',
             detail: 'Reto actualizado exitosamente',
           });
+          this.isLoading = false;
           this.closeModal();
         },
         error: (err) => {
@@ -104,5 +105,7 @@ export class UpdateChallengeComponent {
           });
         },
       });
+
+    this.isLoading = false;
   }
 }

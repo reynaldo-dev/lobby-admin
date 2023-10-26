@@ -1,64 +1,105 @@
-<p-dialog [(visible)]="isOpen" [style]="{ width: '50vw' }" (onHide)="close()" [modal]="true"
-    styleClass="h-auto" id="createEventModal" header="Crear nuevo canjeable" [responsive]="true">
-
-    <!-- <div *ngIf="isLoading">
+<p-dialog
+  [(visible)]="isOpen"
+  [style]="{ width: '50vw' }"
+  (onHide)="close()"
+  [modal]="true"
+  styleClass="h-auto"
+  id="createEventModal"
+  header="Crear nuevo canjeable"
+  [responsive]="true"
+>
+  <!-- <div *ngIf="isLoading">
         <app-loader />
     </div> -->
-    <div class="">
-        <form [formGroup]="createRedeemableForm" class="grid gap-3">
-    
-    
-            <div class="col-12">
-                <span class="p-float-label w-full ">
-                    <input pInputText id="name" formControlName="name" class="w-full" />
-                    <label htmlFor="name">Nombre</label>
-                </span>
-            </div>
-    
-            <div class="col-12">
-                <span class="p-float-label w-full">
-                    <input pInputText id="description" formControlName="description" class="w-full" />
-                    <label htmlFor="description">Descripción</label>
-                </span>
-            </div>
+  <div class="">
+    <form [formGroup]="createRedeemableForm" class="grid gap-3">
+      <div class="col-12">
+        <span class="p-float-label w-full">
+          <input pInputText id="name" formControlName="name" class="w-full" />
+          <label htmlFor="name">Nombre</label>
+        </span>
+      </div>
 
+      <div class="col-12">
+        <span class="p-float-label w-full">
+          <input
+            pInputText
+            id="description"
+            formControlName="description"
+            class="w-full"
+          />
+          <label htmlFor="description">Descripción</label>
+        </span>
+      </div>
 
-            <div class="col-12">
-                <span class="p-float-label w-full">
-                    <p-dropdown [options]="tokens ? tokens : []" formControlName="required_token_id" optionLabel="name" optionValue="id" placeholder="Tipo de token requerido" styleClass="w-full"  inputId="required_token_id"></p-dropdown>
-                    <label for="community">Tipo de token requerido</label>
-                </span>
-            </div>
-    
-            <div class="col-12">
-                <label htmlFor="score" class="text-400">
-                    Cantidad de tokens requeridos
-                </label>
-                <span class="p-float-label w-full">
-                    <p-inputNumber inputId="locale-us" locale="en-US" id="required_token_amount" inputId="integeronly" inputId="minmax"
-                        [showButtons]="true" inputId="minmax-buttons" [min]="1" [max]="100" formControlName="required_token_amount"
-                        class="w-full" />
-                </span>
-            </div>
+      <div class="col-12">
+        <span class="p-float-label w-full">
+          <p-dropdown
+            [options]="tokens ? tokens : []"
+            formControlName="required_token_id"
+            optionLabel="name"
+            optionValue="id"
+            placeholder="Tipo de token requerido"
+            styleClass="w-full"
+            inputId="required_token_id"
+          ></p-dropdown>
+          <label for="community">Tipo de token requerido</label>
+        </span>
+      </div>
 
-            <div class="col-12">
-                <label htmlFor="score" class="text-400">
-                    Stock
-                </label>
-                <span class="p-float-label w-full">
-                    <p-inputNumber inputId="locale-us" locale="en-US" id="stock" inputId="integeronly" inputId="minmax"
-                        [showButtons]="true" inputId="minmax-buttons" [min]="1" [max]="100" formControlName="stock"
-                        class="w-full" />
-                </span>
-            </div>
-    
-            <div class="w-full flex justify-content-end">
-                <p-button [loading]="isLoading" (click)="createRedeemable()" icon="pi pi-check" label="Crear"
-                    styleClass="p-button-rounded"></p-button>
-            </div>
-    
-    
-        </form>
-    </div>
+      <div class="col-12">
+        <label htmlFor="score" class="text-400">
+          Cantidad de tokens requeridos
+        </label>
+        <span class="p-float-label w-full">
+          <p-inputNumber
+            inputId="locale-us"
+            locale="en-US"
+            id="required_token_amount"
+            inputId="integeronly"
+            inputId="minmax"
+            [showButtons]="true"
+            inputId="minmax-buttons"
+            [min]="1"
+            [max]="100"
+            formControlName="required_token_amount"
+            class="w-full"
+          />
+        </span>
+      </div>
+
+      <div class="col-12">
+        <label htmlFor="score" class="text-400"> Stock </label>
+        <span class="p-float-label w-full">
+          <p-inputNumber
+            inputId="locale-us"
+            locale="en-US"
+            id="stock"
+            inputId="integeronly"
+            inputId="minmax"
+            [showButtons]="true"
+            inputId="minmax-buttons"
+            [min]="1"
+            [max]="100"
+            formControlName="stock"
+            class="w-full"
+          />
+        </span>
+      </div>
+
+      <div class="w-full flex justify-content-end">
+        <button
+          pButton
+          [loading]="isLoading"
+          (click)="createRedeemable()"
+          icon="pi pi-check"
+          label="Crear"
+          styleClass="p-button-rounded"
+        ></button>
+      </div>
+    </form>
+  </div>
 </p-dialog>
-<p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+<p-toast
+  [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"
+></p-toast>

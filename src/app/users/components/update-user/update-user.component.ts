@@ -16,6 +16,7 @@ import { departments } from 'src/app/helpers/departments/departments.data';
 export class UpdateUserComponent {
   public isModalUpdateOpen = false;
   public departaments: IDepartment[] = departments;
+  public isLoading = false;
 
   public updateUserForm = this.fb.group({
     email: ['', Validators.required],
@@ -79,6 +80,7 @@ export class UpdateUserComponent {
   }
 
   updateUser() {
+    this.isLoading = true;
     if (this.updateUserForm.invalid) {
       this.messageService.add({
         severity: 'error',
@@ -104,5 +106,6 @@ export class UpdateUserComponent {
           this.messageService.add({ severity: 'error', summary: err });
         },
       });
+    this.isLoading = false;
   }
 }

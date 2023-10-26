@@ -1,24 +1,52 @@
 <div
-  class="w-full flex align-items-center p-2 justify-content-between mt-3 border-round-xl"
-  [ngClass]="
-  {
-    'ranking-top1': getCurrentIndex(item) === 0,
-    'ranking-top2': getCurrentIndex(item) === 1,
-    'ranking-top3': getCurrentIndex(item) === 2,
-    'surface-200': getCurrentIndex(item) > 2
-
-  }
-  "
-  *ngFor="let item of ranking"
+  class="w-full flex align-items-center p-2 justify-content-between mt-3 border-round-xl surface-100 relative"
+  *ngFor="let item of ranking; let i = index"
 >
   <img
     [src]="item.picture ? item.picture : 'assets/user-male.svg'"
     alt=""
-    class="w-2   border-circle"
+    class="w-2 border-circle"
+    *ngIf="getCurrentIndex(item) > 0"
   />
-  <span [ngClass]="{ 'text-500': getCurrentIndex(item) > 2 }">{{ item.name }} {{ item.lastname }}</span>
+
+  <img
+    [src]="'assets/first-place-ranking.svg'"
+    alt=""
+    *ngIf="getCurrentIndex(item) === 0"
+    class="w-2"
+  />
+
+  <span
+    *ngIf="getCurrentIndex(item) > 0 && getCurrentIndex(item) <= 2"
+    [ngStyle]="{
+      position: 'absolute',
+      top: '-20px',
+      left: 0,
+      zIndex: 1,
+      marginTop: -1
+    }"
+    class="text-yellow-300 text-4xl font-bold"
+  >
+    {{ i + 1 }}
+  </span>
+  <span [ngClass]="{ 'text-500': getCurrentIndex(item) > 2 }"
+    >{{ item.name.split(" ")[0] }} {{ item.lastname.split(" ")[0] }}</span
+  >
   <div class="flex gap-1 justify-content-center align-items-center">
-    <i class="pi pi-star-fill" [ngClass]="{ 'text-yellow-300': getCurrentIndex(item) > 2 }" ></i>
-    <span class="" [ngClass]="{ 'text-yellow-300': getCurrentIndex(item) > 2 }" >{{ item.recognitionsReceivedCount }}</span>
+    <i
+      class="pi pi-star-fill"
+      [ngClass]="{
+        'text-yellow-300':
+          getCurrentIndex(item) >= 0 && getCurrentIndex(item) <= 2
+      }"
+    ></i>
+    <span
+      class=""
+      [ngClass]="{
+        'text-yellow-300':
+          getCurrentIndex(item) >= 0 && getCurrentIndex(item) <= 2
+      }"
+      >{{ item.recognitionsReceivedCount }}</span
+    >
   </div>
 </div>

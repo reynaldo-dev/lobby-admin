@@ -1,62 +1,114 @@
-<p-dialog header="Crear alianza" styleClass="relative w-full md:w-5" [(visible)]="isModalCreateVisible" [modal]="true" (onHide)="closeModal()" [draggable]="false">
-   <div>
-</div>
-<form [formGroup]="createAllianceForm" class="grid gap-3">
+<p-dialog
+  header="Crear alianza"
+  styleClass=" w-full md:w-5 h-full"
+  [(visible)]="isModalCreateVisible"
+  [modal]="true"
+  (onHide)="closeModal()"
+  [draggable]="false"
+>
+  <div></div>
+  <form [formGroup]="createAllianceForm" class="grid gap-3">
     <div class="col-12">
-        <span class="p-float-label w-full ">
-            <input pInputText id="name" formControlName="name" class="w-full" />
-            <label htmlFor="name">Nombre</label>
-        </span>
+      <span class="p-float-label w-full">
+        <input pInputText id="name" formControlName="name" class="w-full" />
+        <label htmlFor="name">Nombre</label>
+      </span>
     </div>
 
     <div class="col-12">
+      <span class="p-float-label w-full">
+        <p-dropdown
+          [options]="allianceCategories ? allianceCategories : []"
+          formControlName="allianceCategoryId"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="Categoría"
+          styleClass="w-full"
+          inputId="eventCategoryId"
+        ></p-dropdown>
+        <label for="eventCategoryId">Selecciona una categoría</label>
+      </span>
+    </div>
+
+    <div class="col-12">
+      <span class="p-float-label w-full">
+        <input
+          pInputText
+          id="description"
+          formControlName="description"
+          class="w-full"
+        />
+        <label htmlFor="description">Descripción</label>
+      </span>
+    </div>
+
+    <div class="col-12">
+      <p-calendar
+        formControlName="initialDate"
+        styleClass="w-full"
+        [showIcon]="true"
+        placeholder="Fecha inicial"
+        panelStyleClass=""
+      ></p-calendar>
+    </div>
+
+    <div class="col-12">
+      <p-calendar
+        formControlName="endDate"
+        styleClass="w-full"
+        [showIcon]="true"
+        placeholder="Fecha de finalización"
+        panelStyleClass=""
+      ></p-calendar>
+    </div>
+
+    <div formArrayName="benefits" class="col-12 h-auto mb-5 mt-5">
+      <div class="flex justify-content-between align-items-center">
+        <span class="text-500" *ngIf="benefitsControls.controls.length > 0"
+          >Beneficios</span
+        >
+        <p-button
+          label="Agregar beneficio"
+          styleClass="p-button-sm p-button-text"
+          (onClick)="addBenefit()"
+        ></p-button>
+      </div>
+
+      <div
+        class="col-12 flex gap-2 align-items-center"
+        *ngFor="let benefit of benefitsControls.controls; let i = index"
+      >
         <span class="p-float-label w-full">
-            <p-dropdown  [options]="allianceCategories ? allianceCategories : []" formControlName="allianceCategoryId" optionLabel="name" optionValue="id" placeholder="Categoría" styleClass="w-full"  inputId="eventCategoryId"></p-dropdown>
-            <label for="eventCategoryId">Selecciona una categoría</label>
+          <input
+            pInputText
+            id="benefit"
+            [formControlName]="i"
+            class="w-full"
+            placeholder="Benefit {{ i + 1 }}"
+          />
         </span>
-    </div>
-
-    <div class="col-12">
-        <span class="p-float-label w-full">
-            <input pInputText id="description" formControlName="description" class="w-full" />
-            <label htmlFor="description">Descripción</label>
-        </span>
-    </div>
-
-    <div class="col-5 flex gap-3 justiy-content-center align-items-center">
-        <p-calendar formControlName="initialDate" styleClass=""   [showIcon]="true" placeholder="Fecha inicial"
-            panelStyleClass="mt-8 "></p-calendar>
-    </div>
-
-    <div class="col-5 flex gap-3 justiy-content-center align-items-center">
-        <p-calendar formControlName="endDate" styleClass=""  [showIcon]="true"  placeholder="Fecha de finalización"
-            panelStyleClass="mt-8"></p-calendar>
-    </div>
-
-    <div formArrayName="benefits" class="col-12  h-auto mb-5 mt-5">
-        <div class="flex justify-content-between align-items-center">
-            <span class="text-500" *ngIf="benefitsControls.controls.length > 0">Beneficios</span>
-            <p-button label="Agregar beneficio" styleClass="p-button-sm p-button-text"
-                (onClick)="addBenefit()"></p-button>
-        </div>
-
-        <div class="col-12 flex gap-2 align-items-center"
-            *ngFor="let benefit of benefitsControls.controls; let i = index">
-            <span class="p-float-label w-full">
-                <input pInputText id="benefit" [formControlName]="i" class="w-full" placeholder="Benefit {{i + 1}}" />
-            </span>
-            <p-button (onClick)="removeBenefit(i)"
-                styleClass="p-button-text p-button-danger p-button-sm">
-                Eliminar
-            </p-button>
-        </div>
+        <p-button
+          (onClick)="removeBenefit(i)"
+          styleClass="p-button-text p-button-danger p-button-sm"
+        >
+          Eliminar
+        </p-button>
+      </div>
     </div>
 
     <div class="flex justify-content-end w-full mt-5">
-        <button pButton [loading]="isLoading" (click)="createAlliance()" label="Crear" class="p-button-raised p-button-rounded" icon="pi pi-save"></button>
+      <button
+        pButton
+        [loading]="isLoading"
+        (click)="createAlliance()"
+        label="Crear"
+        class="p-button-raised p-button-rounded"
+        icon="pi pi-save"
+      ></button>
     </div>
-   
-</form>
+  </form>
 </p-dialog>
 
-<p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+<p-toast
+  [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"
+></p-toast>

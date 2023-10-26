@@ -1,110 +1,153 @@
+<p-dialog
+  header="Crear reto"
+  styleClass="h-full relative w-full md:w-6"
+  [(visible)]="isVisible"
+  [modal]="true"
+  (onHide)="closeModal()"
+  [draggable]="false"
+  [resizable]="true"
+>
+  <div></div>
+  <form [formGroup]="createChallengeForm" class="grid gap-3">
+    <div class="col-12">
+      <span class="p-float-label w-full">
+        <input pInputText id="title" formControlName="title" class="w-full" />
+        <label htmlFor="title">Titulo</label>
+      </span>
+    </div>
 
-<p-dialog header="Crear reto" styleClass="h-full relative w-full md:w-6" [(visible)]="isVisible" [modal]="true" (onHide)="closeModal()" [draggable]="false" [resizable]="true" >
-    <div>
- </div>
- <form [formGroup]="createChallengeForm" class="grid gap-3">
-     <div class="col-12">
-         <span class="p-float-label w-full ">
-             <input pInputText id="title" formControlName="title" class="w-full" />
-             <label htmlFor="title">Titulo</label>
-         </span>
-     </div>
- 
-     <div class="col-12">
-         <span class="p-float-label w-full">
-             <input pInputText id="description" formControlName="description" class="w-full" />
-             <label htmlFor="description">Descripción</label>
-         </span>
-     </div>
+    <div class="col-12">
+      <span class="p-float-label w-full">
+        <input
+          pInputText
+          id="description"
+          formControlName="description"
+          class="w-full"
+        />
+        <label htmlFor="description">Descripción</label>
+      </span>
+    </div>
 
-     <div class="col-12">
+    <div class="col-12">
+      <span class="p-float-label w-full">
+        <p-dropdown
+          [options]="eventCategories"
+          formControlName="eventCategoryId"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="Selecciona una categoría para este evento"
+          styleClass="w-full"
+          inputId="eventCategory"
+        ></p-dropdown>
+        <label for="eventCategory">Selecciona una categoría</label>
+      </span>
+    </div>
+
+    <div class="col-12">
+      <p-calendar
+        formControlName="initialDate"
+        styleClass="w-full"
+        [showIcon]="true"
+        placeholder="Fecha inicial"
+        panelStyleClass=""
+      ></p-calendar>
+    </div>
+
+    <div class="col-12">
+      <p-calendar
+        formControlName="endDate"
+        styleClass="w-full"
+        [showIcon]="true"
+        placeholder="Fecha de finalización"
+        panelStyleClass=""
+      ></p-calendar>
+    </div>
+
+    <div class="col-12">
+      <label htmlFor="credits" class="text-400"> Creditos </label>
+      <span class="p-float-label w-full">
+        <p-inputNumber
+          inputId="locale-us"
+          locale="en-US"
+          id="credits"
+          inputId="integeronly"
+          inputId="minmax"
+          [showButtons]="true"
+          inputId="minmax-buttons"
+          [min]="1"
+          [max]="100"
+          formControlName="credits"
+          styleClass="w-full"
+        />
+      </span>
+    </div>
+
+    <div class="col-12">
+      <label htmlFor="coupons" class="text-400"> Cupos </label>
+      <span class="p-float-label w-full">
+        <p-inputNumber
+          inputId="locale-us"
+          locale="en-US"
+          id="points"
+          inputId="integeronly"
+          inputId="minmax"
+          [showButtons]="true"
+          inputId="minmax-buttons"
+          [min]="1"
+          [max]="100"
+          formControlName="coupons"
+          styleClass="w-full"
+        />
+      </span>
+    </div>
+
+    <div formArrayName="indications" class="col-12 h-auto mb-5 mt-5">
+      <div class="flex justify-content-between align-items-center">
+        <span class="text-500" *ngIf="indicationsControls.controls.length > 0"
+          >Indicaciones</span
+        >
+        <p-button
+          label="Agregar indicacion"
+          styleClass="p-button-sm p-button-text"
+          (onClick)="addIndication()"
+        ></p-button>
+      </div>
+
+      <div
+        class="col-12 flex gap-2 align-items-center"
+        *ngFor="let indication of indicationsControls.controls; let i = index"
+      >
         <span class="p-float-label w-full">
-            <p-dropdown  [options]="eventCategories" formControlName="eventCategoryId" optionLabel="name" optionValue="id" placeholder="Selecciona una categoría para este evento" styleClass="w-full"  inputId="eventCategory"></p-dropdown>
-            <label for="eventCategory">Selecciona una categoría</label>
+          <input
+            pInputText
+            id="indication"
+            [formControlName]="i"
+            class="w-full"
+            placeholder="Indicacion {{ i + 1 }}"
+          />
         </span>
+        <p-button
+          (onClick)="removeIndication(i)"
+          styleClass="p-button-text p-button-danger p-button-sm"
+        >
+          Eliminar
+        </p-button>
+      </div>
     </div>
- 
-     <div class="col-12">
-         <p-calendar formControlName="initialDate" styleClass="w-full"   [showIcon]="true" placeholder="Fecha inicial"
-             panelStyleClass=""></p-calendar>
-     </div>
- 
-     <div class="col-12">
-         <p-calendar formControlName="endDate" styleClass="w-full"  [showIcon]="true"  placeholder="Fecha de finalización"
-             panelStyleClass=""></p-calendar>
-     </div>
 
-    
-
-         <div class="col-12" >
-            <label htmlFor="credits" class="text-400">
-                Creditos
-            </label>
-            <span class="p-float-label w-full">
-                <p-inputNumber 
-                    inputId="locale-us" 
-                    locale="en-US" 
-                    id="credits" 
-                    inputId="integeronly" 
-                    inputId="minmax" 
-                    [showButtons]="true" 
-                    inputId="minmax-buttons"  
-                    [min]="1" 
-                    [max]="100" 
-                    formControlName="credits" 
-                    styleClass="w-full" 
-                />
-            </span>
-        </div>
-    
-        <div class="col-12" >
-            <label htmlFor="coupons" class="text-400">
-                Cupos
-            </label>
-            <span class="p-float-label w-full">
-                <p-inputNumber 
-                    inputId="locale-us" 
-                    locale="en-US" 
-                    id="points" 
-                    inputId="integeronly" 
-                    inputId="minmax" 
-                    [showButtons]="true" 
-                    inputId="minmax-buttons"  
-                    [min]="1" 
-                    [max]="100" 
-                    formControlName="coupons" 
-                    styleClass="w-full" 
-                />
-            </span>
-        </div>
-  
-
- 
-     <div formArrayName="indications" class="col-12  h-auto mb-5 mt-5">
-         <div class="flex justify-content-between align-items-center">
-             <span class="text-500" *ngIf="indicationsControls.controls.length > 0">Indicaciones</span>
-             <p-button label="Agregar indicacion" styleClass="p-button-sm p-button-text"
-                 (onClick)="addIndication()"></p-button>
-         </div>
- 
-         <div class="col-12 flex gap-2 align-items-center"
-             *ngFor="let indication of indicationsControls.controls; let i = index">
-             <span class="p-float-label w-full">
-                 <input pInputText id="indication" [formControlName]="i" class="w-full" placeholder="Indicacion {{i + 1}}" />
-             </span>
-             <p-button (onClick)="removeIndication(i)"
-                 styleClass="p-button-text p-button-danger p-button-sm">
-                 Eliminar
-             </p-button>
-         </div>
-     </div>
-
-     <div class="flex justify-content-end w-full mt-5">
-        <button pButton [loading]="isLoading" (click)="createChallenge()" label="Crear" class="p-button-raised p-button-rounded" icon="pi pi-save"></button>
+    <div class="flex justify-content-end w-full mt-5">
+      <button
+        pButton
+        [loading]="isLoading"
+        (click)="createChallenge()"
+        label="Crear"
+        class="p-button-raised p-button-rounded"
+        icon="pi pi-save"
+      ></button>
     </div>
- 
-    
- </form>
- </p-dialog>
- 
- <p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+  </form>
+</p-dialog>
+
+<p-toast
+  [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"
+></p-toast>

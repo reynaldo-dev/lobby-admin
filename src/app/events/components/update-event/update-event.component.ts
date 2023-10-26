@@ -22,12 +22,13 @@ export class UpdateEventComponent implements OnInit {
     isPrivate: ['', Validators.required],
     place: [''],
     link: [''],
-    // dateTime: ['', Validators.required],
+
     communityId: ['', Validators.required],
     eventCategoryId: ['', Validators.required],
     credits: [1, Validators.required],
   });
   public selectedEventId: string | undefined;
+  public isLoading: boolean = false;
 
   constructor(
     private eventsService: EventsService,
@@ -86,6 +87,7 @@ export class UpdateEventComponent implements OnInit {
   }
 
   updateEvent() {
+    this.isLoading = true;
     const isPrivate =
       this.updateEventForm.get('isPrivate')?.value?.toString() === 'true'
         ? 'Si'
@@ -110,6 +112,7 @@ export class UpdateEventComponent implements OnInit {
             this.messageService.add({ severity: 'error', summary: err });
           },
         });
+      this.isLoading = false;
       return;
     }
 
@@ -118,13 +121,6 @@ export class UpdateEventComponent implements OnInit {
       summary: 'Error',
       detail: 'Por favor, complete todos los campos',
     });
-  }
-
-  formatDate(date: string) {
-    const [datePart, timePart] = date.split(', ');
-    const [day, month, year] = datePart.split('/');
-    const [hour, minute] = timePart.split(':');
-    const formatDate = new Date(`${month}/${day}/${year} ${hour}:${minute}`);
-    return formatDate;
+    this.isLoading = false;
   }
 }

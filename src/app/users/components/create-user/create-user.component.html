@@ -118,6 +118,7 @@
       <div class="flex justify-content-end w-full mt-5">
         <button
           pButton
+          [loading]="isLoading"
           (click)="createUser()"
           label="Crear"
           class="p-button-raised p-button-rounded"
