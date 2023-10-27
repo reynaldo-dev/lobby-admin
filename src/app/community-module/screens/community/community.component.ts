@@ -1,10 +1,9 @@
 import { Component, effect } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { CommunityService } from '../../services/community.service';
 import { MessageService } from 'primeng/api';
 import { ICommunities } from 'src/app/admin-dashboard/interfaces/communities.interface';
-import { switchMap } from 'rxjs';
-import { FormBuilder, Validators } from '@angular/forms';
+import { CommunityService } from '../../services/community.service';
 effect;
 
 @Component({

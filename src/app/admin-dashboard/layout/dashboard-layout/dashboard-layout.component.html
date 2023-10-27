@@ -1,14 +1,17 @@
 <div class="col-fixed">
-   <app-side-bar [isVisible]="isVisible" />
+  <app-side-bar [isVisible]="isVisible" />
 
-    <div class="grid">
-        <div class="col-1 mr-4">
-            <p-button (click)="handleToggleMenu()" icon="pi pi-bars"
-                styleClass="p-button-lg p-button-secondary p-button-text">
-            </p-button>
-        </div>
-        <div class="col-11 md:col-10">
-            <router-outlet></router-outlet>
-        </div>
+  <div class="grid">
+    <div class="col-1 mr-4">
+      <p-button
+        (click)="handleToggleMenu()"
+        icon="pi pi-bars"
+        styleClass="p-button-lg p-button-secondary p-button-text"
+      >
+      </p-button>
     </div>
+    <div class="col-12 md:col-10">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>

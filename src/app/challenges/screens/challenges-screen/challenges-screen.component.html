@@ -3,27 +3,30 @@
 </div>
 
 <main class="bg-transparent">
-  <div class="flex justify-content-between">
+  <div
+    class="flex justify-content-between flex-column md:flex-column lg:flex-row"
+  >
     <h2 class="text-500 mt-5">Retos</h2>
-    <div class="flex justify-content-between align-items-center gap-3">
+
+    <div class="grid gap-3 mt-2 md:mt-2">
       <p-button
         label="Marcar como completados"
         icon="pi pi-check"
-        styleClass="p-button-sm p-button-success  p-button-rounded"
+        styleClass="p-button-sm p-button-success p-button-rounded col-12"
         (onClick)="openMarkAsDoneModal()"
       ></p-button>
 
       <p-button
         label="Descargar estado actual de los retos"
         icon="pi pi-download"
-        styleClass="p-button-sm p-button-success p-button-outlined p-button-rounded"
+        styleClass="p-button-sm p-button-success p-button-outlined p-button-rounded col-12"
         (onClick)="generateChallengeTicketsStateReport()"
       ></p-button>
 
       <p-button
         label="Descargar reporte general"
         icon="pi pi-download"
-        styleClass="p-button-sm p-button-success p-button-outlined p-button-rounded"
+        styleClass="p-button-sm p-button-success p-button-outlined p-button-rounded col-12"
         (onClick)="generateGeneralReport()"
       ></p-button>
     </div>

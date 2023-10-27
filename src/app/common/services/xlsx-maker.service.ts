@@ -27,7 +27,7 @@ export class XlsxMakerService {
   getReportData(eventId: string): Observable<IEventReportResponse> {
     return this.http
       .get<IEventReportResponse>(
-        `${this.apiURL}/event/event-report/${eventId}`,
+        `${this.apiURL}/events/event-report/${eventId}`,
         {
           headers: this.headers,
         }

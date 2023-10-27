@@ -64,7 +64,7 @@ export class ConsumablesTicketsComponent {
 
   openDialog(consumable: IConsumableData): void {
     this.selectedConsumable = consumable;
-    console.log(this.selectedConsumable);
+
     this.consumablesTicketsService.toggleDialogDetails(true);
   }
 

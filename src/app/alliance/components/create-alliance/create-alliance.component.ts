@@ -13,7 +13,7 @@ import { AllianceCategoryService } from 'src/app/alliance-category/services/alli
 })
 export class CreateAllianceComponent {
   public isModalCreateVisible: boolean = false;
-  public isLoading: boolean = true;
+  public isLoading: boolean = false;
 
   createAllianceForm: FormGroup;
 
