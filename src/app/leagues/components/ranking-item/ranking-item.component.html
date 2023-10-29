@@ -6,18 +6,10 @@
     [src]="item.picture ? item.picture : 'assets/user-male.svg'"
     alt=""
     class="w-2 border-circle"
-    *ngIf="getCurrentIndex(item) > 0"
-  />
-
-  <img
-    [src]="'assets/first-place-ranking.svg'"
-    alt=""
-    *ngIf="getCurrentIndex(item) === 0"
-    class="w-2"
   />
 
   <span
-    *ngIf="getCurrentIndex(item) > 0 && getCurrentIndex(item) <= 2"
+    *ngIf="getCurrentIndex(item) >= 0 && getCurrentIndex(item) <= 2"
     [ngStyle]="{
       position: 'absolute',
       top: '-20px',

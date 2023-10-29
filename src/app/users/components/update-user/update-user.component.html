@@ -102,12 +102,14 @@
       <div class="flex justify-content-end w-full align-self-end">
         <button
           pButton
-          [loading]="isLoading"
           (click)="updateUser()"
           label="Actualizar"
           class="p-button-raised p-button-rounded"
           icon="pi pi-save"
         ></button>
+      </div>
+      <div *ngIf="isLoading">
+        <app-loader />
       </div>
     </form>
   </div>

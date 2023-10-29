@@ -1,54 +1,78 @@
 <section class="" *ngIf="community">
-    <div class="grid mt-2" >
-        <div class="span12 h-10rem border-round-top-md w-full" [style]="{'background-color': community.color}">
-        </div>
+  <div class="grid mt-2">
+    <div
+      class="span12 h-10rem border-round-top-md w-full"
+      [style]="{ 'background-color': community.color }"
+    ></div>
 
-        <div class="col-6 flex flex-column">
-            <span class=" text-3xl">{{community.name}}</span>
-            <span class="text-md">{{community.description}}</span>
-        </div>
-
-        <div class="col-6 flex justify-content-end">
-            <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-info p-button-outlined"
-                (onClick)="toggleDialog()" />
-        </div>
-        <div class="col-12 mt-5">
-            <p-button styleClass="p-button-rounded" (onClick)="openModalCommunityMembers()" >
-                {{community.membersCount.toString()}} Miembros
-                <i class="ml-2 pi pi-window-maximize"></i>
-            </p-button>
-        </div>
+    <div class="col-6 flex flex-column">
+      <span class="text-3xl">{{ community.name }}</span>
+      <span class="text-md">{{ community.description }}</span>
     </div>
 
-    <app-community-members />
-
-    <!-- eventos -->
-    <h3 class="mt-5" >Eventos</h3>
-    <div class="grid mt-2"  >
-        <a class="col-12 cursor-pointer" style="text-decoration: none;" *ngFor="let event of community?.Event" [routerLink]="['/dashboard/eventos', event.id]" >
-            <app-event-card [communityColor]="community.color" [event]="event" />
-        </a>
+    <div class="col-6 flex justify-content-end">
+      <p-button
+        icon="pi pi-pencil"
+        styleClass="p-button-rounded p-button-info p-button-outlined"
+        (onClick)="toggleDialog()"
+      />
     </div>
+    <div class="col-12 mt-5">
+      <p-button
+        styleClass="p-button-rounded"
+        (onClick)="openModalCommunityMembers()"
+      >
+        {{ community.membersCount.toString() }} Miembros
+        <i class="ml-2 pi pi-window-maximize"></i>
+      </p-button>
+    </div>
+  </div>
 
-    <!-- update community dialog -->
-    <p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
-    <p-dialog
-      header="Crear nueva comunidad"
-      [modal]="true"
-      [(visible)]="visible"
-      [style]="{ height:'auto'}"
-      styleClass="sm:w-full md:w-9 lg:w-6 relative"
+  <app-community-members />
 
+  <!-- eventos -->
+  <h3 class="mt-5">Eventos</h3>
+  <div class="grid mt-2" *ngIf="community?.Event && community?.Event?.length">
+    <a
+      class="col-12 cursor-pointer"
+      style="text-decoration: none"
+      *ngFor="let event of community?.Event"
+      [routerLink]="['/dashboard/eventos', event.id]"
     >
+      <app-event-card [communityColor]="community.color" [event]="event" />
+    </a>
+  </div>
 
-    <form [formGroup]="updateCommunityForm" class="w-full flex gap-3 flex-column justify-content-center align-items-center" >
+  <div
+    *ngIf="community?.Event?.length === 0"
+    class="w-full flex justify-content-center align-items-center flex-column gap-3"
+  >
+    <span class="text-500">Aún no se han creado eventos en esta comunidad</span>
+    <img src="assets/no-data.svg" alt="" class="w-2" />
+  </div>
+
+  <!-- update community dialog -->
+  <p-toast
+    [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"
+  ></p-toast>
+  <p-dialog
+    header="Crear nueva comunidad"
+    [modal]="true"
+    [(visible)]="visible"
+    [style]="{ height: 'auto' }"
+    styleClass="sm:w-full md:w-9 lg:w-6 relative"
+  >
+    <form
+      [formGroup]="updateCommunityForm"
+      class="w-full flex gap-3 flex-column justify-content-center align-items-center"
+    >
       <div class="flex flex-column gap-2 w-full">
         <label htmlFor="nombre">Nombre</label>
         <input
           pInputText
           id="name"
           aria-describedby="nombre-help"
-         formControlName="name"
+          formControlName="name"
         />
       </div>
 
@@ -74,21 +98,28 @@
 
       <div class="flex flex-column gap-2 w-full justify-content-start">
         <label htmlFor="color">Color</label>
-        <p-colorPicker class="absolute mt-5"  formControlName="color"></p-colorPicker>
+        <p-colorPicker
+          class="absolute mt-5"
+          formControlName="color"
+        ></p-colorPicker>
       </div>
     </form>
 
-      <div class="flex justify-content-end mt-8" >
-        <p-button
-          label="Cancelar"
-          styleClass="p-button-secondary p-button-text"
-          (onClick)="toggleDialog()"
-        ></p-button>
-        <p-button label="Guardar" [loading]="isLoading" (click)="updateCommunity()"></p-button>
-      </div>
-    </p-dialog>
+    <div class="flex justify-content-end mt-8">
+      <p-button
+        label="Cancelar"
+        styleClass="p-button-secondary p-button-text"
+        (onClick)="toggleDialog()"
+      ></p-button>
+      <p-button
+        label="Guardar"
+        [loading]="isLoading"
+        (click)="updateCommunity()"
+      ></p-button>
+    </div>
+  </p-dialog>
 </section>
 
-<div *ngIf="!community" >
-    <app-loader />
+<div *ngIf="!community">
+  <app-loader />
 </div>

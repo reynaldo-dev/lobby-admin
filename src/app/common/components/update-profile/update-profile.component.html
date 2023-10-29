@@ -77,6 +77,10 @@
         label="Actualizar"
         styleClass="p-button-text"
       ></p-button>
+
+      <div *ngIf="isLoading">
+        <app-loader />
+      </div>
     </form>
   </div>
 </p-dialog>

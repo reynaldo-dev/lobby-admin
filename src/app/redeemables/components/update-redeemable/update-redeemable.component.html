@@ -7,9 +7,6 @@
   header="Actualizar canjeable"
   [responsive]="true"
 >
-  <!-- <div *ngIf="isLoading">
-        <app-loader />
-    </div> -->
   <div class="">
     <form [formGroup]="updateRedeemableForm" class="grid gap-3">
       <div class="col-12">
@@ -86,12 +83,14 @@
       <div class="w-full flex justify-content-end">
         <button
           pButton
-          [loading]="isLoading"
           (click)="updateRedeemable()"
           icon="pi pi-check"
           label="Crear"
           styleClass="p-button-rounded"
         ></button>
+      </div>
+      <div *ngIf="isLoading">
+        <app-loader />
       </div>
     </form>
   </div>

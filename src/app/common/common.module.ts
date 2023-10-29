@@ -8,6 +8,7 @@ import { UpdateProfileComponent } from './components/update-profile/update-profi
 import { UsersModule } from '../users/users.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UnauthorizedScreenComponent } from './screens/unauthorized-screen/unauthorized-screen.component';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,12 @@ import { UnauthorizedScreenComponent } from './screens/unauthorized-screen/unaut
     UpdateProfileComponent,
     UnauthorizedScreenComponent,
   ],
-  imports: [CommonModule, PrimeNgModule, ReactiveFormsModule, UsersModule],
+  imports: [
+    CommonModule,
+    PrimeNgModule,
+    ReactiveFormsModule,
+    UsersModule,
+    ComponentsModule,
+  ],
 })
 export class AppCommonModule {}

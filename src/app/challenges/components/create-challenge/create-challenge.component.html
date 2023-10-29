@@ -138,12 +138,14 @@
     <div class="flex justify-content-end w-full mt-5">
       <button
         pButton
-        [loading]="isLoading"
         (click)="createChallenge()"
         label="Crear"
         class="p-button-raised p-button-rounded"
         icon="pi pi-save"
       ></button>
+    </div>
+    <div *ngIf="isLoading">
+      <app-loader />
     </div>
   </form>
 </p-dialog>
