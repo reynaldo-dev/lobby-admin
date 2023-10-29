@@ -1,54 +1,61 @@
 <div
-  class="grid gap-2 mt-8 md:mt-0 mb-5 cursor-pointer bg-white w-full py-2 border-round-lg justify-content-evenly"
+  class="grid gap-2 mb-5 cursor-pointer w-full py-2 border-round-lg justify-content-evenly"
 >
   <div
-    class="col-5 md:col-4 lg:col-2 bg-primary border-round-lg flex justify-content-between align-items-center"
+    class="col-12 md:col-5 lg:col-3 bg-white border-round-lg flex md:justify-content-center justify-content-around align-items-center"
     routerLink="/dashboard/eventos"
   >
-    <div class="m-2 flex gap-2 flex-column">
-      <span class="font-bold text-xl text-white">{{ activeEvents }}</span>
-      <p>Eventos Activos</p>
+    <div
+      class="p-3 border-round-xl bg-blue-100 flex justify-content-center align-items-center"
+    >
+      <i class="pi pi-calendar text-primary" style="font-size: 2rem"></i>
     </div>
-    <div class="w-8">
-      <img
-        src="../../../../assets/pendinng-event.svg"
-        alt="Image"
-        class="responsive-img w-full"
-      />
+    <div
+      class="m-2 flex gap-2 flex-column justify-content-center align-items-center"
+    >
+      <span class="font-bold text-xl text-color-secondary">{{
+        activeEvents
+      }}</span>
+      <p class="text-color-secondary text-center">Eventos Activos</p>
     </div>
   </div>
 
   <div
-    class="col-5 md:col-4 lg:col-2 bg-white border-1 border-primary border-round-lg flex justify-content-between align-items-center"
+    class="col-12 md:col-5 lg:col-3 bg-white border-round-lg flex md:justify-content-center justify-content-around align-items-center"
     routerLink="/dashboard/eventos"
   >
-    <div class="m-2 flex gap-2 flex-column">
-      <span class="font-bold text-xl text-primary">{{ inactiveEvents }}</span>
-      <p class="text-primary">Eventos Finalizados</p>
+    <div
+      class="p-3 border-round-xl bg-yellow-100 flex justify-content-center align-items-center"
+    >
+      <i class="pi pi-check text-yellow-500" style="font-size: 2rem"></i>
     </div>
-    <div class="w-8">
-      <img
-        src="../../../../assets/done-events.svg"
-        alt="Image"
-        class="responsive-img w-full"
-      />
+
+    <div
+      class="m-2 flex gap-2 flex-column justify-content-center align-items-center"
+    >
+      <span class="font-bold text-xl text-color-secondary">{{
+        inactiveEvents
+      }}</span>
+      <p class="text-color-secondary text-center">Eventos Finalizados</p>
     </div>
   </div>
 
   <div
-    class="col-5 md:col-4 lg:col-2 bg-primary border-round-lg flex justify-content-between align-items-center"
+    class="col-12 md:col-5 lg:col-3 bg-white border-round-lg flex md:justify-content-center justify-content-around align-items-center"
     routerLink="/dashboard/canjes"
   >
-    <div class="m-2 flex gap-2 flex-column">
-      <span class="font-bold text-xl text-white">{{ totalRedeems }}</span>
-      <p>Canjes Activos</p>
+    <div
+      class="p-3 border-round-xl bg-green-100 flex justify-content-center align-items-center"
+    >
+      <i class="pi pi-shopping-bag text-green-500" style="font-size: 2rem"></i>
     </div>
-    <div class="w-8">
-      <img
-        src="../../../../assets/shop-cart.svg"
-        alt="Image"
-        class="responsive-img w-full"
-      />
+    <div
+      class="m-2 flex gap-2 flex-column justify-content-center align-items-center"
+    >
+      <span class="font-bold text-xl text-color-secondary">{{
+        totalRedeems
+      }}</span>
+      <p class="text-color-secondary text-center">Canjes Activos</p>
     </div>
   </div>
 </div>

@@ -1,16 +1,34 @@
 <div class="col-fixed">
   <app-side-bar [isVisible]="isVisible" />
 
-  <div class="grid">
-    <div class="col-1 mr-4">
-      <p-button
-        (click)="handleToggleMenu()"
-        icon="pi pi-bars"
-        styleClass="p-button-lg p-button-secondary p-button-text"
-      >
-      </p-button>
+  <div class="bg-white">
+    <div class="w-full flex justify-content-between align-items-center">
+      <div class="">
+        <p-button
+          (click)="handleToggleMenu()"
+          icon="pi pi-bars"
+          styleClass="p-button-lg p-button-secondary p-button-text"
+        >
+        </p-button>
+      </div>
+
+      <div class="">
+        <div class="">
+          <app-profile-sign
+            [name]="user.name"
+            [lastname]="user.lastname"
+            [email]="user.email"
+            [role]="user.role"
+            [padding]="15"
+            [picture]="user.picture"
+          />
+        </div>
+      </div>
     </div>
-    <div class="col-12 md:col-10">
+  </div>
+
+  <div class="grid mx-2">
+    <div class="col-12 md:col-12">
       <router-outlet></router-outlet>
     </div>
   </div>

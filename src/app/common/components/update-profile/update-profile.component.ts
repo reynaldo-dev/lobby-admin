@@ -21,6 +21,7 @@ export class UpdateProfileComponent implements OnInit {
     city: ['', Validators.required],
     workplace: ['', Validators.required],
   });
+  public isLoading = false;
   public departmentsOptions = departments;
   constructor(
     private authService: AuthService,
@@ -62,6 +63,7 @@ export class UpdateProfileComponent implements OnInit {
   }
 
   updateProfile() {
+    this.isLoading = true;
     if (this.updateProfileForm.invalid) {
       this.messageService.add({
         severity: 'error',
@@ -93,9 +95,11 @@ export class UpdateProfileComponent implements OnInit {
             summary: 'Success',
             detail: 'Perfil actualizado correctamente',
           });
+          this.isLoading = false;
           this.userService.toggleUpdateProfileModal(false);
         },
         (error) => {
+          this.isLoading = false;
           this.messageService.add({
             severity: 'error',
             summary: 'Error',

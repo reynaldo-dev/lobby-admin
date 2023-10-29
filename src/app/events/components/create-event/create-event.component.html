@@ -169,7 +169,6 @@
               label="Siguiente"
               class="p-button-raised p-button-rounded"
               icon="pi pi-save"
-              [loading]="isLoading"
             ></button>
           </div>
 
@@ -183,7 +182,6 @@
               label="Crear evento"
               class="p-button-raised p-button-rounded"
               icon="pi pi-save"
-              [loading]="isLoading"
             ></button>
           </div>
         </form>
@@ -252,6 +250,9 @@
         </div>
       </form>
     </p-tabPanel>
+    <div *ngIf="isLoading">
+      <app-loader />
+    </div>
   </p-tabView>
 </p-dialog>
 <p-toast

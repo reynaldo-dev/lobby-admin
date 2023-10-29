@@ -1,60 +1,67 @@
 <p-dialog
-      header="Crear nueva comunidad"
-      [modal]="true"
-      [(visible)]="isVisible"
-      [style]="{ height:'auto'}"
-      styleClass="sm:w-full md:w-9 lg:w-6 relative"
-      (onHide)="toggleModalCreateCommunity(false)"
+  header="Crear nueva comunidad"
+  [modal]="true"
+  [(visible)]="isVisible"
+  [style]="{ height: 'auto' }"
+  styleClass="sm:w-full md:w-9 lg:w-6 relative"
+  (onHide)="toggleModalCreateCommunity(false)"
+>
+  <form
+    [formGroup]="createCommunityForm"
+    class="w-full flex gap-3 flex-column justify-content-center align-items-center"
+  >
+    <div class="flex flex-column gap-2 w-full">
+      <label htmlFor="nombre">Nombre</label>
+      <input
+        pInputText
+        id="name"
+        aria-describedby="nombre-help"
+        formControlName="name"
+      />
+    </div>
 
-    >
+    <div class="flex flex-column gap-2 w-full">
+      <label htmlFor="descripcion">Descripción</label>
+      <input
+        pInputText
+        id="description"
+        aria-describedby="descripcion-help"
+        formControlName="description"
+      />
+    </div>
 
-    <form [formGroup]="createCommunityForm" class="w-full flex gap-3 flex-column justify-content-center align-items-center" >
-      <div class="flex flex-column gap-2 w-full">
-        <label htmlFor="nombre">Nombre</label>
-        <input
-          pInputText
-          id="name"
-          aria-describedby="nombre-help"
-         formControlName="name"
-        />
-      </div>
+    <div class="flex flex-column gap-2 w-full">
+      <label htmlFor="descripcion">Link a workplace</label>
+      <input
+        pInputText
+        id="link"
+        aria-describedby="descripcion-help"
+        formControlName="link"
+      />
+    </div>
 
-      <div class="flex flex-column gap-2 w-full">
-        <label htmlFor="descripcion">Descripción</label>
-        <input
-          pInputText
-          id="description"
-          aria-describedby="descripcion-help"
-          formControlName="description"
-        />
-      </div>
+    <div class="flex flex-column gap-2 w-full justify-content-start">
+      <label htmlFor="color">Color</label>
+      <p-colorPicker
+        class="absolute mt-5"
+        formControlName="color"
+      ></p-colorPicker>
+    </div>
+  </form>
 
-      <div class="flex flex-column gap-2 w-full">
-        <label htmlFor="descripcion">Link a workplace</label>
-        <input
-          pInputText
-          id="link"
-          aria-describedby="descripcion-help"
-          formControlName="link"
-        />
-      </div>
+  <div class="flex justify-content-end mt-8">
+    <p-button
+      label="Cancelar"
+      styleClass="p-button-secondary p-button-text"
+      (onClick)="toggleModalCreateCommunity(false)"
+    ></p-button>
+    <p-button label="Guardar" (click)="createCommunity()"></p-button>
+  </div>
+  <div *ngIf="isLoading">
+    <app-loader />
+  </div>
+</p-dialog>
 
-      <div class="flex flex-column gap-2 w-full justify-content-start">
-        <label htmlFor="color">Color</label>
-        <p-colorPicker class="absolute mt-5"  formControlName="color"></p-colorPicker>
-      </div>
-    </form>
-
-      <div class="flex justify-content-end mt-8" >
-        <p-button
-          label="Cancelar"
-          styleClass="p-button-secondary p-button-text"
-          (onClick)="toggleModalCreateCommunity(false)"
-        ></p-button>
-        <p-button label="Guardar" [loading]="isLoading" (click)="createCommunity()"></p-button>
-      </div>
-    </p-dialog>
-
-    <p-toast
-    [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"
-  ></p-toast>
+<p-toast
+  [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"
+></p-toast>

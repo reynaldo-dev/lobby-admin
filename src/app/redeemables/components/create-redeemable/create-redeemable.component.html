@@ -89,12 +89,14 @@
       <div class="w-full flex justify-content-end">
         <button
           pButton
-          [loading]="isLoading"
           (click)="createRedeemable()"
           icon="pi pi-check"
           label="Crear"
           styleClass="p-button-rounded"
         ></button>
+      </div>
+      <div *ngIf="isLoading">
+        <app-loader />
       </div>
     </form>
   </div>
