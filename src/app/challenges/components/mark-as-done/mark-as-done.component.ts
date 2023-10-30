@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import * as XLSX from 'xlsx';
 import { ChallengesService } from '../../services/challenges.service';
+import { XlsxMakerService } from 'src/app/common/services/xlsx-maker.service';
 
 @Component({
   selector: 'app-mark-as-done',
@@ -17,7 +18,8 @@ export class MarkAsDoneComponent implements OnInit {
 
   constructor(
     private challengeService: ChallengesService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private xlsx: XlsxMakerService
   ) {}
 
   ngOnInit(): void {
@@ -43,18 +45,7 @@ export class MarkAsDoneComponent implements OnInit {
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
         const excelData = XLSX.utils.sheet_to_json(worksheet);
-
-        // if (this.isSomePending(excelData)) {
-        //   this.messageService.add({
-        //     severity: 'error',
-        //     summary: 'Error',
-        //     detail:
-        //       'Revisa el documento, ningun ticket debe estar con el reto pendiente',
-        //   });
-
-        //   this.clearFileInput();
-        //   return;
-        // }
+        //const dataa = this.xlsx.readFile(e);
 
         this.challengeService.markChallengesAsDone(excelData).subscribe({
           next: () => {

@@ -17,6 +17,7 @@ export interface UserData {
   city?: string;
   picture?: string;
   workplace?: string;
+  enterprise_id?: string;
 }
 
 export interface Rol {

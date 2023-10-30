@@ -48,4 +48,8 @@ export class UsersComponent implements OnInit {
     this.usersService.setSelectedUser(user);
     this.usersService.toggleUpdateModal(true);
   }
+
+  openCreateMasiveModal(): void {
+    this.usersService.toggleCreateMasiveModal(true);
+  }
 }
