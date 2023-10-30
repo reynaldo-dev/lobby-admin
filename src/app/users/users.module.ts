@@ -7,6 +7,7 @@ import { CreateUserComponent } from './components/create-user/create-user.compon
 import { UpdateUserComponent } from './components/update-user/update-user.component';
 import { ComponentsModule } from '../components/components.module';
 import { UserComponent } from './screens/user/user.component';
+import { CreateUsersMasiveDialogComponent } from './components/create-users-masive-dialog/create-users-masive-dialog.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { UserComponent } from './screens/user/user.component';
     CreateUserComponent,
     UpdateUserComponent,
     UserComponent,
+    CreateUsersMasiveDialogComponent,
   ],
   imports: [
     CommonModule,

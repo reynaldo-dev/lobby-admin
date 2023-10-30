@@ -19,6 +19,7 @@ export class CreateUserComponent {
 
   public createUserForm = this.fb.group({
     email: ['', Validators.required],
+    enterprise_id: ['', Validators.required],
     name: ['', Validators.required],
     lastname: ['', Validators.required],
     password: ['', Validators.required],

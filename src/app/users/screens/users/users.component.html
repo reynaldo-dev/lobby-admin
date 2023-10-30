@@ -3,7 +3,16 @@
 </div>
 
 <div *ngIf="users" class="">
-  <h3 class="text-500 mt-5">Usuarios</h3>
+  <div class="flex justify-content-between align-items-center">
+    <h3 class="text-500 mt-5">Usuarios</h3>
+
+    <p-button
+      label="Crear masivamente"
+      icon="pi pi-plus"
+      styleClass="p-button-sm p-button-success p-button-rounded col-12"
+      (onClick)="openCreateMasiveModal()"
+    ></p-button>
+  </div>
 
   <div class="mt-7">
     <p-table
@@ -44,6 +53,22 @@
                 type="text"
                 field="name"
                 placeholder="Busca un nombre"
+                display="menu"
+                matchMode="contains"
+                [showMatchModes]="false"
+                [showOperator]="false"
+                [showAddButton]="false"
+              ></p-columnFilter>
+            </div>
+          </th>
+
+          <th style="min-width: 15rem" class="border-none">
+            <div class="flex align-items-center">
+              Softpeople
+              <p-columnFilter
+                type="text"
+                field="enterprise_id"
+                placeholder="Busca un Softpeople"
                 display="menu"
                 matchMode="contains"
                 [showMatchModes]="false"
@@ -113,6 +138,9 @@
             </p-button>
           </td>
           <td class="border-none">
+            {{ user.enterprise_id }}
+          </td>
+          <td class="border-none">
             {{ user.lastname }}
           </td>
           <td class="border-none">
@@ -142,6 +170,7 @@
     </p-table>
     <app-update-user />
     <app-create-user />
+    <app-create-users-masive-dialog />
     <button
       pButton
       type="button"
