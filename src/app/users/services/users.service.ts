@@ -140,7 +140,10 @@ export class UsersService {
       .post(`${this.baseUrl}/masive`, mappedUsers, { headers: this.headers })
       .pipe(
         switchMap(() => this.getUsers()),
-        catchError(this.handleError)
+        catchError((err) => {
+          this.getUsers().subscribe();
+          return throwError(() => err.error.message || 'Algo salio mal');
+        })
       );
   }
 
