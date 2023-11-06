@@ -1,4 +1,4 @@
-<h3 class="text-500 mt-5">Cupones de Asistencia</h3>
+<h3 class="">Cupones de Asistencia</h3>
 <div></div>
 
 <div class="mt-4 bg-white p-4 border-round-lg">
@@ -29,7 +29,6 @@
         </span>
       </div>
     </ng-template>
-
 
     <ng-template pTemplate="header">
       <tr class="border-none">
@@ -143,7 +142,9 @@
     </ng-template>
     <ng-template pTemplate="body" let-ticket>
       <tr class="border-none">
-        <td class="border-none">{{ ticket.user.name }} {{ ticket.user.lastname }}</td>
+        <td class="border-none">
+          {{ ticket.user.name }} {{ ticket.user.lastname }}
+        </td>
         <td class="border-none">
           {{ ticket.user.email }}
         </td>

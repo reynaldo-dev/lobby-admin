@@ -1,4 +1,4 @@
-<h3 class="text-500 mt-5">Cupones de Consumibles</h3>
+<h3 class="">Cupones de Consumibles</h3>
 
 <div class="mt-4 p-4 border-round-lg bg-white">
   <p-table
@@ -144,7 +144,9 @@
         <td class="border-none">
           {{ ticket.consumable.name }}
         </td>
-        <td class="border-none">{{ ticket.user.name }} {{ ticket.user.lastname }}</td>
+        <td class="border-none">
+          {{ ticket.user.name }} {{ ticket.user.lastname }}
+        </td>
         <td class="border-none">
           {{ ticket.event.title }}
         </td>
