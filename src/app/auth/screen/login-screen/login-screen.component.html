@@ -1,19 +1,45 @@
 <div class="mb-4 w-full">
-    <span class="text-3xl font-bold text-600 md:mx-auto mx-3">Bienvenido de nuevo</span>
+  <span class="text-3xl font-bold text-600 md:mx-auto mx-3"
+    >Bienvenido de nuevo</span
+  >
 </div>
 
 <div class="w-full">
-    <form class="flex gap-4 flex-column">
-        <div class="flex flex-column gap-2">
-            <label htmlFor="email" class="text-500">Correo electrónico</label>
-            <input class="w-full" pInputText id="email" aria-describedby="username-help" [formControl]="email" placeholder="some@davivienda.com" />
-        </div>
-        <div class="flex flex-column gap-2">
-            <label htmlFor="password" class="text-500">Contraseña</label>
-            <input  class="w-full" pInputText id="password" type="password" aria-describedby="username-help" [formControl]="password" />
-        </div>
-        <button pButton pRipple label="Iniciar Sesión" (click)="login()" icon="pi pi-sign-in" iconPos="right"></button>
-        <p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
-    </form>
-    <app-google-auth-button/>
+  <form class="flex gap-4 flex-column">
+    <div class="flex flex-column gap-2">
+      <label htmlFor="email" class="text__primary">Correo electrónico</label>
+      <input
+        class="w-full"
+        pInputText
+        id="email"
+        aria-describedby="username-help"
+        [formControl]="email"
+        placeholder="some@davivienda.com"
+      />
+    </div>
+    <div class="flex flex-column gap-2">
+      <label htmlFor="password" class="text__primary">Contraseña</label>
+      <input
+        class="w-full"
+        pInputText
+        id="password"
+        type="password"
+        aria-describedby="username-help"
+        [formControl]="password"
+      />
+    </div>
+    <button
+      pButton
+      pRipple
+      label="Iniciar Sesión"
+      (click)="login()"
+      icon="pi pi-sign-in"
+      iconPos="right"
+      class="highlight__text-color border-round-md"
+    ></button>
+    <p-toast
+      [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"
+    ></p-toast>
+  </form>
+  <app-google-auth-button />
 </div>

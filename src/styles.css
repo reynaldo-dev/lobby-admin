@@ -1,15 +1,29 @@
-@import "primeng/resources/themes/fluent-light/theme.css";
+@import "primeng/resources/themes/saga-orange/theme.css";
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
 
-html,
-body,
-* {
+body {
   margin: 0;
-  padding: 0;
+  background-color: var(--mask-bg);
   font-family: var(--font-family);
 }
 
-body {
-  background-color: var(--surface-hover);
+.primary__bg {
+  background-color: var(--primary-color);
+}
+
+.text__primary {
+  color: var(--primary-color);
+}
+
+.text__secondary {
+  color: var(--text-secondary-color);
+}
+
+.high__light__bg {
+  background-color: var(--highlight-bg);
+}
+
+.highlight__text-color {
+  color: var(--highlight-text-color);
 }

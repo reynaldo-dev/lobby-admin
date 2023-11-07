@@ -56,14 +56,16 @@ export class CommunityService {
   }
 
   getCommunities() {
-    return this.http.get(`${environment.apiUrl}/communities`).pipe(
-      tap((res) => {
-        this._communities = res as ICommunities[];
-      }),
-      catchError((err) => {
-        return throwError(() => err.error.message);
-      })
-    );
+    return this.http
+      .get(`${environment.apiUrl}/communities?withUsers=true`)
+      .pipe(
+        tap((res) => {
+          this._communities = res as ICommunities[];
+        }),
+        catchError((err) => {
+          return throwError(() => err.error.message);
+        })
+      );
   }
 
   getCommunityById(id: string) {
